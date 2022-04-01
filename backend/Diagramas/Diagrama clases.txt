@@ -1,0 +1,64 @@
+@startuml
+class Usuario {
+  nombre
+  id
+  contraseña
+  fechaNacimiento
+  fotoPerfil
+  mail
+  publicaciones : lista
+  valoracion
+  valoraciones : lista
+  comentarios : lista
+  
+  Usuario(mail, nombre, id, contraseña, fechaNacimiento)
+  iniciarSesion(mail,contraseña) : bool
+  recuperarContraseña(mail) : bool
+  modificarPerfil(nombre,contraseña,fechaNacimiento,mail,foto) : bool
+  eliminarCuenta(contraseña) : bool
+  seguirUsuario(usuario) : bool
+  recibirValoracion(valoracion) : bool
+  recibirComentario(comentario) : bool
+  modificarEvento(this, evento) : bool
+  toJson() : JSONObject
+}
+
+class Evento {
+  nombre
+  ubicacion
+  fecha
+  host
+  comentarios : lista
+  valoracion
+  valoraciones : lista
+  publicaciones : lista
+  participantes : lista
+  etiquetas : lista
+
+
+  Evento(nombre, fecha, host, ubicacion, etiquetas)
+  modificar(host, nombre, fecha, ubicacion, etiquetas) : bool
+  toJson() : JSONObject
+  recibirComentario(comentario) : bool
+  recibirValoracion(valoracion) : bool
+  añadirParticipante(participante) : bool
+  eliminarParticipante(participante) : bool
+  eliminar() : bool
+  añadirPublicacion(publicacion) : bool
+}
+
+class Publicacion {
+  usuario
+  fecha
+  imagenes : lista
+  texto
+
+  Publicacion(usuario, fecha, imagenes, texto)
+  toJson() : JSONObject
+  eliminar() : bool
+}
+
+Usuario "1" o-- "n" Evento : tiene
+Evento "1" -- "1" Usuario : host
+Evento "1" -- "n" Publicacion : tiene
+@enduml
