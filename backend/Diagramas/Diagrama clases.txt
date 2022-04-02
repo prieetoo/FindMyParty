@@ -1,64 +1,66 @@
 @startuml
 class Usuario {
-  nombre
-  id
-  contraseña
-  fechaNacimiento
-  fotoPerfil
-  mail
-  publicaciones : lista
-  valoracion
-  valoraciones : lista
-  comentarios : lista
-  
-  Usuario(mail, nombre, id, contraseña, fechaNacimiento)
+  nombre : String
+  id : int
+  password : String
+  fechaNacimiento : Date
+  foto : String
+  email : String
+  valoracion : float
+  valoraciones : List<flloat>
+  Usuario(nombre, password, fechaNacimiento, foto, email)
   iniciarSesion(mail,contraseña) : bool
-  recuperarContraseña(mail) : bool
-  modificarPerfil(nombre,contraseña,fechaNacimiento,mail,foto) : bool
-  eliminarCuenta(contraseña) : bool
+  recuperarPassword(mail) : bool
+  modificarPerfil(nombre, password, fechaNacimiento, foto, email) : bool
+  eliminar(contraseña) : bool
   seguirUsuario(usuario) : bool
   recibirValoracion(valoracion) : bool
   recibirComentario(comentario) : bool
-  modificarEvento(this, evento) : bool
+  modificarEvento(evento) : bool
   toJson() : JSONObject
 }
 
 class Evento {
-  nombre
-  ubicacion
-  fecha
-  host
-  comentarios : lista
-  valoracion
-  valoraciones : lista
-  publicaciones : lista
-  participantes : lista
-  etiquetas : lista
-
-
-  Evento(nombre, fecha, host, ubicacion, etiquetas)
-  modificar(host, nombre, fecha, ubicacion, etiquetas) : bool
-  toJson() : JSONObject
+  nombre : String
+  ubicacion : String
+  fecha : Date
+  host : Usuario
+  valoracion : float
+  valoraciones : List<float>
+  etiquetas : List<String>
+  Evento(nombre, ubicacion, fecha, host, etiquetas)
+  modificar(nombre, ubicacion, fecha, host, etiquetas) : bool
   recibirComentario(comentario) : bool
   recibirValoracion(valoracion) : bool
   añadirParticipante(participante) : bool
   eliminarParticipante(participante) : bool
   eliminar() : bool
   añadirPublicacion(publicacion) : bool
+  toJson() : JSONObject
 }
 
 class Publicacion {
-  usuario
-  fecha
-  imagenes : lista
-  texto
-
-  Publicacion(usuario, fecha, imagenes, texto)
-  toJson() : JSONObject
+  autor : Usuario
+  fecha : Date
+  imagenes : List<String>
+  contenido : String
+  Publicacion(autor, fecha, imagenes, contenido)
   eliminar() : bool
+  toJson() : JSONObject
 }
 
-Usuario "1" o-- "n" Evento : tiene
-Evento "1" -- "1" Usuario : host
-Evento "1" -- "n" Publicacion : tiene
+class Comentario {
+  autor : Usuario
+  fecha : Date
+  contenido : String
+  Comentario(autor, fecha, contenido)
+  toJson() : JSONObject
+}
+
+Usuario "1" *--> "*" Evento : eventos
+Evento "1" --> "1" Usuario : host
+Evento "1" *--> "*" Publicacion : publicaciones
+Evento "1" *--> "*" Usuario : participantes
+Evento "1" *--> "*" Comentario : comentarios
+Usuario "1" *--> "*" Comentario : comentarios
 @enduml

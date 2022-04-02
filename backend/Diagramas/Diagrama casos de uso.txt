@@ -10,7 +10,6 @@ U <|-- A
 rectangle FindMyParty {
   package "Gestión cuenta" {
     usecase "Crear cuenta" as UC1
-    usecase "Registrarse" as UC2
     usecase "Recuperar constraseña" as UC3
     usecase "Iniciar sesión" as UC4
     usecase "Acceder como invitado" as UC5
@@ -53,10 +52,9 @@ rectangle FindMyParty {
   usecase "Mostrar anuncios" as UC31
 }
 
-UC2 ..> UC8 : include
+UC1 ..> UC8 : include
 
 U ---> UC1
-U ---> UC2
 U ---> UC3
 U ---> UC4
 U ---> UC5
@@ -84,7 +82,7 @@ U ---> UC27
 U ---> UC28
 U ---> UC29
 
-APIV -up-> UC8
-GM -up-> UC30
-SDK -up-> UC31
+APIV <-up- UC8
+GM <-up- UC30
+SDK <-up- UC31
 @enduml
