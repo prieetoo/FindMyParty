@@ -57,10 +57,10 @@ class Comentario {
   toJson() : JSONObject
 }
 
-Usuario "1" *--> "*" Evento : eventos
+Usuario "0" *--> "*" Evento : eventos
 Evento "1" --> "1" Usuario : host
-Evento "1" *--> "*" Publicacion : publicaciones
+Evento "0" *--> "*" Publicacion : publicaciones
 Evento "1" *--> "*" Usuario : participantes
-Evento "1" *--> "*" Comentario : comentarios
-Usuario "1" *--> "*" Comentario : comentarios
+Evento "0" *--> "*" Comentario : comentarios
+Usuario "0" *--> "*" Comentario : comentarios
 @enduml
