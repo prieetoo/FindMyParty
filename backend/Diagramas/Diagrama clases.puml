@@ -1,4 +1,4 @@
-@startuml
+ nb @startuml
 class Usuario {
   nombre : String
   id : int
@@ -9,13 +9,14 @@ class Usuario {
   valoracion : float
   valoraciones : List<flloat>
   Usuario(nombre, password, fechaNacimiento, foto, email)
-  iniciarSesion(mail,contraseña) : bool
-  recuperarPassword(mail) : bool
+  iniciarSesion(email,password) : bool
+  recuperarPassword(email) : bool
   modificarPerfil(nombre, password, fechaNacimiento, foto, email) : bool
-  eliminar(contraseña) : bool
+  eliminar(password) : bool
   seguirUsuario(usuario) : bool
   recibirValoracion(valoracion) : bool
   recibirComentario(comentario) : bool
+  crearEvento(evento) : bool
   modificarEvento(evento) : bool
   toJson() : JSONObject
 }
