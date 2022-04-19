@@ -1,7 +1,12 @@
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import netscape.javascript.JSObject;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
 
 public class Usuario{
   private String nombre;
@@ -22,12 +27,71 @@ public class Usuario{
     this.valoraciones = new ArrayList<>();
 
   }
+  public String getNombre() {
+    return nombre;
+  }
+
+  public void setNombre(String nombre) {
+    this.nombre = nombre;
+  }
+
+  public int getId() {
+    return id;
+  }
+
+  public void setId(int id) {
+    this.id = id;
+  }
+
+  public String getPassword() {
+    return password;
+  }
+
+  public void setPassword(String password) {
+    this.password = password;
+  }
+
+  public String getFoto() {
+    return foto;
+  }
+
+  public void setFoto(String foto) {
+    this.foto = foto;
+  }
+
+  public String getEmail() {
+    return email;
+  }
+
+  public void setEmail(String email) {
+    this.email = email;
+  }
+
+  public void setValoracion(float valoracion) {
+    this.valoracion = valoracion;
+  }
+
+  public List<Float> getValoraciones() {
+    return valoraciones;
+  }
+
+  public void setValoraciones(List<Float> valoraciones) {
+    this.valoraciones = valoraciones;
+  }
 
   public boolean iniciarSesion(String email, String password){
+
+    // Consultar a la bd mail password
+
+    //si existe iniciar y true
+
     return false;
   }
 
   public boolean recuperarPassword(String email){
+
+    // Consultar a la bd password, si no existe email return false
+
     return false;
   }
 
@@ -80,7 +144,13 @@ public class Usuario{
     return false;
   }
 
-  private JSObject toJson(){
+  public JsonObject toJson(){
+    Gson gson = new Gson();
+    try (FileWriter writer = new FileWriter(this.id+".json")) {
+      gson.toJson(this, writer);
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
     return null;
   }
 
