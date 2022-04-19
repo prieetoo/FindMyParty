@@ -5,3 +5,5 @@
 
 ## Semana 2
 - 06/04/2022: Creación del modelo relacional de la base de datos con Oracle Data Modeler.
+
+## Semana 3
