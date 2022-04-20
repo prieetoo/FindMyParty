@@ -1,3 +1,5 @@
+package core;
+
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import netscape.javascript.JSObject;
