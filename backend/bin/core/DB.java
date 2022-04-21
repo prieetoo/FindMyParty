@@ -7,10 +7,21 @@ public class DB {
     Statement statement;
 
     public DB(){
-        this.connection = DriverManager.getConnection("BD","USER","PASS");
-        this.statement = this.connection.createStatement();
+        try {
+            Class.forName("oracle.jdbc.driver.OracleDriver");
+            this.connection = DriverManager.getConnection("BD","USER","PASS");
+            this.statement = this.connection.createStatement();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
     public ResultSet execute(String operation){
-        return this.statement.executeQuery("select * from emp");
+        ResultSet rs = null;
+        try {
+            rs = this.statement.executeQuery("select * from emp");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return rs;
     }
 }

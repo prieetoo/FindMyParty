@@ -84,7 +84,7 @@ public class Usuario{
   public boolean iniciarSesion(String email, String password){
 
     // Consultar a la bd mail password
-
+    String consulta = "SELECT mail,password FROM Usuario u where u.mail = " + email + " AND u.password = " + password + " ;";
     //si existe iniciar y true
 
     return false;
@@ -92,18 +92,29 @@ public class Usuario{
 
   public boolean recuperarPassword(String email){
 
+    String consulta = "SELECT password FROM Usuario u where u.mail = " + email + ";";
     // Consultar a la bd password, si no existe email return false
-
-    return false;
+    //ResultSet rs = DB.execute(consulta);
+    //if(rs.next() == false) { return false}
+    return true;
   }
 
-  public boolean modificarPerfil(String nombre,String password, String fecaNacimiento, String foto, String email){
+  public boolean modificarPerfil(String nombre,String password, String fechaNacimiento, String foto, String email){
     // Añadir a la bd
 
+    String consulta = "UPDATE Usuario " +
+            "SET nombre = " + nombre + "," +
+            "    password  = " + password + "," +
+            "    fecha_nacimiento = " + fechaNacimiento + "," +
+            "    foto = " + foto + "," +
+            "    mail = " + email +
+            " WHERE id = " + this.id  + ";";
+    //ResultSet rs = DB.execute(consulta);
     this.nombre=nombre;
     this.password=password;
     this.foto=foto;
     this.email=email;
+
     return false;
   }
 
