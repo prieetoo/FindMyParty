@@ -2,7 +2,6 @@ package core;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import org.json.JSONObject;
 
 
 public class Evento {
@@ -146,7 +145,7 @@ public class Evento {
     return false;
   }
 
-  public boolean eiminar() {
+  public boolean eliminar() {
     //Eliminar evento de la lista de eventos de usuario host (necesario en evento?)
     return false;
   }
@@ -156,7 +155,7 @@ public class Evento {
     return true;
   }
 
-  public JSONObject toJson() {
+  public String toJson() {
     //Pasar a formato JSON
     return null;
   }

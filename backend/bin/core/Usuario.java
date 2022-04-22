@@ -1,6 +1,7 @@
 package core;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import netscape.javascript.JSObject;
 
@@ -8,6 +9,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 
 public class Usuario{
@@ -81,21 +83,21 @@ public class Usuario{
     this.valoraciones = valoraciones;
   }
 
-  public boolean iniciarSesion(String email, String password){
+  public static Usuario iniciarSesion(String email, String password){
 
     // Consultar a la bd mail password
     String consulta = "SELECT mail,password FROM Usuario u where u.mail = " + email + " AND u.password = " + password + " ;";
     //si existe iniciar y true
 
-    return false;
+    return new Usuario("nombre", 0 ,password, "foto",email);
   }
 
   public boolean recuperarPassword(String email){
 
     String consulta = "SELECT password FROM Usuario u where u.mail = " + email + ";";
     // Consultar a la bd password, si no existe email return false
-    //ResultSet rs = DB.execute(consulta);
-    //if(rs.next() == false) { return false}
+    // ResultSet rs = DB.execute(consulta);
+    // if(rs.next() == false) { return false}
     return true;
   }
 
@@ -110,6 +112,7 @@ public class Usuario{
             "    mail = " + email +
             " WHERE id = " + this.id  + ";";
     //ResultSet rs = DB.execute(consulta);
+
     this.nombre=nombre;
     this.password=password;
     this.foto=foto;
@@ -119,6 +122,12 @@ public class Usuario{
   }
 
   public boolean eliminar(String password){
+
+    // Consultar a la bd mail password
+    String consulta = "SELECT mail,password FROM Usuario u where u.mail = " + this.email + " AND u.password = " + password + " ;";
+    //si existe eliminar
+    consulta =  "DELETE FROM Usuario u WHERE u.id = " + this.id;
+
     return false;
   }
 
@@ -142,30 +151,43 @@ public class Usuario{
     this.valoracion = total/this.valoraciones.size();
   }
 
-  private boolean recivirComentario(){
+  private boolean recivirComentario(String fecha, String contenido, int destinatario){
     //Esperar hasta que comentario este
+
+    //Añadir comentario
+    String consulta = "INSERT INTO ComentarioUsuario (fecha,contenido,Usuario_id,Usuario_id1) VALUES (TO_DATE('" + fecha + "'.'yyyy/mm/dd')," +
+            contenido + "," + this.id + "," + destinatario + ");";
+
     return false;
   }
 
-  private boolean crearEvento(){
+  private boolean crearEvento(String nombre,String ubicacion,String fecha, int id){
     //Esperar hasta que evento este
+
+    //Modificar en la bd
+    String consulta = "UPDATE Evento SET " +
+            " nombre = " + nombre  + "," +
+            " ubicacion = " + ubicacion + "," +
+            " fecha = TO_DATE('" + fecha + "'.'yyyy/mm/dd')" +
+            "WHERE Usuario_id = " + this.id + " AND id = " + id + ";";
+
     return false;
   }
 
-  private boolean modificarEvento(){
+  private boolean modificarEvento(String nombre,String ubicacion,String fecha){
     //Esperar hasta que evento este
+
+    //Añadir a la bd
+    String consulta = "INSERT INTO Evento (nombre,ubicacion,fecha,Usuario_id) VALUES (" + nombre  + "," +
+            ubicacion + ", TO_DATE('" + fecha + "'.'yyyy/mm/dd')," + this.id + ");";
     return false;
   }
 
-  public JsonObject toJson(){
-    Gson gson = new Gson();
-    try (FileWriter writer = new FileWriter(this.id+".json")) {
-      gson.toJson(this, writer);
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
-    return null;
+  public String toJson(){
+    Gson gson = new GsonBuilder().setPrettyPrinting().create();;
+    return gson.toJson(this);
   }
+
 
   public float getValoracion() {
     return valoracion;
