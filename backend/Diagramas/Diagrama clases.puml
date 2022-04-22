@@ -22,6 +22,7 @@ class Usuario {
 }
 
 class Evento {
+  id : int
   nombre : String
   ubicacion : String
   fecha : Date

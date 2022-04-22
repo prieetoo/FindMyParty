@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 
 public class Evento {
-
+  private int id;
   private String nombre;
   private String ubicacion;
   private LocalDate fecha;
@@ -16,6 +16,14 @@ public class Evento {
   private ArrayList<Comentario> comentarios;
   private ArrayList<Usuario> participantes;
   private ArrayList<Publicacion> publicaciones;
+
+  public int getId() {
+    return id;
+  }
+
+  public void setId(int id) {
+    this.id = id;
+  }
 
   public String getNombre() {
     return nombre;
@@ -108,31 +116,66 @@ public class Evento {
     this.comentarios = new ArrayList<Comentario>();
     this.participantes = new ArrayList<Usuario>();
     this.publicaciones = new ArrayList<Publicacion>();
+
+    //Añadir a la BD
+    String consulta = "INSERT INTO EVENTO (nombre, ubicacion, fecha, valoracion, usuario_id) VALUES ('" +
+        nombre + "', '" +
+        ubicacion + "', TO_DATE('" +
+        fecha + "'.'dd/mm/yyyy'), '" +
+        this.valoracion + "', '" +
+        host.getId() + "');";
+    //Ejecutar inserción
   }
 
   public boolean modificar(String nombre, String ubicacion, LocalDate fecha, Usuario host, ArrayList<String> etiquetas) {
-    //Definir condiciones para la modificación de los parámetros
     this.nombre = nombre;
     this.ubicacion = ubicacion;
     this.fecha = fecha;
     this.host = host;
     this.etiquetas = etiquetas;
-    return true;
+    //Modificar la BD
+    String consulta1 = "UPDATE EVENTO " +
+        "SET nombre = '" + nombre + "', " +
+        "    ubicacion = '" + ubicacion + "', " +
+        "    fecha = TO_DATE('" + fecha + "'.'dd/mm/yyyy'), " +
+        "    usuario_id = '" + host.getId() +
+        "WHERE id = '" + this.id + "';";
+    for (int i = 0; i < etiquetas.size(); i++) {
+      String consulta2 = "INSERT INTO Etiqueta (etiqueta, Evento_id) VALUES (" +
+          "'" + etiquetas.get(i) + "', " +
+          "'" + this.id + "');";
+      //Ejecutar inserción
+    }
+    return false;
   }
 
-  public boolean comentar(Comentario comentario) { //booleano necesario?
+  public boolean comentar(Comentario comentario) {
     this.comentarios.add(comentario);
-    return true;
+    return false;
   }
 
-  public boolean valorar(Valoracion valoracion) { //booleano necesario?
-    this.valoraciones.add(valoracion);
-    return true;
+  public boolean valorar(Valoracion valoracion) {
+    if (valoracion.getValor() >= 0 && valoracion.getValor() <= 5) {
+      this.valoraciones.add(valoracion);
+      float val = 0;
+      for (int i = 0; i < valoraciones.size(); i++){
+        val += valoraciones.get(i).getValor();
+      }
+      val /= valoraciones.size();
+      this.valoracion = val;
+      String consulta = "UPDATE EVENTO" +
+          "SET valoracion = '" + val +
+          "WHERE id = '" + this.id + "';";
+      //Ejecutar consulta
+      return true;
+    } else {
+      return false;
+    }
   }
 
-  public boolean añadirParticipante(Usuario participante) { //booleano necesario?
+  public boolean anadirParticipante(Usuario participante) {
     this.participantes.add(participante);
-    return true;
+    return false;
   }
 
   public boolean eliminarParticipante(Usuario participante) {
@@ -145,14 +188,20 @@ public class Evento {
     return false;
   }
 
-  public boolean eliminar() {
-    //Eliminar evento de la lista de eventos de usuario host (necesario en evento?)
+  public boolean anadirPublicacion(Publicacion publicacion) {
+    this.publicaciones.add(publicacion);
     return false;
   }
 
-  public boolean añadirPublicacion(Publicacion publicacion) {
-    this.publicaciones.add(publicacion);
-    return true;
+  public boolean eliminar() {
+    String consulta = "SELECT * " +
+        "              FROM Evento" +
+        "              WHERE id = '" + this.id + "';";
+    //if (existe)
+    //  eliminar de la BD
+    //  return true
+    //else
+    return false;
   }
 
   public String toJson() {
