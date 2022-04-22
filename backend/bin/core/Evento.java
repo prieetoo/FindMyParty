@@ -2,6 +2,7 @@ package core;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import org.json.JSONObject;
 
 
 public class Evento {
@@ -151,6 +152,10 @@ public class Evento {
 
   public boolean comentar(Comentario comentario) {
     this.comentarios.add(comentario);
+    String consulta = "UPDATE EVENTO" +
+                      "SET Evento_id = '" + this.id +
+                      "WHERE id = '" + comentario.getId() + "';";
+    //Ejecutar
     return false;
   }
 
@@ -197,7 +202,7 @@ public class Evento {
     String consulta = "SELECT * " +
         "              FROM Evento" +
         "              WHERE id = '" + this.id + "';";
-    //if (existe)
+    //if (consulta devuelve resultado)
     //  eliminar de la BD
     //  return true
     //else
@@ -205,7 +210,8 @@ public class Evento {
   }
 
   public String toJson() {
-    //Pasar a formato JSON
+    JSONObject json = new JSONObject();
+    json.put("id", this.id);
     return null;
   }
 }
