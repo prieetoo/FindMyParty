@@ -20,7 +20,7 @@ public class DB {
     public static ResultSet execute(String operation){
         ResultSet rs = null;
         try {
-            rs = statement.executeQuery("select * from emp");
+            rs = statement.executeQuery(operation);
         } catch (SQLException e) {
             e.printStackTrace();
         }

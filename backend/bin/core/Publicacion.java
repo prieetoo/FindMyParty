@@ -29,7 +29,7 @@ public class Publicacion {
     private boolean eliminar() //revisar
     {
         String consulta = "DELETE FROM Publicacion p WHERE p.id = " + this.id +";";
-        ResultSet rs = DB.execute(consulta); //esto de dudosa procedencia por cambuiar execute a static
+        ResultSet rs = DB.execute(consulta); //esto de dudosa procedencia por cambiar execute a static
         return rs != null;
     }
     private JSObject toJson(){
