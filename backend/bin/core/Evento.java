@@ -3,6 +3,7 @@ package core;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.sql.ResultSet;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -148,6 +149,7 @@ public class Evento {
           "'" + etiquetas.get(i) + "', " +
           "'" + this.id + "');";
       //Ejecutar inserción
+
     }
     return false;
   }
@@ -157,8 +159,9 @@ public class Evento {
     String consulta = "UPDATE EVENTO" +
                       "SET Evento_id = '" + this.id +
                       "WHERE id = '" + comentario.getId() + "';";
-    //Ejecutar
-    return false;
+    //Ejecutar propuesta:
+    ResultSet rs = DB.execute(consulta);
+    return rs!= null;
   }
 
   public boolean valorar(Valoracion valoracion) {
@@ -173,8 +176,9 @@ public class Evento {
       String consulta = "UPDATE EVENTO" +
           "SET valoracion = '" + val +
           "WHERE id = '" + this.id + "';";
-      //Ejecutar consulta
-      return true;
+      //Ejecutar consulta propuesta:
+      ResultSet rs = DB.execute(consulta);
+      return rs!=null;
     } else {
       return false;
     }

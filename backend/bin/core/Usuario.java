@@ -2,14 +2,10 @@ package core;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.JsonObject;
-import netscape.javascript.JSObject;
 
-import java.io.FileWriter;
-import java.io.IOException;
+import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Pattern;
 
 
 public class Usuario{
@@ -111,14 +107,12 @@ public class Usuario{
             "    foto = " + foto + "," +
             "    mail = " + email +
             " WHERE id = " + this.id  + ";";
-    //ResultSet rs = DB.execute(consulta);
-
     this.nombre=nombre;
     this.password=password;
     this.foto=foto;
     this.email=email;
-
-    return false;
+    ResultSet rs = DB.execute(consulta);
+    return rs!=null;
   }
 
   public boolean eliminar(String password){
