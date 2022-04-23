@@ -41,6 +41,7 @@ public class Usuario{
     return false;
   }
 
+
   public boolean eliminar(String password){
     return false;
   }
@@ -87,4 +88,63 @@ public class Usuario{
   public float getValoracion() {
     return valoracion;
   }
+
+
+
+  //getters y setters
+  public String getNombre() {
+    return nombre;
+  }
+
+  public void setNombre(String nombre) {
+    this.nombre = nombre;
+  }
+
+  public int getId() {
+    return id;
+  }
+
+  public void setId(int id) {
+    this.id = id;
+  }
+
+  public String getPassword() {
+    return password;
+  }
+
+  public void setPassword(String password) {
+    this.password = password;
+  }
+
+  public String getFoto() {
+    return foto;
+  }
+
+  public void setFoto(String foto) {
+    this.foto = foto;
+  }
+
+  public String getEmail() {
+    return email;
+  }
+
+  public void setEmail(String email) {
+    this.email = email;
+  }
+
+  public void setValoracion(float valoracion) {
+    this.valoracion = valoracion;
+  }
+
+  public List<Float> getValoraciones() {
+    return valoraciones;
+  }
+
+  public void setValoraciones(List<Float> valoraciones) {
+    this.valoraciones = valoraciones;
+  }
+
+
 }
+
+
