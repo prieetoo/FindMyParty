@@ -1,16 +1,17 @@
 package core;
 import netscape.javascript.JSObject;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 public class Comentario {
     private Usuario autor;
-    private Date fecha;
+    private LocalDate fecha;
     private String contenido;
 
-    public Comentario(Usuario autor, Date fecha, String contenido){
+    public Comentario(Usuario autor, LocalDate fecha, String contenido){
         this.autor = autor;
-        this.fecha = new Date(fecha.getTime());
+        this.fecha = fecha;
         this.contenido = contenido;
     }
     private JSObject toJson(){
@@ -25,11 +26,11 @@ public class Comentario {
         this.autor = autor;
     }
 
-    public Date getFecha() {
+    public LocalDate getFecha() {
         return fecha;
     }
 
-    public void setFecha(Date fecha) {
+    public void setFecha(LocalDate fecha) {
         this.fecha = fecha;
     }
 

@@ -2,27 +2,35 @@ package core;
 
 import netscape.javascript.JSObject;
 
+import javax.swing.*;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 public class Publicacion {
 
+    private int id;
     private Usuario autor;
     private Date fecha;
     private List<String> img;
     private String contenido;
 
-    public Publicacion(Usuario autor, Date fecha, List<String> img, String contenido)
+    public Publicacion(int id, Usuario autor, Date fecha, List<String> img, String contenido)
     {
+        this.id = id;
         this.autor = autor;
         this.fecha = new Date(fecha.getTime());
         this.img = new ArrayList<>(img);
         this.contenido = contenido;
+
     }
-    private boolean eliminar()
+    private boolean eliminar() //revisar
     {
-        return false;
+        String consulta = "DELETE FROM Publicacion p WHERE p.id = " + this.id +";";
+        ResultSet rs = DB.execute(consulta); //esto de dudosa procedencia por cambuiar execute a static
+        return rs != null;
     }
     private JSObject toJson(){
         return null;
