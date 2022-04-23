@@ -127,7 +127,6 @@ public class Usuario{
     String consulta = "SELECT mail,password FROM Usuario u where u.mail = " + this.email + " AND u.password = " + password + " ;";
     //si existe eliminar
     consulta =  "DELETE FROM Usuario u WHERE u.id = " + this.id;
-
     return false;
   }
 

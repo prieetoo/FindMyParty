@@ -1,6 +1,6 @@
 package core;
 
-import netscape.javascript.JSObject;
+import org.json.JSONObject;
 
 import java.sql.ResultSet;
 import java.time.LocalDate;
@@ -23,8 +23,13 @@ public class Comentario {
         ResultSet rs = DB.execute(consulta); //esto de dudosa procedencia por cambiar execute a static
         return rs != null;
     }
-    private JSObject toJson(){
-        return null;
+    public JSONObject toJson(){
+        JSONObject json = new JSONObject();
+        json.put("id", this.id);
+        json.put("autor",this.autor);
+        json.put("fecha", this.fecha);
+        json.put("contenido", this.contenido);
+        return json;
     }
     public Usuario getAutor() {
         return autor;

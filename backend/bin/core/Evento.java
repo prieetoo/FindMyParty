@@ -1,10 +1,10 @@
 package core;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
-
 import org.json.JSONArray;
 import org.json.JSONObject;
+
+import java.time.LocalDate;
+import java.util.ArrayList;
 
 
 public class Evento {

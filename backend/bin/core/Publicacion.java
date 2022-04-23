@@ -1,6 +1,7 @@
 package core;
 
-import netscape.javascript.JSObject;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.sql.ResultSet;
 import java.util.ArrayList;
@@ -12,7 +13,7 @@ public class Publicacion {
     private int id;
     private Usuario autor;
     private Date fecha;
-    private List<String> img;
+    private ArrayList<String> img;
     private String contenido;
 
     public Publicacion(int id, Usuario autor, Date fecha, List<String> img, String contenido)
@@ -30,8 +31,17 @@ public class Publicacion {
         ResultSet rs = DB.execute(consulta); //esto de dudosa procedencia por cambiar execute a static
         return rs != null;
     }
-    private JSObject toJson(){
-        return null;
+    public JSONObject toJson(){
+        JSONObject json = new JSONObject();
+        json.put("id", this.id);
+        json.put("autor",this.autor);
+        json.put("fecha", this.fecha);
+        json.put("contenido", this.contenido);
+        JSONArray jsonArray = new JSONArray();
+        for (int i = 0; this.img.size() > i; i++)
+            jsonArray.put(this.img.get(i));
+        json.put("img", jsonArray);
+        return json;
     }
 
     //getters y setters
@@ -56,7 +66,7 @@ public class Publicacion {
         return img;
     }
 
-    public void setImg(List<String> img) {
+    public void setImg(ArrayList<String> img) {
         this.img = img;
     }
 
