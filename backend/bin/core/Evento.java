@@ -144,14 +144,15 @@ public class Evento {
         "    fecha = TO_DATE('" + fecha + "'.'dd/mm/yyyy'), " +
         "    usuario_id = '" + host.getId() +
         "WHERE id = '" + this.id + "';";
+    ResultSet rs = DB.execute(consulta1);
     for (int i = 0; i < etiquetas.size(); i++) {
       String consulta2 = "INSERT INTO Etiqueta (etiqueta, Evento_id) VALUES (" +
           "'" + etiquetas.get(i) + "', " +
           "'" + this.id + "');";
+      ResultSet rs1 = DB.execute(consulta2);
       //Ejecutar inserción
-
     }
-    return false;
+    return rs!=null;
   }
 
   public boolean comentar(Comentario comentario) {

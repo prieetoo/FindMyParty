@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import java.sql.ResultSet;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,7 +15,9 @@ public class Usuario{
   private String password;
   private String foto;
   private String email;
+  private Evento e; //esto lo cambiamos si hacemos herencia
   private float valoracion;
+  private ArrayList<Comentario> comentarios;
   private List<Float> valoraciones;
 
   public Usuario(String nombre, int id, String password, String foto, String email){
@@ -25,6 +28,8 @@ public class Usuario{
     this.email = email;
     this.valoracion = 0F;
     this.valoraciones = new ArrayList<>();
+    this.comentarios = new ArrayList<>();
+    this.e = null;
 
   }
   public String getNombre() {
@@ -84,7 +89,8 @@ public class Usuario{
     // Consultar a la bd mail password
     String consulta = "SELECT mail,password FROM Usuario u where u.mail = " + email + " AND u.password = " + password + " ;";
     //si existe iniciar y true
-
+    ResultSet rs = DB.execute(consulta);
+    //por que devolvemos un usuario nuevo si esta iniciando sesion?????
     return new Usuario("nombre", 0 ,password, "foto",email);
   }
 
@@ -144,36 +150,37 @@ public class Usuario{
     this.valoracion = total/this.valoraciones.size();
   }
 
-  private boolean recivirComentario(String fecha, String contenido, int destinatario){
+  private boolean recivirComentario(String fecha, String contenido, Usuario usuario){ //echadle un ojo
     //Esperar hasta que comentario este
-
+    LocalDate localDate = LocalDate.parse(fecha);
+    Comentario c = new Comentario(id, usuario, this, localDate, contenido);
+    comentarios.add(c);
     //Añadir comentario
     String consulta = "INSERT INTO ComentarioUsuario (fecha,contenido,Usuario_id,Usuario_id1) VALUES (TO_DATE('" + fecha + "'.'yyyy/mm/dd')," +
-            contenido + "," + this.id + "," + destinatario + ");";
-
-    return false;
+            contenido + "," + this.id + "," + this + ");";
+    ResultSet rs = DB.execute(consulta);
+    return rs!= null;
   }
 
-  private boolean crearEvento(String nombre,String ubicacion,String fecha, int id){
+  private boolean crearEvento(String nombre, String ubicacion, String fecha, ArrayList<String> etiquetas){
     //Esperar hasta que evento este
 
+    LocalDate localDate = LocalDate.parse(fecha);
+     this.e = new Evento(nombre,ubicacion,localDate,this,etiquetas);
     //Modificar en la bd
     String consulta = "UPDATE Evento SET " +
             " nombre = " + nombre  + "," +
             " ubicacion = " + ubicacion + "," +
             " fecha = TO_DATE('" + fecha + "'.'yyyy/mm/dd')" +
             "WHERE Usuario_id = " + this.id + " AND id = " + id + ";";
-
-    return false;
+    ResultSet rs = DB.execute(consulta);
+    return rs!=null;
   }
 
   private boolean modificarEvento(String nombre,String ubicacion,String fecha){
-    //Esperar hasta que evento este
 
-    //Añadir a la bd
-    String consulta = "INSERT INTO Evento (nombre,ubicacion,fecha,Usuario_id) VALUES (" + nombre  + "," +
-            ubicacion + ", TO_DATE('" + fecha + "'.'yyyy/mm/dd')," + this.id + ");";
-    return false;
+    LocalDate localdate = LocalDate.parse(fecha);
+    return e.modificar(nombre,ubicacion,localdate,this, e.getEtiquetas());
   }
 
   public String toJson(){

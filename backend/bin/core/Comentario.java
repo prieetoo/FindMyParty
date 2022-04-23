@@ -8,12 +8,14 @@ import java.time.LocalDate;
 public class Comentario {
     private int id;
     private Usuario autor;
+    private Usuario destinatario;
     private LocalDate fecha;
     private String contenido;
 
-    public Comentario(int id, Usuario autor, LocalDate fecha, String contenido){
+    public Comentario(int id, Usuario autor,Usuario destinatario, LocalDate fecha, String contenido){
         this.id = id;
         this.autor = autor;
+        this.destinatario = destinatario;
         this.fecha = fecha;
         this.contenido = contenido;
     }
@@ -27,6 +29,7 @@ public class Comentario {
         JSONObject json = new JSONObject();
         json.put("id", this.id);
         json.put("autor",this.autor);
+        json.put("destinatario",this.destinatario);
         json.put("fecha", this.fecha);
         json.put("contenido", this.contenido);
         return json;
@@ -54,5 +57,11 @@ public class Comentario {
     }
     public void setId(int id) {
         this.id = id;
+    }
+    public Usuario getDestinatario() {
+        return destinatario;
+    }
+    public void setDestinatario(Usuario destinatario) {
+        this.destinatario = destinatario;
     }
 }
