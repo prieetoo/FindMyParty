@@ -2,8 +2,6 @@ package core;
 
 import netscape.javascript.JSObject;
 
-import javax.swing.*;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Date;
@@ -68,6 +66,14 @@ public class Publicacion {
 
     public void setContenido(String contenido) {
         this.contenido = contenido;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }
 
