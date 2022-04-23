@@ -28,6 +28,12 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
             <artifactId>mysql-connector-java</artifactId>
             <version>8.0.27</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.json/json -->
+        <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>20220320</version>
+        </dependency>
 
     </dependencies>
     <properties>

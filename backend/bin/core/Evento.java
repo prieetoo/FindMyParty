@@ -2,6 +2,8 @@ package core;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 
@@ -209,9 +211,44 @@ public class Evento {
     return false;
   }
 
-  public String toJson() {
+  public JSONObject toJson() {
     JSONObject json = new JSONObject();
     json.put("id", this.id);
-    return null;
+    json.put("nombre", this.nombre);
+    json.put("ubicacion", this.ubicacion);
+    json.put("fecha", this.fecha);
+    json.put("host", this.host.toJson());
+    json.put("valoracion", this.valoracion);
+
+    JSONArray jsonArray = new JSONArray();
+    for (int i = 0; i < this.valoraciones.size(); i++) {
+      jsonArray.put(this.valoraciones.get(i).toJson());
+    }
+    json.put("valoraciones", jsonArray);
+
+    jsonArray = new JSONArray();
+    for (int i = 0; i < this.etiquetas.size(); i++) {
+      jsonArray.put(this.etiquetas.get(i));
+    }
+    json.put("etiquetas", jsonArray);
+
+    jsonArray = new JSONArray();
+    for (int i = 0; i < this.comentarios.size(); i++) {
+      jsonArray.put(this.comentarios.get(i).toJson());
+    }
+    json.put("comentarios", jsonArray);
+
+    jsonArray = new JSONArray();
+    for (int i = 0; i < this.participantes.size(); i++) {
+      jsonArray.put(this.participantes.get(i).toJson());
+    }
+    json.put("participantes", jsonArray);
+
+    jsonArray = new JSONArray();
+    for (int i = 0; i < this.publicaciones.size(); i++) {
+      jsonArray.put(this.publicaciones.get(i).toJson());
+    }
+    json.put("publicaciones", jsonArray);
+    return json;
   }
 }
