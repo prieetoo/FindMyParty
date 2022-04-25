@@ -4,6 +4,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -122,13 +123,22 @@ public class Evento {
     this.publicaciones = new ArrayList<Publicacion>();
 
     //Añadir a la BD
-    String consulta = "INSERT INTO EVENTO (nombre, ubicacion, fecha, valoracion, usuario_id) VALUES ('" +
+    String consulta = "INSERT INTO EVENTO (nombre, ubicacion, fecha, valoracion, usuario_id) " +
+        "OUTPUT Inserted.id" +
+        "VALUES ('" +
         nombre + "', '" +
         ubicacion + "', TO_DATE('" +
         fecha + "'.'dd/mm/yyyy'), '" +
         this.valoracion + "', '" +
         host.getId() + "');";
-    //Ejecutar inserción
+    boolean rs = DB.executeUpdate(consulta);
+    String consulta1 = "SELECT LAST_INSERT_ID()";
+    ResultSet rs1 = DB.executeQuery(consulta1);
+    try {
+      this.id = rs1.getInt("id");
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
   }
 
   public boolean modificar(String nombre, String ubicacion, LocalDate fecha, Usuario host, ArrayList<String> etiquetas) {
@@ -137,6 +147,7 @@ public class Evento {
     this.fecha = fecha;
     this.host = host;
     this.etiquetas = etiquetas;
+
     //Modificar la BD
     String consulta1 = "UPDATE EVENTO " +
         "SET nombre = '" + nombre + "', " +
@@ -144,15 +155,14 @@ public class Evento {
         "    fecha = TO_DATE('" + fecha + "'.'dd/mm/yyyy'), " +
         "    usuario_id = '" + host.getId() +
         "WHERE id = '" + this.id + "';";
-    ResultSet rs = DB.execute(consulta1);
-    for (int i = 0; i < etiquetas.size(); i++) {
+    boolean rs = DB.executeUpdate(consulta1);
+    for (int i = 0; i < etiquetas.size() && rs; i++) {
       String consulta2 = "INSERT INTO Etiqueta (etiqueta, Evento_id) VALUES (" +
           "'" + etiquetas.get(i) + "', " +
           "'" + this.id + "');";
-      ResultSet rs1 = DB.execute(consulta2);
-      //Ejecutar inserción
+      rs = DB.executeUpdate(consulta2);
     }
-    return rs!=null;
+    return rs;
   }
 
   public boolean comentar(Comentario comentario) {
@@ -161,8 +171,8 @@ public class Evento {
                       "SET Evento_id = '" + this.id +
                       "WHERE id = '" + comentario.getId() + "';";
     //Ejecutar propuesta:
-    ResultSet rs = DB.execute(consulta);
-    return rs!= null;
+    boolean rs = DB.executeUpdate(consulta);
+    return rs;
   }
 
   public boolean valorar(Valoracion valoracion) {
@@ -178,8 +188,8 @@ public class Evento {
           "SET valoracion = '" + val +
           "WHERE id = '" + this.id + "';";
       //Ejecutar consulta propuesta:
-      ResultSet rs = DB.execute(consulta);
-      return rs!=null;
+      boolean rs = DB.executeUpdate(consulta);
+      return rs;
     } else {
       return false;
     }
@@ -187,14 +197,22 @@ public class Evento {
 
   public boolean anadirParticipante(Usuario participante) {
     this.participantes.add(participante);
-    return false;
+    String consulta = "INSERT INTO Participante (Evento_id, Usuario_id) VALUES (" +
+        "'" + this.id + "', " +
+        "'" + participante.getId() + "');";
+    boolean rs = DB.executeUpdate(consulta);
+    return rs;
   }
 
   public boolean eliminarParticipante(Usuario participante) {
+    String consulta = "DELETE FROM Participante" +
+        "   WHERE Usuario_id = '" + participante.getId() + "' and" +
+        "        Evento_id = '" + this.id + "';";
     for (int i = 0; i < participantes.size(); i++) {
       if (participantes.get(i).getId() == participante.getId()) {
+        boolean rs = DB.executeUpdate(consulta);
         participantes.remove(i);
-        return true;
+        return rs;
       }
     }
     return false;
@@ -209,10 +227,17 @@ public class Evento {
     String consulta = "SELECT * " +
         "              FROM Evento" +
         "              WHERE id = '" + this.id + "';";
-    //if (consulta devuelve resultado)
-    //  eliminar de la BD
-    //  return true
-    //else
+    ResultSet rs = DB.executeQuery(consulta);
+    try {
+      if (rs.next()){
+        String consulta1 = "DELETE FROM Evento" +
+            "   WHERE id = '" + this.id + "';";
+        boolean rs1 = DB.executeUpdate(consulta1);
+        return rs1;
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
     return false;
   }
 

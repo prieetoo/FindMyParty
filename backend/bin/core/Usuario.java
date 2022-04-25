@@ -89,7 +89,7 @@ public class Usuario{
     // Consultar a la bd mail password
     String consulta = "SELECT mail,password FROM Usuario u where u.mail = " + email + " AND u.password = " + password + " ;";
     //si existe iniciar y true
-    ResultSet rs = DB.execute(consulta);
+    ResultSet rs = DB.executeQuery(consulta);
     //por que devolvemos un usuario nuevo si esta iniciando sesion?????
     return new Usuario("nombre", 0 ,password, "foto",email);
   }
@@ -117,8 +117,8 @@ public class Usuario{
     this.password=password;
     this.foto=foto;
     this.email=email;
-    ResultSet rs = DB.execute(consulta);
-    return rs!=null;
+    boolean rs = DB.executeUpdate(consulta);
+    return rs;
   }
 
   public boolean eliminar(String password){
@@ -158,8 +158,8 @@ public class Usuario{
     //Añadir comentario
     String consulta = "INSERT INTO ComentarioUsuario (fecha,contenido,Usuario_id,Usuario_id1) VALUES (TO_DATE('" + fecha + "'.'yyyy/mm/dd')," +
             contenido + "," + this.id + "," + this + ");";
-    ResultSet rs = DB.execute(consulta);
-    return rs!= null;
+    boolean rs = DB.executeUpdate(consulta);
+    return rs;
   }
 
   private boolean crearEvento(String nombre, String ubicacion, String fecha, ArrayList<String> etiquetas){
@@ -173,8 +173,8 @@ public class Usuario{
             " ubicacion = " + ubicacion + "," +
             " fecha = TO_DATE('" + fecha + "'.'yyyy/mm/dd')" +
             "WHERE Usuario_id = " + this.id + " AND id = " + id + ";";
-    ResultSet rs = DB.execute(consulta);
-    return rs!=null;
+    boolean rs = DB.executeUpdate(consulta);
+    return rs;
   }
 
   private boolean modificarEvento(String nombre,String ubicacion,String fecha){
