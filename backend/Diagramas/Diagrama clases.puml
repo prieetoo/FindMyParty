@@ -16,7 +16,7 @@ class Usuario {
   + recibirValoracion(valoracion : Valoracion)
   - calcularValoracion()
   + recibirComentario(comentario : Comentario) : bool
-  + crearEvento(evento : Evento) : bool
+  + crearEvento(nombre : String, ubicacion : String, fecha : LocalDate, etiqueta : ArrayList<String>) : bool
   + modificarEvento(evento : Evento) : bool
   + valorarEvento(destinatario : Usuario, valoracion : float)
   + valorarUsuario(destinatario : Usuario, valoracion : float)
