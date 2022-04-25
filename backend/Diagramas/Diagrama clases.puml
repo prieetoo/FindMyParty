@@ -1,75 +1,75 @@
  nb @startuml
 class Usuario {
-  nombre : String
-  id : int
-  password : String
-  fechaNacimiento : Date
-  foto : String
-  email : String
-  valoracion : float
-  Usuario(nombre, password, fechaNacimiento, foto, email)
-  {static} iniciarSesion(email,password) : Usuario
-  recuperarPassword(email) : bool
-  modificarPerfil(nombre, password, fechaNacimiento, foto, email) : bool
-  eliminar(password) : bool
-  seguirUsuario(usuario) : bool
-  recibirValoracion(valoracion)
-  calcularValoracion()
-  recibirComentario(comentario) : bool
-  crearEvento(evento) : bool
-  modificarEvento(evento) : bool
-  valorarEvento(destinatario, valoracion)
-  valorarUsuario(destinatario, valoracion)
-  toJson() : JSONObject
+  - nombre : String
+  - id : int
+  - password : String
+  - fechaNacimiento : Date
+  - foto : String
+  - email : String
+  - valoracion : float
+  + Usuario(nombre : String, password : String, fechaNacimiento : LocalDate, foto : String, email : String)
+  + {static} iniciarSesion(email : String, password : String) : Usuario
+  + recuperarPassword(email : String) : bool
+  + modificarPerfil(nombre : String, password : String, fechaNacimiento : LocalDate, foto : String, email : String) : bool
+  + eliminar(password : String) : bool
+  + seguirUsuario(usuario : Usuario) : bool
+  + recibirValoracion(valoracion : Valoracion)
+  - calcularValoracion()
+  + recibirComentario(comentario : Comentario) : bool
+  + crearEvento(evento : Evento) : bool
+  + modificarEvento(evento : Evento) : bool
+  + valorarEvento(destinatario : Usuario, valoracion : float)
+  + valorarUsuario(destinatario : Usuario, valoracion : float)
+  + toJson() : JSONObject
 }
 
 class Evento {
-  id : int
-  nombre : String
-  ubicacion : String
-  fecha : Date
-  host : Usuario
-  valoracion : float
-  etiquetas : List<String>
-  activo : bool
-  Evento(nombre, ubicacion, fecha, host, etiquetas)
-  modificar(nombre, ubicacion, fecha, host, etiquetas) : bool
-  comentar(comentario) : bool
-  valorar(valoracion) : bool
-  añadirParticipante(participante) : bool
-  eliminarParticipante(participante) : bool
-  eliminar() : bool
-  añadirPublicacion(publicacion) : bool
-  toJson() : JSONObject
+  - id : int
+  - nombre : String
+  - ubicacion : String
+  - fecha : Date
+  - host : Usuario
+  - valoracion : float
+  - etiquetas : List<String>
+  - activo : bool
+  + Evento(nombre : String, ubicacion : String, fecha : LocalDate, host : Usuario, etiquetas : List<String>)
+  + modificar(nombre : String, ubicacion : String, fecha : LocalDate, host : Usuario, etiquetas : List<String>) : bool
+  + comentar(comentario : Comentario) : bool
+  + valorar(valoracion : Valoracion)) : bool
+  + añadirParticipante(participante : Usuario) : bool
+  + eliminarParticipante(participante : Usuario)) : bool
+  + eliminar() : bool
+  + añadirPublicacion(publicacion : Publicacion) : bool
+  + toJson() : JSONObject
 }
 
 class Publicacion {
-  id : int
-  autor : Usuario
-  fecha : Date
-  imagenes : List<String>
-  contenido : String
-  Publicacion(autor, fecha, imagenes, contenido)
-  eliminar() : bool
-  toJson() : JSONObject
+  - id : int
+  - autor : Usuario
+  - fecha : LocalDate
+  - imagenes : List<String>
+  - contenido : String
+  + Publicacion(autor : Usuario, fecha : LocalDate, imagenes : List<String>, contenido : String)
+  + eliminar() : bool
+  + toJson() : JSONObject
 }
 
 class Comentario {
-  id : int
-  autor : Usuario
-  destinatario : Usuario
-  fecha : Date
-  contenido : String
-  Comentario(autor, fecha, contenido)
-  eliminar() : bool
-  toJson() : JSONObject
+  - id : int
+  - autor : Usuario
+  - destinatario : Usuario
+  - fecha : Date
+  - contenido : String
+  + Comentario(autor : Usuario, fecha : LocalDate, contenido : String)
+  + eliminar() : bool
+  + toJson() : JSONObject
 }
 
 class Valoracion {
-  id : int
-  valor : float
-  Valoracion(id, float)
-  toJson() : JSONObject
+  - autor : Usuario
+  - valor : float
+  + Valoracion(autor : Usuario, valor : float)
+  + toJson() : JSONObject
 }
 
 Usuario "0" *--> "*" Evento : eventos

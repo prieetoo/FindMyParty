@@ -135,7 +135,7 @@ public class Usuario{
     return false;
   }
 
-  public void valorarEvento(Evento destinatario, float Valoracion) {
+  public void valorarEvento(Evento destinatario, float valoracion) {
     Valoracion val = new Valoracion(this, valoracion);
     destinatario.valorar(val);
   }
