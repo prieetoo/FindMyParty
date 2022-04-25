@@ -1,7 +1,5 @@
 package core;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -17,7 +15,7 @@ public class Usuario{
   private String password;
   private String foto;
   private String email;
-  private ArrayList<Evento> e; //esto lo cambiamos si hacemos herencia
+  private ArrayList<Evento> eventos; //esto lo cambiamos si hacemos herencia
   private float valoracion;
   private ArrayList<Comentario> comentarios;
   private List<Valoracion> valoraciones;
@@ -32,7 +30,7 @@ public class Usuario{
     this.valoracion = 0F;
     this.valoraciones = new ArrayList<>();
     this.comentarios = new ArrayList<>();
-    this.e = null;
+    this.eventos = null;
 
   }
   public String getNombre() {
@@ -166,9 +164,8 @@ public class Usuario{
 
   private boolean crearEvento(String nombre, String ubicacion, String fecha, ArrayList<String> etiquetas){
     //Esperar hasta que evento este
-
     LocalDate localDate = LocalDate.parse(fecha);
-     this.e = new Evento(nombre,ubicacion,localDate,this,etiquetas);
+    this.eventos.add(new Evento(nombre,ubicacion,localDate,this,etiquetas));
     //Modificar en la bd
     String consulta = "UPDATE Evento SET " +
             " nombre = " + nombre  + "," +
@@ -182,9 +179,9 @@ public class Usuario{
   private boolean modificarEvento(String nombre,String ubicacion,String fecha, int id) {
 
     LocalDate localdate = LocalDate.parse(fecha);
-    for (int i = 0; i < this.e.size(); i++) {
-      if (e.get(i).getId() == id)
-        return e.get(i).modificar(nombre, ubicacion, localdate, this, e.getEtiquetas());
+    for (int i = 0; i < this.eventos.size(); i++) {
+      if (eventos.get(i).getId() == id)
+        return eventos.get(i).modificar(nombre, ubicacion, localdate, this, eventos.get(i).getEtiquetas());
     }
     return false;
   }
@@ -199,7 +196,6 @@ public class Usuario{
     json.put("email", this.email);
     json.put("valoracion", this.valoracion);
 
-
     JSONArray jsonArray = new JSONArray();
     for (int i = 0; i < this.valoraciones.size(); i++) {
       jsonArray.put(this.valoraciones.get(i).toJson());
@@ -213,16 +209,11 @@ public class Usuario{
     json.put("comentarios", jsonArray);
 
     jsonArray = new JSONArray();
-    for (int i = 0; i < this.participantes.size(); i++) {
-      jsonArray.put(this.participantes.get(i).toJson());
+    for (int i = 0; i < this.eventos.size(); i++) {
+      jsonArray.put(this.eventos.get(i).toJson());
     }
-    json.put("participantes", jsonArray);
+    json.put("eventos", jsonArray);
 
-    jsonArray = new JSONArray();
-    for (int i = 0; i < this.publicaciones.size(); i++) {
-      jsonArray.put(this.publicaciones.get(i).toJson());
-    }
-    json.put("publicaciones", jsonArray);
     return json;
   }
 
