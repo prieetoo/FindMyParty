@@ -23,102 +23,6 @@ public class Evento {
   private ArrayList<Publicacion> publicaciones;
   private boolean activo;
 
-  public int getId() {
-    return id;
-  }
-
-  public void setId(int id) {
-    this.id = id;
-  }
-
-  public String getNombre() {
-    return nombre;
-  }
-
-  public void setNombre(String nombre) {
-    this.nombre = nombre;
-  }
-
-  public String getUbicacion() {
-    return ubicacion;
-  }
-
-  public void setUbicacion(String ubicacion) {
-    this.ubicacion = ubicacion;
-  }
-
-  public LocalDate getFecha() {
-    return fecha;
-  }
-
-  public void setFecha(LocalDate fecha) {
-    this.fecha = fecha;
-  }
-
-  public Usuario getHost() {
-    return host;
-  }
-
-  public void setHost(Usuario host) {
-    this.host = host;
-  }
-
-  public float getValoracion() {
-    return valoracion;
-  }
-
-  public void setValoracion(float valoracion) {
-    this.valoracion = valoracion;
-  }
-
-  public ArrayList<Valoracion> getValoraciones() {
-    return valoraciones;
-  }
-
-  public void setValoraciones(ArrayList<Valoracion> valoraciones) {
-    this.valoraciones = valoraciones;
-  }
-
-  public ArrayList<String> getEtiquetas() {
-    return etiquetas;
-  }
-
-  public void setEtiquetas(ArrayList<String> etiquetas) {
-    this.etiquetas = etiquetas;
-  }
-
-  public ArrayList<Comentario> getComentarios() {
-    return comentarios;
-  }
-
-  public void setComentarios(ArrayList<Comentario> comentarios) {
-    this.comentarios = comentarios;
-  }
-
-  public ArrayList<Usuario> getParticipantes() {
-    return participantes;
-  }
-
-  public void setParticipantes(ArrayList<Usuario> participantes) {
-    this.participantes = participantes;
-  }
-
-  public ArrayList<Publicacion> getPublicaciones() {
-    return publicaciones;
-  }
-
-  public void setPublicaciones(ArrayList<Publicacion> publicaciones) {
-    this.publicaciones = publicaciones;
-  }
-
-  public boolean isActivo() {
-    return activo;
-  }
-
-  public void setActivo(boolean activo) {
-    this.activo = activo;
-  }
-
   public Evento(String nombre, String ubicacion, LocalDate fecha, Usuario host, ArrayList<String> etiquetas) {
     this.nombre = nombre;
     this.ubicacion = ubicacion;
@@ -289,5 +193,102 @@ public class Evento {
     }
     json.put("publicaciones", jsonArray);
     return json;
+  }
+
+  //Getters y setters
+  public int getId() {
+    return id;
+  }
+
+  public void setId(int id) {
+    this.id = id;
+  }
+
+  public String getNombre() {
+    return nombre;
+  }
+
+  public void setNombre(String nombre) {
+    this.nombre = nombre;
+  }
+
+  public String getUbicacion() {
+    return ubicacion;
+  }
+
+  public void setUbicacion(String ubicacion) {
+    this.ubicacion = ubicacion;
+  }
+
+  public LocalDate getFecha() {
+    return fecha;
+  }
+
+  public void setFecha(LocalDate fecha) {
+    this.fecha = fecha;
+  }
+
+  public Usuario getHost() {
+    return host;
+  }
+
+  public void setHost(Usuario host) {
+    this.host = host;
+  }
+
+  public float getValoracion() {
+    return valoracion;
+  }
+
+  public void setValoracion(float valoracion) {
+    this.valoracion = valoracion;
+  }
+
+  public ArrayList<Valoracion> getValoraciones() {
+    return valoraciones;
+  }
+
+  public void setValoraciones(ArrayList<Valoracion> valoraciones) {
+    this.valoraciones = valoraciones;
+  }
+
+  public ArrayList<String> getEtiquetas() {
+    return etiquetas;
+  }
+
+  public void setEtiquetas(ArrayList<String> etiquetas) {
+    this.etiquetas = etiquetas;
+  }
+
+  public ArrayList<Comentario> getComentarios() {
+    return comentarios;
+  }
+
+  public void setComentarios(ArrayList<Comentario> comentarios) {
+    this.comentarios = comentarios;
+  }
+
+  public ArrayList<Usuario> getParticipantes() {
+    return participantes;
+  }
+
+  public void setParticipantes(ArrayList<Usuario> participantes) {
+    this.participantes = participantes;
+  }
+
+  public ArrayList<Publicacion> getPublicaciones() {
+    return publicaciones;
+  }
+
+  public void setPublicaciones(ArrayList<Publicacion> publicaciones) {
+    this.publicaciones = publicaciones;
+  }
+
+  public boolean isActivo() {
+    return activo;
+  }
+
+  public void setActivo(boolean activo) {
+    this.activo = activo;
   }
 }

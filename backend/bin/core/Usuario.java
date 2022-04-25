@@ -33,57 +33,6 @@ public class Usuario{
     this.eventos = null;
 
   }
-  public String getNombre() {
-    return nombre;
-  }
-
-  public void setNombre(String nombre) {
-    this.nombre = nombre;
-  }
-
-  public int getId() {
-    return id;
-  }
-
-  public void setId(int id) {
-    this.id = id;
-  }
-
-  public String getPassword() {
-    return password;
-  }
-
-  public void setPassword(String password) {
-    this.password = password;
-  }
-
-  public String getFoto() {
-    return foto;
-  }
-
-  public void setFoto(String foto) {
-    this.foto = foto;
-  }
-
-  public String getEmail() {
-    return email;
-  }
-
-  public void setEmail(String email) {
-    this.email = email;
-  }
-
-  public void setValoracion(float valoracion) {
-    this.valoracion = valoracion;
-  }
-
-  public List<Valoracion> getValoraciones() {
-    return valoraciones;
-  }
-
-  public void setValoraciones(List<Valoracion> valoraciones) {
-    this.valoraciones = valoraciones;
-  }
 
   public static Usuario iniciarSesion(String email, String password){
 
@@ -217,8 +166,84 @@ public class Usuario{
     return json;
   }
 
+  //Getters y setters
+  public String getNombre() {
+    return nombre;
+  }
+
+  public void setNombre(String nombre) {
+    this.nombre = nombre;
+  }
+
+  public int getId() {
+    return id;
+  }
+
+  public void setId(int id) {
+    this.id = id;
+  }
+
+  public String getPassword() {
+    return password;
+  }
+
+  public void setPassword(String password) {
+    this.password = password;
+  }
+
+  public String getFoto() {
+    return foto;
+  }
+
+  public void setFoto(String foto) {
+    this.foto = foto;
+  }
+
+  public String getEmail() {
+    return email;
+  }
+
+  public void setEmail(String email) {
+    this.email = email;
+  }
+
+  public ArrayList<Evento> getEventos() {
+    return eventos;
+  }
+
+  public void setEventos(ArrayList<Evento> eventos) {
+    this.eventos = eventos;
+  }
 
   public float getValoracion() {
     return valoracion;
+  }
+
+  public void setValoracion(float valoracion) {
+    this.valoracion = valoracion;
+  }
+
+  public ArrayList<Comentario> getComentarios() {
+    return comentarios;
+  }
+
+  public void setComentarios(ArrayList<Comentario> comentarios) {
+    this.comentarios = comentarios;
+  }
+
+  public List<Valoracion> getValoraciones() {
+    return valoraciones;
+  }
+
+  public void setValoraciones(List<Valoracion> valoraciones) {
+    this.valoraciones = valoraciones;
+  }
+
+  public LocalDate getFechaNacimiento() {
+    return fechaNacimiento;
+  }
+
+  public void setFechaNacimiento(LocalDate fechaNacimiento) {
+    this.fechaNacimiento = fechaNacimiento;
   }
 }
