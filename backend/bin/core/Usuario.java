@@ -179,10 +179,14 @@ public class Usuario{
     return rs;
   }
 
-  private boolean modificarEvento(String nombre,String ubicacion,String fecha){
+  private boolean modificarEvento(String nombre,String ubicacion,String fecha, int id) {
 
     LocalDate localdate = LocalDate.parse(fecha);
-    return e.modificar(nombre,ubicacion,localdate,this, e.getEtiquetas());
+    for (int i = 0; i < this.e.size(); i++) {
+      if (e.get(i).getId() == id)
+        return e.get(i).modificar(nombre, ubicacion, localdate, this, e.getEtiquetas());
+    }
+    return false;
   }
 
   public JSONObject toJson(){
@@ -201,12 +205,6 @@ public class Usuario{
       jsonArray.put(this.valoraciones.get(i).toJson());
     }
     json.put("valoraciones", jsonArray);
-
-    jsonArray = new JSONArray();
-    for (int i = 0; i < this.etiquetas.size(); i++) {
-      jsonArray.put(this.etiquetas.get(i));
-    }
-    json.put("etiquetas", jsonArray);
 
     jsonArray = new JSONArray();
     for (int i = 0; i < this.comentarios.size(); i++) {
