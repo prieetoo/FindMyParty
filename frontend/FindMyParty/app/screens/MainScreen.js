@@ -1,30 +1,11 @@
-import React from 'react';
-import {StyleSheet, View} from 'react-native';
-import {GestureHandlerRootView} from 'react-native-gesture-handler'; 
+import React, {components} from 'react'
+import { Text } from 'react-native'
 
-function MainScreen() {
+export default class MainScreen extends Component{
 
-    return (
-        <GestureHandlerRootView>
-            <View style = {styles.container}>
-                
-            </View>
-        </GestureHandlerRootView>
-    );
+    render(){
+        return(
+            <Text style={{ textAlign:'center', marginTop:200, fontFamily:'Poppins-Black'}}>Principal</Text>
+        )
+    }
 }
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 3,
-        flexDirection: 'column',
-        backgroundColor: "white",
-        alignItems: 'center',
-        justifyContent: 'space-evenly',
-    },
-    statusbar: {
-        backgroundColor: "#020",
-    },
-    
-})
-
-export default MainScreen;
