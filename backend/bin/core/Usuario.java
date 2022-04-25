@@ -2,6 +2,8 @@ package core;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.sql.ResultSet;
 import java.time.LocalDate;
@@ -15,10 +17,11 @@ public class Usuario{
   private String password;
   private String foto;
   private String email;
-  private Evento e; //esto lo cambiamos si hacemos herencia
+  private ArrayList<Evento> e; //esto lo cambiamos si hacemos herencia
   private float valoracion;
   private ArrayList<Comentario> comentarios;
-  private List<Float> valoraciones;
+  private List<Valoracion> valoraciones;
+  private LocalDate fechaNacimiento;
 
   public Usuario(String nombre, int id, String password, String foto, String email){
     this.nombre = nombre;
@@ -76,11 +79,11 @@ public class Usuario{
     this.valoracion = valoracion;
   }
 
-  public List<Float> getValoraciones() {
+  public List<Valoracion> getValoraciones() {
     return valoraciones;
   }
 
-  public void setValoraciones(List<Float> valoraciones) {
+  public void setValoraciones(List<Valoracion> valoraciones) {
     this.valoraciones = valoraciones;
   }
 
@@ -130,9 +133,9 @@ public class Usuario{
     return false;
   }
 
-  public boolean recibirValoracion(float valoracion){
+  public boolean recibirValoracion(Valoracion valoracion){
 
-    if (valoracion >= 0 && valoracion <= 10){
+    if (valoracion.getValor() >= 0 && valoracion.getValor() <= 10){
       valoraciones.add(valoracion);
       // Añadir a la bd
       calcularValoracion();
@@ -143,14 +146,13 @@ public class Usuario{
 
   private void calcularValoracion(){
     float total = 0F;
-    for (float val: this.valoraciones) {
-      total += val;
-
+    for (int i =0; i< this.valoraciones.size(); i++){
+      total +=this.valoraciones.get(i).getValor();
     }
     this.valoracion = total/this.valoraciones.size();
   }
 
-  private boolean recivirComentario(String fecha, String contenido, Usuario usuario){ //echadle un ojo
+  private boolean recibirComentario(String fecha, String contenido, Usuario usuario){ //echadle un ojo
     //Esperar hasta que comentario este
     LocalDate localDate = LocalDate.parse(fecha);
     Comentario c = new Comentario(id, usuario, this, localDate, contenido);
@@ -183,9 +185,47 @@ public class Usuario{
     return e.modificar(nombre,ubicacion,localdate,this, e.getEtiquetas());
   }
 
-  public String toJson(){
-    Gson gson = new GsonBuilder().setPrettyPrinting().create();;
-    return gson.toJson(this);
+  public JSONObject toJson(){
+    JSONObject json = new JSONObject();
+    json.put("id", this.id);
+    json.put("nombre", this.nombre);
+    json.put("password", this.password);
+    json.put("fechaNacimiento", this.fechaNacimiento);
+    json.put("foto", this.foto);
+    json.put("email", this.email);
+    json.put("valoracion", this.valoracion);
+
+
+    JSONArray jsonArray = new JSONArray();
+    for (int i = 0; i < this.valoraciones.size(); i++) {
+      jsonArray.put(this.valoraciones.get(i).toJson());
+    }
+    json.put("valoraciones", jsonArray);
+
+    jsonArray = new JSONArray();
+    for (int i = 0; i < this.etiquetas.size(); i++) {
+      jsonArray.put(this.etiquetas.get(i));
+    }
+    json.put("etiquetas", jsonArray);
+
+    jsonArray = new JSONArray();
+    for (int i = 0; i < this.comentarios.size(); i++) {
+      jsonArray.put(this.comentarios.get(i).toJson());
+    }
+    json.put("comentarios", jsonArray);
+
+    jsonArray = new JSONArray();
+    for (int i = 0; i < this.participantes.size(); i++) {
+      jsonArray.put(this.participantes.get(i).toJson());
+    }
+    json.put("participantes", jsonArray);
+
+    jsonArray = new JSONArray();
+    for (int i = 0; i < this.publicaciones.size(); i++) {
+      jsonArray.put(this.publicaciones.get(i).toJson());
+    }
+    json.put("publicaciones", jsonArray);
+    return json;
   }
 
 

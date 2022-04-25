@@ -21,6 +21,7 @@ public class Evento {
   private ArrayList<Comentario> comentarios;
   private ArrayList<Usuario> participantes;
   private ArrayList<Publicacion> publicaciones;
+  private boolean activo;
 
   public int getId() {
     return id;
@@ -121,7 +122,7 @@ public class Evento {
     this.comentarios = new ArrayList<Comentario>();
     this.participantes = new ArrayList<Usuario>();
     this.publicaciones = new ArrayList<Publicacion>();
-
+    this.activo = fecha.isBefore(LocalDate.now());
     //Añadir a la BD
     String consulta = "INSERT INTO EVENTO (nombre, ubicacion, fecha, valoracion, usuario_id) " +
         "OUTPUT Inserted.id" +

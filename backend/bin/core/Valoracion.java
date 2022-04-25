@@ -30,5 +30,4 @@ public class Valoracion {
         json.put("valor",this.valor);
         return json;
     }
-
 }

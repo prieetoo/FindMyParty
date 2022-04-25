@@ -7,14 +7,15 @@ class Usuario {
   foto : String
   email : String
   valoracion : float
-  valoraciones : List<flloat>
+  valoraciones : List<float>
   Usuario(nombre, password, fechaNacimiento, foto, email)
-  iniciarSesion(email,password) : bool
+  {static} iniciarSesion(email,password) : Usuario
   recuperarPassword(email) : bool
   modificarPerfil(nombre, password, fechaNacimiento, foto, email) : bool
   eliminar(password) : bool
   seguirUsuario(usuario) : bool
-  recibirValoracion(valoracion) : bool
+  recibirValoracion(valoracion)
+  calcularValoracion()
   recibirComentario(comentario) : bool
   crearEvento(evento) : bool
   modificarEvento(evento) : bool
