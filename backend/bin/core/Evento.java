@@ -111,6 +111,14 @@ public class Evento {
     this.publicaciones = publicaciones;
   }
 
+  public boolean isActivo() {
+    return activo;
+  }
+
+  public void setActivo(boolean activo) {
+    this.activo = activo;
+  }
+
   public Evento(String nombre, String ubicacion, LocalDate fecha, Usuario host, ArrayList<String> etiquetas) {
     this.nombre = nombre;
     this.ubicacion = ubicacion;

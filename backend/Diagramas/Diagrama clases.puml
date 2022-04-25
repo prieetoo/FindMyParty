@@ -7,7 +7,6 @@ class Usuario {
   foto : String
   email : String
   valoracion : float
-  valoraciones : List<float>
   Usuario(nombre, password, fechaNacimiento, foto, email)
   {static} iniciarSesion(email,password) : Usuario
   recuperarPassword(email) : bool
@@ -29,8 +28,8 @@ class Evento {
   fecha : Date
   host : Usuario
   valoracion : float
-  valoraciones : List<float>
   etiquetas : List<String>
+  activo : bool
   Evento(nombre, ubicacion, fecha, host, etiquetas)
   modificar(nombre, ubicacion, fecha, host, etiquetas) : bool
   recibirComentario(comentario) : bool
@@ -43,6 +42,7 @@ class Evento {
 }
 
 class Publicacion {
+  id : int
   autor : Usuario
   fecha : Date
   imagenes : List<String>
@@ -53,10 +53,20 @@ class Publicacion {
 }
 
 class Comentario {
+  id : int
   autor : Usuario
+  destinatario : Usuario
   fecha : Date
   contenido : String
   Comentario(autor, fecha, contenido)
+  eliminar() : bool
+  toJson() : JSONObject
+}
+
+class Valoracion {
+  id : int
+  valor : float
+  Valoracion(id, float)
   toJson() : JSONObject
 }
 
@@ -66,4 +76,6 @@ Evento "0" *--> "*" Publicacion : publicaciones
 Evento "1" *--> "*" Usuario : participantes
 Evento "0" *--> "*" Comentario : comentarios
 Usuario "0" *--> "*" Comentario : comentarios
+Evento "0" *--> "*" Valoracion : valoraciones
+Usuario "0" *--> "*" Valoracion : valoraciones
 @enduml
