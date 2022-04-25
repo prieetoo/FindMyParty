@@ -18,6 +18,8 @@ class Usuario {
   recibirComentario(comentario) : bool
   crearEvento(evento) : bool
   modificarEvento(evento) : bool
+  valorarEvento(destinatario, valoracion)
+  valorarUsuario(destinatario, valoracion)
   toJson() : JSONObject
 }
 
@@ -32,8 +34,8 @@ class Evento {
   activo : bool
   Evento(nombre, ubicacion, fecha, host, etiquetas)
   modificar(nombre, ubicacion, fecha, host, etiquetas) : bool
-  recibirComentario(comentario) : bool
-  recibirValoracion(valoracion) : bool
+  comentar(comentario) : bool
+  valorar(valoracion) : bool
   añadirParticipante(participante) : bool
   eliminarParticipante(participante) : bool
   eliminar() : bool

@@ -3,19 +3,26 @@ package core;
 import org.json.JSONObject;
 
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class Valoracion {
 
     //no se que parametros tiene exactamente esta clase asi que hay que mirarlo
     private int id;
     private float valor;
-     public Valoracion( int id,float valoracion)
+     public Valoracion(float valoracion)
      {
-         this.id = id;
          this.valor = valoracion;
          //guardamos en la base de datos
          String consulta = ("INSERT INTO valoracion VALUES (" +valor+")"); //revisar
          boolean rs = DB.executeUpdate(consulta);
+         String consulta1 = "SELECT LAST_INSERT_ID()";
+         ResultSet rs1 = DB.executeQuery(consulta1);
+         try {
+             this.id = rs1.getInt("id");
+         } catch (SQLException e) {
+             e.printStackTrace();
+         }
      }
      //setters y getters
     public float getValor() {

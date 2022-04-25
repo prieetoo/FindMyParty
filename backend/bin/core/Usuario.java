@@ -135,6 +135,16 @@ public class Usuario{
     return false;
   }
 
+  public void valorarEvento(Evento destinatario, float Valoracion) {
+    Valoracion val = new Valoracion(valoracion);
+    destinatario.valorar(val);
+  }
+
+  public void valorarUsuario(Usuario destinatario, float valoracion) {
+    Valoracion val = new Valoracion(valoracion);
+    destinatario.recibirValoracion(val);
+  }
+
   public JSONObject toJson(){
     JSONObject json = new JSONObject();
     json.put("id", this.id);
