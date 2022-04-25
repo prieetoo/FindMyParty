@@ -136,12 +136,12 @@ public class Usuario{
   }
 
   public void valorarEvento(Evento destinatario, float Valoracion) {
-    Valoracion val = new Valoracion(valoracion);
+    Valoracion val = new Valoracion(this, valoracion);
     destinatario.valorar(val);
   }
 
   public void valorarUsuario(Usuario destinatario, float valoracion) {
-    Valoracion val = new Valoracion(valoracion);
+    Valoracion val = new Valoracion(this, valoracion);
     destinatario.recibirValoracion(val);
   }
 
