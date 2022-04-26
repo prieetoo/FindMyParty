@@ -44,9 +44,9 @@ public class Evento {
         fecha + "'.'dd/mm/yyyy'), '" +
         this.valoracion + "', '" +
         host.getId() + "');";
-    boolean rs = DB.executeUpdate(consulta);
+    boolean rs = DB.getInstance().executeUpdate(consulta);
     String consulta1 = "SELECT LAST_INSERT_ID()";
-    ResultSet rs1 = DB.executeQuery(consulta1);
+    ResultSet rs1 = DB.getInstance().executeQuery(consulta1);
     try {
       this.id = rs1.getInt("id");
     } catch (SQLException e) {
@@ -68,12 +68,12 @@ public class Evento {
         "    fecha = TO_DATE('" + fecha + "'.'dd/mm/yyyy'), " +
         "    usuario_id = '" + host.getId() +
         "WHERE id = '" + this.id + "';";
-    boolean rs = DB.executeUpdate(consulta1);
+    boolean rs = DB.getInstance().executeUpdate(consulta1);
     for (int i = 0; i < etiquetas.size() && rs; i++) {
       String consulta2 = "INSERT INTO Etiqueta (etiqueta, Evento_id) VALUES (" +
           "'" + etiquetas.get(i) + "', " +
           "'" + this.id + "');";
-      rs = DB.executeUpdate(consulta2);
+      rs = DB.getInstance().executeUpdate(consulta2);
     }
     return rs;
   }
@@ -84,7 +84,7 @@ public class Evento {
                       "SET Evento_id = '" + this.id +
                       "WHERE id = '" + comentario.getId() + "';";
     //Ejecutar propuesta:
-    boolean rs = DB.executeUpdate(consulta);
+    boolean rs = DB.getInstance().executeUpdate(consulta);
     return rs;
   }
 
@@ -101,7 +101,7 @@ public class Evento {
           "SET valoracion = '" + val +
           "WHERE id = '" + this.id + "';";
       //Ejecutar consulta propuesta:
-      boolean rs = DB.executeUpdate(consulta);
+      boolean rs = DB.getInstance().executeUpdate(consulta);
       return rs;
     } else {
       return false;
@@ -113,7 +113,7 @@ public class Evento {
     String consulta = "INSERT INTO Participante (Evento_id, Usuario_id) VALUES (" +
         "'" + this.id + "', " +
         "'" + participante.getId() + "');";
-    boolean rs = DB.executeUpdate(consulta);
+    boolean rs = DB.getInstance().executeUpdate(consulta);
     return rs;
   }
 
@@ -123,7 +123,7 @@ public class Evento {
         "        Evento_id = '" + this.id + "';";
     for (int i = 0; i < participantes.size(); i++) {
       if (participantes.get(i).getId() == participante.getId()) {
-        boolean rs = DB.executeUpdate(consulta);
+        boolean rs = DB.getInstance().executeUpdate(consulta);
         participantes.remove(i);
         return rs;
       }
@@ -140,12 +140,12 @@ public class Evento {
     String consulta = "SELECT * " +
         "              FROM Evento" +
         "              WHERE id = '" + this.id + "';";
-    ResultSet rs = DB.executeQuery(consulta);
+    ResultSet rs = DB.getInstance().executeQuery(consulta);
     try {
       if (rs.next()){
         String consulta1 = "DELETE FROM Evento" +
             "   WHERE id = '" + this.id + "';";
-        boolean rs1 = DB.executeUpdate(consulta1);
+        boolean rs1 = DB.getInstance().executeUpdate(consulta1);
         return rs1;
       }
     } catch (SQLException e) {

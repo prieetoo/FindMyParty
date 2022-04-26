@@ -22,7 +22,7 @@ public class Comentario {
     private boolean eliminar() //revisar
     {
         String consulta = "DELETE FROM Comentario p WHERE p.id = " + this.id +";";
-        boolean rs = DB.executeUpdate(consulta); //esto de dudosa procedencia por cambiar execute a static
+        boolean rs = DB.getInstance().executeUpdate(consulta); //esto de dudosa procedencia por cambiar execute a static
         return rs;
     }
     public JSONObject toJson(){

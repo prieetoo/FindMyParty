@@ -2,21 +2,22 @@ package core;
 
 import java.sql.*;
 
-public class DB {
+public final class DB {
     static Connection connection;
     static Statement statement;
-
+    private static DB instance;
 
     public DB(){
 
         try {
-            Class.forName("com.mysql.jdbc.Driver");
+            Class.forName("com.mysql.cj.jdbc.Driver");
             connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/FMP","root","root");
             statement = connection.createStatement();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
     public static ResultSet executeQuery(String operation){
         ResultSet rs = null;
         try {
@@ -35,5 +36,12 @@ public class DB {
             e.printStackTrace();
         }
         return rs > 0;
+    }
+
+    public static DB getInstance() {
+        if (instance == null) {
+            instance = new DB();
+        }
+        return instance;
     }
 }

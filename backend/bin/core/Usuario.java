@@ -39,7 +39,7 @@ public class Usuario{
     // Consultar a la bd mail password
     String consulta = "SELECT mail,password FROM Usuario u where u.mail = " + email + " AND u.password = " + password + " ;";
     //si existe iniciar y true
-    ResultSet rs = DB.executeQuery(consulta);
+    ResultSet rs = DB.getInstance().executeQuery(consulta);
     //por que devolvemos un usuario nuevo si esta iniciando sesion?????
     return new Usuario("nombre", 0 ,password, "foto",email);
   }
@@ -48,7 +48,7 @@ public class Usuario{
 
     String consulta = "SELECT password FROM Usuario u where u.mail = " + email + ";";
     // Consultar a la bd password, si no existe email return false
-    // ResultSet rs = DB.execute(consulta);
+    // ResultSet rs = DB.getInstance().execute(consulta);
     // if(rs.next() == false) { return false}
     return true;
   }
@@ -67,7 +67,7 @@ public class Usuario{
     this.password=password;
     this.foto=foto;
     this.email=email;
-    boolean rs = DB.executeUpdate(consulta);
+    boolean rs = DB.getInstance().executeUpdate(consulta);
     return rs;
   }
 
@@ -107,7 +107,7 @@ public class Usuario{
     //Añadir comentario
     String consulta = "INSERT INTO ComentarioUsuario (fecha,contenido,Usuario_id,Usuario_id1) VALUES (TO_DATE('" + fecha + "'.'yyyy/mm/dd')," +
             contenido + "," + this.id + "," + this + ");";
-    boolean rs = DB.executeUpdate(consulta);
+    boolean rs = DB.getInstance().executeUpdate(consulta);
     return rs;
   }
 
@@ -121,7 +121,7 @@ public class Usuario{
             " ubicacion = " + ubicacion + "," +
             " fecha = TO_DATE('" + fecha + "'.'yyyy/mm/dd')" +
             "WHERE Usuario_id = " + this.id + " AND id = " + id + ";";
-    boolean rs = DB.executeUpdate(consulta);
+    boolean rs = DB.getInstance().executeUpdate(consulta);
     return rs;
   }
 
