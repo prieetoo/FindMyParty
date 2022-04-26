@@ -32,6 +32,10 @@ public class Usuario{
     this.comentarios = new ArrayList<>();
     this.eventos = null;
 
+    String consulta = "INSERT INTO Usuario (nombre,mail,password) " +
+            "VALUES ('" + nombre + "','" +
+            email + "','" + password + "' );";
+    DB.getInstance().executeUpdate(consulta);
   }
 
   public static Usuario iniciarSesion(String email, String password){
@@ -136,12 +140,12 @@ public class Usuario{
   }
 
   public void valorarEvento(Evento destinatario, float valoracion) {
-    Valoracion val = new Valoracion(this, valoracion);
-    destinatario.valorar(val);
+    //Valoracion val = new Valoracion(this, valoracion);
+    //destinatario.valorar(val);
   }
 
   public void valorarUsuario(Usuario destinatario, float valoracion) {
-    Valoracion val = new Valoracion(this, valoracion);
+    Valoracion val = new Valoracion(this,destinatario, valoracion);
     destinatario.recibirValoracion(val);
   }
 

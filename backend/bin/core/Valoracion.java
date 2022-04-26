@@ -7,11 +7,11 @@ import java.sql.ResultSet;
 public class Valoracion {
     private Usuario autor;
     private float valor;
-    public Valoracion( Usuario autor, float valoracion) {
+    public Valoracion( Usuario autor, Usuario destino, float valoracion) {
          this.autor = autor;
          this.valor = valoracion;
          //guardamos en la base de datos
-         String consulta = ("INSERT INTO Valoracionusuario VALUES (" +valor+")"); //revisar
+         String consulta = ("INSERT INTO Valoracionusuario VALUES (" +valor+","+autor.getId()+","+destino.getId()+")"); //revisar
          boolean rs = DB.getInstance().executeUpdate(consulta);
     }
 
