@@ -34,7 +34,11 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
             <artifactId>json</artifactId>
             <version>20220320</version>
         </dependency>
-
+        <dependency>
+            <groupId>software.aws.rds</groupId>
+            <artifactId>aws-mysql-jdbc</artifactId>
+            <version>1.0.0</version>
+        </dependency>
     </dependencies>
     <properties>
         <maven.compiler.source>16</maven.compiler.source>
