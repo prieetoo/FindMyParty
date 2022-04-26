@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native'
-import color from './colors'
+import color from '../styles/colors'
 
 //LoginScreen style
 const loginStyles = StyleSheet.create({
@@ -36,13 +36,13 @@ const loginStyles = StyleSheet.create({
         fontSize: 17,
         color: color.WHITE,
         paddingVertical: 15,
-        fontFamily: 'Poppins-Bold',
+        fontFamily: 'Karantina-Bold',
     },
 
     txtTransparent: {
         color: color.LIGHTPRIMARYCOLOR,
         fontSize: 14,
-        fontFamily: 'Poppins-Light',
+        fontFamily: 'Karantina-Light',
     }
 })
 

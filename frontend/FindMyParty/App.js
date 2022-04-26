@@ -1,7 +1,9 @@
 import React from "react";
 import RegisterFormScreen from './app/screens/RegisterFormScreen';
+import AppNavigation from './app/navigation/AppNavigation';
 import { useFonts } from 'expo-font';
 import MainScreen from "./app/screens/MainScreen";
+import LoginScreen from "./app/screens/LoginScreen";
 
 export default function App() {
   
@@ -14,5 +16,5 @@ export default function App() {
     return null;
   }
 
-  return <MainScreen />;
+  return <AppNavigation />;
 }

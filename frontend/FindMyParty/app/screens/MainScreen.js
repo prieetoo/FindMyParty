@@ -5,7 +5,7 @@ export default class MainScreen extends Component{
 
     render(){
         return(
-            <Text style={{ textAlign:'center', marginTop:200, fontFamily:'Poppins-Black'}}>Principal</Text>
+            <Text style={{ textAlign:'center', marginTop:200, fontFamily:'Karantina-Black'}}>Principal</Text>
         )
     }
 }
