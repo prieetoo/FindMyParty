@@ -144,9 +144,21 @@ public class Usuario{
     //destinatario.valorar(val);
   }
 
-  public void valorarUsuario(Usuario destinatario, float valoracion) {
-    Valoracion val = new Valoracion(this,destinatario, valoracion);
-    destinatario.recibirValoracion(val);
+  public boolean valorarUsuario(Usuario destinatario, float valoracion) {
+    boolean firstTime = true;
+    int i = 0;
+    while (firstTime && i < this.valoraciones.size() ){
+      if (this.valoraciones.get(i).getAutor().getId() == destinatario.getId())
+        firstTime = false;
+
+    }
+    if(firstTime){
+      Valoracion val = new Valoracion(this,destinatario, valoracion);
+      destinatario.recibirValoracion(val);
+      return true;
+    }
+    else return false;
+
   }
 
   public JSONObject toJson(){

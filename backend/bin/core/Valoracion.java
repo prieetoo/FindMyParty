@@ -22,6 +22,13 @@ public class Valoracion {
     public void setValor(float valor) {
         this.valor = valor;
     }
+    public Usuario getAutor() {
+        return autor;
+    }
+
+    public void setAutor(Usuario autor) {
+        this.autor = autor;
+    }
 
     public JSONObject toJson(){
         JSONObject json = new JSONObject();
