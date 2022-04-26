@@ -36,19 +36,17 @@ public class Evento {
     this.publicaciones = new ArrayList<Publicacion>();
     this.activo = fecha.isBefore(LocalDate.now());
     //Añadir a la BD
-    String consulta = "INSERT INTO EVENTO (nombre, ubicacion, fecha, valoracion, usuario_id) " +
-        "OUTPUT Inserted.id" +
+    String consulta = "INSERT INTO Evento (nombre, ubicacion, fecha, valoracion, usuario_id) " +
         "VALUES ('" +
         nombre + "', '" +
-        ubicacion + "', TO_DATE('" +
-        fecha + "'.'dd/mm/yyyy'), '" +
+        ubicacion + "', STR_TO_DATE('" +
+        fecha.toString() + "','%Y-%m-%d'), '" +
         this.valoracion + "', '" +
         host.getId() + "');";
-    boolean rs = DB.getInstance().executeUpdate(consulta);
-    String consulta1 = "SELECT LAST_INSERT_ID()";
-    ResultSet rs1 = DB.getInstance().executeQuery(consulta1);
+    ResultSet rs = DB.getInstance().executeUpdateWithKeys(consulta);
     try {
-      this.id = rs1.getInt("id");
+      if(rs.next())
+        this.id = rs.getInt(1);
     } catch (SQLException e) {
       e.printStackTrace();
     }
@@ -65,7 +63,7 @@ public class Evento {
     String consulta1 = "UPDATE EVENTO " +
         "SET nombre = '" + nombre + "', " +
         "    ubicacion = '" + ubicacion + "', " +
-        "    fecha = TO_DATE('" + fecha + "'.'dd/mm/yyyy'), " +
+        "    fecha = TO_DATE('" + fecha + "','dd-mm-yyyy'), " +
         "    usuario_id = '" + host.getId() +
         "WHERE id = '" + this.id + "';";
     boolean rs = DB.getInstance().executeUpdate(consulta1);
