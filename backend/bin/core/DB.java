@@ -3,8 +3,8 @@ package core;
 import java.sql.*;
 
 public final class DB {
-    static Connection connection;
-    static Statement statement;
+    private static Connection connection;
+    private static Statement statement;
     private static DB instance;
 
     public DB(){
@@ -18,7 +18,7 @@ public final class DB {
         }
     }
 
-    public static ResultSet executeQuery(String operation){
+    public ResultSet executeQuery(String operation){
         ResultSet rs = null;
         try {
             rs = statement.executeQuery(operation);
@@ -28,7 +28,7 @@ public final class DB {
         return rs;
     }
 
-    public static boolean executeUpdate(String operation){
+    public boolean executeUpdate(String operation){
         int rs = 0;
         try {
             rs = statement.executeUpdate(operation);

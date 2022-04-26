@@ -11,7 +11,7 @@ public class Valoracion {
          this.autor = autor;
          this.valor = valoracion;
          //guardamos en la base de datos
-         String consulta = ("INSERT INTO valoracion VALUES (" +valor+")"); //revisar
+         String consulta = ("INSERT INTO Valoracionusuario VALUES (" +valor+")"); //revisar
          boolean rs = DB.getInstance().executeUpdate(consulta);
     }
 
