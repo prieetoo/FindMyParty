@@ -10,8 +10,8 @@ public class DB {
     public DB(){
 
         try {
-            Class.forName("oracle.jdbc.driver.OracleDriver");
-            connection = DriverManager.getConnection("BD","USER","PASS");
+            Class.forName("com.mysql.jdbc.Driver");
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/FMP","root","root");
             statement = connection.createStatement();
         } catch (Exception e) {
             e.printStackTrace();
