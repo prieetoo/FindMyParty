@@ -6,10 +6,12 @@ import java.sql.ResultSet;
 
 public class Valoracion {
     private Usuario autor;
+    private Usuario destino;
     private float valor;
     public Valoracion( Usuario autor, Usuario destino, float valoracion) {
          this.autor = autor;
          this.valor = valoracion;
+         this.destino = destino;
          //guardamos en la base de datos
          String consulta = ("INSERT INTO Valoracionusuario VALUES (" +valor+","+autor.getId()+","+destino.getId()+")"); //revisar
          boolean rs = DB.getInstance().executeUpdate(consulta);
@@ -28,6 +30,14 @@ public class Valoracion {
 
     public void setAutor(Usuario autor) {
         this.autor = autor;
+    }
+
+    public Usuario getDestino() {
+        return destino;
+    }
+
+    public void setDestino(Usuario destino) {
+        this.destino = destino;
     }
 
     public JSONObject toJson(){

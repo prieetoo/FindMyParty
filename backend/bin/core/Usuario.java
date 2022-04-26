@@ -4,7 +4,9 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,21 +23,27 @@ public class Usuario{
   private List<Valoracion> valoraciones;
   private LocalDate fechaNacimiento;
 
-  public Usuario(String nombre, int id, String password, String foto, String email){
+  public Usuario(String nombre,String password, String foto, String email){
     this.nombre = nombre;
-    this.id = id;
+    this.id = 0;
     this.password = password;
     this.foto = foto;
     this.email = email;
     this.valoracion = 0F;
     this.valoraciones = new ArrayList<>();
     this.comentarios = new ArrayList<>();
-    this.eventos = null;
+    this.eventos = new ArrayList<>();
 
     String consulta = "INSERT INTO Usuario (nombre,mail,password) " +
             "VALUES ('" + nombre + "','" +
             email + "','" + password + "' );";
-    DB.getInstance().executeUpdate(consulta);
+    ResultSet rs = DB.getInstance().executeUpdateWithKeys(consulta);
+    try {
+      if(rs.next())
+        this.id = rs.getInt(1);
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
   }
 
   public static Usuario iniciarSesion(String email, String password){
@@ -45,7 +53,7 @@ public class Usuario{
     //si existe iniciar y true
     ResultSet rs = DB.getInstance().executeQuery(consulta);
     //por que devolvemos un usuario nuevo si esta iniciando sesion?????
-    return new Usuario("nombre", 0 ,password, "foto",email);
+    return new Usuario("nombre",password, "foto",email);
   }
 
   public boolean recuperarPassword(String email){
@@ -115,17 +123,18 @@ public class Usuario{
     return rs;
   }
 
-  private boolean crearEvento(String nombre, String ubicacion, String fecha, ArrayList<String> etiquetas){
+  public boolean crearEvento(String nombre, String ubicacion, String fecha, ArrayList<String> etiquetas){
     //Esperar hasta que evento este
-    LocalDate localDate = LocalDate.parse(fecha);
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/M/yyyy");
+    LocalDate localDate = LocalDate.parse(fecha,formatter);
     this.eventos.add(new Evento(nombre,ubicacion,localDate,this,etiquetas));
     //Modificar en la bd
     String consulta = "UPDATE Evento SET " +
             " nombre = " + nombre  + "," +
             " ubicacion = " + ubicacion + "," +
             " fecha = TO_DATE('" + fecha + "'.'yyyy/mm/dd')" +
-            "WHERE Usuario_id = " + this.id + " AND id = " + id + ";";
-    boolean rs = DB.getInstance().executeUpdate(consulta);
+            " WHERE Usuario_id = " + this.id + " AND id = " + id + ";";
+    //boolean rs = DB.getInstance().executeUpdate(consulta);
     return rs;
   }
 
@@ -147,8 +156,8 @@ public class Usuario{
   public boolean valorarUsuario(Usuario destinatario, float valoracion) {
     boolean firstTime = true;
     int i = 0;
-    while (firstTime && i < this.valoraciones.size() ){
-      if (this.valoraciones.get(i).getAutor().getId() == destinatario.getId())
+    while (firstTime && i < destinatario.getValoraciones().size() ){
+      if (destinatario.getValoraciones().get(i).getDestino().getId() == destinatario.getId())
         firstTime = false;
 
     }

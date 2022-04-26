@@ -37,7 +37,16 @@ public final class DB {
         }
         return rs > 0;
     }
-
+    public ResultSet executeUpdateWithKeys(String operation){
+        ResultSet rs = null;
+        try {
+            statement.executeUpdate(operation,Statement.RETURN_GENERATED_KEYS );
+            rs = statement.getGeneratedKeys();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return rs;
+    }
     public static DB getInstance() {
         if (instance == null) {
             instance = new DB();
