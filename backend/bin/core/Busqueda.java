@@ -4,7 +4,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class Busqueda {
-  private Punto ubicacionActual
+  private Punto ubicacionActual;
   private ArrayList<Evento> eventos;
 
   public Busqueda (String Nombre, ArrayList<String> etiquetas, float radio, int numParticipantes, float valoracion, String diaSemana)
