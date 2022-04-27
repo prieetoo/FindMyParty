@@ -12,7 +12,7 @@ import java.util.ArrayList;
 public class Evento {
   private int id;
   private String nombre;
-  private String ubicacion;
+  private Punto ubicacion;
   private LocalDate fecha;
   private Usuario host;
   private float valoracion;
@@ -23,7 +23,7 @@ public class Evento {
   private ArrayList<Publicacion> publicaciones;
   private boolean activo;
 
-  public Evento(String nombre, String ubicacion, LocalDate fecha, Usuario host, ArrayList<String> etiquetas) {
+  public Evento(String nombre, Punto ubicacion, LocalDate fecha, Usuario host, ArrayList<String> etiquetas) {
     this.nombre = nombre;
     this.ubicacion = ubicacion;
     this.fecha = fecha;
@@ -52,7 +52,7 @@ public class Evento {
     }
   }
 
-  public boolean modificar(String nombre, String ubicacion, LocalDate fecha, Usuario host, ArrayList<String> etiquetas) {
+  public boolean modificar(String nombre, Punto ubicacion, LocalDate fecha, Usuario host, ArrayList<String> etiquetas) {
     this.nombre = nombre;
     this.ubicacion = ubicacion;
     this.fecha = fecha;
@@ -210,11 +210,11 @@ public class Evento {
     this.nombre = nombre;
   }
 
-  public String getUbicacion() {
+  public Punto getUbicacion() {
     return ubicacion;
   }
 
-  public void setUbicacion(String ubicacion) {
+  public void setUbicacion(Punto ubicacion) {
     this.ubicacion = ubicacion;
   }
 

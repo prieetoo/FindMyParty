@@ -23,6 +23,7 @@ public class Usuario{
   private List<Valoracion> valoraciones;
   private LocalDate fechaNacimiento;
 
+
   public Usuario(String nombre,String password, String foto, String email){
     this.nombre = nombre;
     this.id = 0;
@@ -123,7 +124,7 @@ public class Usuario{
     return rs;
   }
 
-  public boolean crearEvento(String nombre, String ubicacion, String fecha, ArrayList<String> etiquetas){
+  public boolean crearEvento(String nombre, Punto ubicacion, String fecha, ArrayList<String> etiquetas){
     //Esperar hasta que evento este
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/M/yyyy");
     LocalDate localDate = LocalDate.parse(fecha,formatter);
@@ -138,7 +139,7 @@ public class Usuario{
     return true;
   }
 
-  public boolean modificarEvento(String nombre,String ubicacion,String fecha, int id) {
+  public boolean modificarEvento(String nombre, Punto ubicacion,String fecha, int id) {
 
     boolean owner = false;
     int y = 0;
