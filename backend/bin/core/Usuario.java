@@ -71,7 +71,7 @@ public class Usuario{
     String consulta = "UPDATE Usuario " +
             "SET nombre = " + nombre + "," +
             "    password  = " + password + "," +
-            "    fecha_nacimiento = " + fechaNacimiento + "," +
+            "    fecha_nacimiento = STR_TO_DATE('" + fechaNacimiento + "','%d-%m-%Y')" + "," +
             "    foto = " + foto + "," +
             "    mail = " + email +
             " WHERE id = " + this.id  + ";";
@@ -135,17 +135,26 @@ public class Usuario{
             " fecha = TO_DATE('" + fecha + "'.'yyyy/mm/dd')" +
             " WHERE Usuario_id = " + this.id + " AND id = " + id + ";";
     //boolean rs = DB.getInstance().executeUpdate(consulta);
-    return rs;
+    return true;
   }
 
-  private boolean modificarEvento(String nombre,String ubicacion,String fecha, int id) {
+  public boolean modificarEvento(String nombre,String ubicacion,String fecha, int id) {
 
-    LocalDate localdate = LocalDate.parse(fecha);
-    for (int i = 0; i < this.eventos.size(); i++) {
-      if (eventos.get(i).getId() == id)
-        return eventos.get(i).modificar(nombre, ubicacion, localdate, this, eventos.get(i).getEtiquetas());
+    boolean owner = false;
+    int y = 0;
+    while (!owner && y < this.eventos.size() ){
+      if (this.eventos.get(y).getId() == id)
+        owner = true;
+
     }
-    return false;
+    if(owner) {
+      LocalDate localdate = LocalDate.parse(fecha);
+      for (int i = 0; i < this.eventos.size(); i++) {
+        if (eventos.get(i).getId() == id)
+          return eventos.get(i).modificar(nombre, ubicacion, localdate, this, eventos.get(i).getEtiquetas());
+      }
+    }
+    return !owner;
   }
 
   public void valorarEvento(Evento destinatario, float valoracion) {

@@ -3,8 +3,8 @@ package core;
 import java.sql.*;
 
 public final class DB {
-    private static Connection connection;
-    private static Statement statement;
+    private Connection connection;
+    private Statement statement;
     private static DB instance;
 
     public DB(){

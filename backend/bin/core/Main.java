@@ -11,14 +11,18 @@ public class Main {
     System.out.print(u1.getId() + " \n");
     usuarios.add(u1);
     usuarios.add(u2);
+    //Valorar usuario
     u2.valorarUsuario(u1,4);
     u2.valorarUsuario(u1,2);
     u1.valorarUsuario(u2,10);
     System.out.print(u1.getValoracion() + " \n");
     ArrayList<String> etiquetas = new ArrayList<>();
     etiquetas.add("rave");
+    //Crear evento
     u1.crearEvento("Test Lis","Aqui","26/4/2022",etiquetas);
-
+    //Modificar
+    u1.modificarEvento("Test modificado","Ahi","26/4/2022",u1.getEventos().get(1).getId());
+    u1.modificarPerfil("Alex2","321","5/5/2002","/foto2.png","nuevo@gmai.com");
     //System.out.print(u1.toJson());
   }
 
