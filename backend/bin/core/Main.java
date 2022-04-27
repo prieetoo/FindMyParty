@@ -21,7 +21,7 @@ public class Main {
     //Crear evento
     u1.crearEvento("Test Lis","Aqui","26/4/2022",etiquetas);
     //Modificar
-    u1.modificarEvento("Test modificado","Ahi","26/4/2022",u1.getEventos().get(1).getId());
+    u1.modificarEvento("Test modificado","Ahi","26/4/2022",u1.getEventos().get(0).getId());
     u1.modificarPerfil("Alex2","321","5/5/2002","/foto2.png","nuevo@gmai.com");
     //System.out.print(u1.toJson());
   }

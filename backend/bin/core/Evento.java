@@ -60,15 +60,15 @@ public class Evento {
     this.etiquetas = etiquetas;
 
     //Modificar la BD
-    String consulta1 = "UPDATE EVENTO " +
+    String consulta1 = "UPDATE Evento " +
         "SET nombre = '" + nombre + "', " +
         "    ubicacion = '" + ubicacion + "', " +
-        "    fecha = TO_DATE('" + fecha + "','dd-mm-yyyy'), " +
-        "    usuario_id = '" + host.getId() +
-        "WHERE id = '" + this.id + "';";
+        "    fecha = STR_TO_DATE('" + fecha + "','%Y-%m-%d'), " +
+        "    usuario_id = " + host.getId() +
+        " WHERE id = " + this.id + ";";
     boolean rs = DB.getInstance().executeUpdate(consulta1);
     for (int i = 0; i < etiquetas.size() && rs; i++) {
-      String consulta2 = "INSERT INTO Etiqueta (etiqueta, Evento_id) VALUES (" +
+      String consulta2 = "INSERT INTO Etiqueta (etiqueta, evento_id) VALUES (" +
           "'" + etiquetas.get(i) + "', " +
           "'" + this.id + "');";
       rs = DB.getInstance().executeUpdate(consulta2);

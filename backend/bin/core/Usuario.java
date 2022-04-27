@@ -69,12 +69,12 @@ public class Usuario{
     // Añadir a la bd
 
     String consulta = "UPDATE Usuario " +
-            "SET nombre = " + nombre + "," +
-            "    password  = " + password + "," +
-            "    fecha_nacimiento = STR_TO_DATE('" + fechaNacimiento + "','%d-%m-%Y')" + "," +
-            "    foto = " + foto + "," +
-            "    mail = " + email +
-            " WHERE id = " + this.id  + ";";
+            "SET nombre =' " + nombre + "'," +
+            "    password  = '" + password + "'," +
+            "    fecha_nacimiento = STR_TO_DATE('" + fechaNacimiento + "','%d/%m/%Y')," +
+            "    foto = '" + foto + "'," +
+            "    mail = '" + email +
+            "' WHERE id = " + this.id  + ";";
     this.nombre=nombre;
     this.password=password;
     this.foto=foto;
@@ -148,13 +148,14 @@ public class Usuario{
 
     }
     if(owner) {
-      LocalDate localdate = LocalDate.parse(fecha);
+      DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/M/yyyy");
+      LocalDate localDate = LocalDate.parse(fecha,formatter);
       for (int i = 0; i < this.eventos.size(); i++) {
         if (eventos.get(i).getId() == id)
-          return eventos.get(i).modificar(nombre, ubicacion, localdate, this, eventos.get(i).getEtiquetas());
+          return eventos.get(i).modificar(nombre, ubicacion, localDate, this, eventos.get(i).getEtiquetas());
       }
     }
-    return !owner;
+    return owner;
   }
 
   public void valorarEvento(Evento destinatario, float valoracion) {
