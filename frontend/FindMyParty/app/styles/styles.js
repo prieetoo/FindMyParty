@@ -1,7 +1,7 @@
-import { StyleSheet } from 'react-native'
+import { StyleSheet, Keyboard } from 'react-native'
 import color from '../styles/colors'
 
-//Estilos para MainScreen
+//Styles for MainScreen
 const mainStyles = StyleSheet.create({
 
     container: {
@@ -20,7 +20,20 @@ const mainStyles = StyleSheet.create({
         fontSize: 28,
         marginTop: 20,
         color: color.BLUE,
-        fontFamily: "Poppins-SemiBold"
+    },
+    
+    formFields: {
+        backgroundColor: 'rgb(248, 248, 248)',
+        width: 350,
+        height: 50,
+        borderRadius: 8,
+        paddingHorizontal: 15,
+    },
+
+    formFieldsBox: {
+        flex: 1,
+        justifyContent: 'space-evenly',
+
     },
 
     btnMain: {
@@ -46,18 +59,16 @@ const mainStyles = StyleSheet.create({
         fontSize: 17,
         color: color.WHITE,
         paddingVertical: 15,
-        fontFamily: 'Poppins-Bold',
     },
 
     txtTransparent: {
         color: color.LIGHTPRIMARYCOLOR,
         fontSize: 14,
-        fontFamily: 'Poppins-Light',
     }
     
 })
 
-//Estilos para LoginScreen
+//Styles for LoginScreen
 const loginStyles = StyleSheet.create({
 
     logo: {
@@ -66,8 +77,8 @@ const loginStyles = StyleSheet.create({
     },
 })
 
-//Estilos para RegistroScreen
-const registroStyles = StyleSheet.create({
+//Styles for RegisterScreen
+const registerStyles = StyleSheet.create({
 
     checkBox: {
         marginLeft: 0,
@@ -84,23 +95,13 @@ const registroStyles = StyleSheet.create({
 
     buttonSocialIcon: {
         marginBottom: 10,
-        width: 250,
-        height: 60,
+        width: 300,
+        height: 50,
         alignItems: 'center',
-        borderRadius: 60,
+        borderRadius: 8,
+        fontFamily: 'RalewayUI',
+        fontSize: 50,
     },
 })
 
-//Estilos para SplashScreen
-const splashStyles = StyleSheet.create({
-    image: {
-        flex: 1,
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: color.WHITE,
-    }
-})
-
-
-export { loginStyles, mainStyles, registroStyles, splashStyles }
+export { loginStyles, mainStyles, registerStyles }

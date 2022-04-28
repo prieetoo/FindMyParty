@@ -9,15 +9,11 @@ export default function MyTextInput(props){
       <Input
         style={{alignItems: 'center'}}
         containerStyle={{marginBottom:20,borderBottomColor: color.LIGHTPRIMARYCOLOR, borderBottomWidth: 1}}
-        inputStyle={{ fontSize:18,paddingVertical: 10,
-            paddingHorizontal:8, marginTop:12,
-            color: color.PRIMARYCOLOR,
-            fontFamily:"Karantina-Light",}}
-        placeholderTextColor={color.LIGHTPRIMARYCOLOR}
-        placeholder={props.placeholder}
-        leftIconContainerStyle={{ marginLeft:0 }}
-        leftIcon={<Icon size={24} color={color.PRIMARYCOLOR} 
-        type={'font-awesome'} name={props.image}/>}
+        inputStyle={{ backgroundColor: 'rgb(248, 248, 248)',
+        width: 350,
+        height: 50,
+        borderRadius: 8,
+        paddingHorizontal: 15,}}
         rightIcon={props.bolGone?
         <TouchableOpacity activeOpacity = { 0.8 } style={styles.btnVisibility} onPress = {props.onPress}>
         <Image style={ styles.btnImage} tintColor={color.PRIMARYCOLOR} 

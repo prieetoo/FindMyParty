@@ -8,8 +8,8 @@ import LoginScreen from "./app/screens/LoginScreen";
 export default function App() {
   
   const [loaded] = useFonts({
-    Karantina: require('./app/assets/fonts/Karantina/Karantina-Bold.ttf'),
-    RalewayLight: require('./app/assets/fonts/Raleway/static/Raleway-Light.ttf'),
+    RalewayTitle: require('./app/assets/fonts/Raleway/static/Raleway-Light.ttf'),
+    RalewayUI: require('./app/assets/fonts/Raleway/static/Raleway-Medium.ttf'),
   });
 
   if (!loaded) {
