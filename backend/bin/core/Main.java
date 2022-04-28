@@ -13,7 +13,8 @@ public class Main {
     u1.crearEvento("Test Lis",new Punto(41,92),"26/4/2022",etiquetas);
     u2.crearEvento("Test eliminar",new Punto(41,92),"26/4/2022",etiquetas);
     u1.getEventos().get(0).anadirParticipante(u2);
-    u1.eliminar("123");
+    u1.recibirComentario("Comentario",u2);
+
 
     //System.out.print(u1.toJson());
   }

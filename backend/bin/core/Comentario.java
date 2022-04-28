@@ -4,15 +4,16 @@ import org.json.JSONObject;
 
 import java.sql.ResultSet;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class Comentario {
     private int id;
     private Usuario autor;
     private Usuario destinatario;
-    private LocalDate fecha;
+    private LocalDateTime fecha;
     private String contenido;
 
-    public Comentario(int id, Usuario autor,Usuario destinatario, LocalDate fecha, String contenido){
+    public Comentario(int id, Usuario autor,Usuario destinatario, LocalDateTime fecha, String contenido){
         this.id = id;
         this.autor = autor;
         this.destinatario = destinatario;
@@ -40,10 +41,10 @@ public class Comentario {
     public void setAutor(Usuario autor) {
         this.autor = autor;
     }
-    public LocalDate getFecha() {
+    public LocalDateTime getFecha() {
         return fecha;
     }
-    public void setFecha(LocalDate fecha) {
+    public void setFecha(LocalDateTime fecha) {
         this.fecha = fecha;
     }
     public String getContenido() {

@@ -6,6 +6,7 @@ import org.json.JSONObject;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
@@ -125,14 +126,18 @@ public class Usuario{
     this.valoracion = total/this.valoraciones.size();
   }
 
-  private boolean recibirComentario(String fecha, String contenido, Usuario usuario){ //echadle un ojo
+  public boolean recibirComentario(String contenido, Usuario usuario){
     //Esperar hasta que comentario este
-    LocalDate localDate = LocalDate.parse(fecha);
+    LocalDateTime localDate = LocalDateTime.now();
     Comentario c = new Comentario(id, usuario, this, localDate, contenido);
     comentarios.add(c);
     //Añadir comentario
-    String consulta = "INSERT INTO ComentarioUsuario (fecha,contenido,Usuario_id,Usuario_id1) VALUES (TO_DATE('" + fecha + "'.'yyyy/mm/dd')," +
-            contenido + "," + this.id + "," + this + ");";
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+    // Format LocalDateTime
+    String formattedDateTime = localDate.format(formatter);
+
+    String consulta = "INSERT INTO `Comentariousuario` (`fecha`,`contenido`,`Usuario_id`,`Usuario_id1`)" +
+            " VALUES ( STR_TO_DATE('" + formattedDateTime + "','%Y-%m-%d %T'),'" + contenido + "'," + this.id + "," + usuario.getId() + " );";
     boolean rs = DB.getInstance().executeUpdate(consulta);
     return rs;
   }
