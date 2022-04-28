@@ -141,8 +141,12 @@ public class Evento {
     ResultSet rs = DB.getInstance().executeQuery(consulta);
     try {
       if (rs.next()){
-        String consulta1 = "DELETE FROM Evento" +
-            "   WHERE id = '" + this.id + "';";
+        String consulta1 = "DELETE FROM Participante" +
+                " WHERE Evento_id = " + this.id + " ;" +
+                " DELETE FROM Etiqueta" +
+                " WHERE evento_id = " + this.id + ";" +
+                " DELETE FROM Evento" +
+                " WHERE id = '" + this.id + "';";
         boolean rs1 = DB.getInstance().executeUpdate(consulta1);
         return rs1;
       }

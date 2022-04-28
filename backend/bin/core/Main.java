@@ -11,9 +11,9 @@ public class Main {
     etiquetas.add("rave");
     //Crear evento
     u1.crearEvento("Test Lis",new Punto(41,92),"26/4/2022",etiquetas);
-    int id = u1.getEventos().get(0).getId();
-    u2.unirseEvento(id);
-    u2.abandonarEvento(id);
+    u2.crearEvento("Test eliminar",new Punto(41,92),"26/4/2022",etiquetas);
+    u1.getEventos().get(0).anadirParticipante(u2);
+    u1.eliminar("123");
 
     //System.out.print(u1.toJson());
   }

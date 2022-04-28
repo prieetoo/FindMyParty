@@ -87,12 +87,23 @@ public class Usuario{
   }
 
   public boolean eliminar(String password){
+    boolean rs = false;
+    String consulta =  "DELETE FROM `Participante`" +
+            " WHERE Usuario_id = '" + this.id + "';" +
+            "DELETE FROM `Valoracionevento`" +
+            " WHERE Usuario_id = '" + this.id + "';" +
+            "DELETE FROM `Valoracionusuario`" +
+            " WHERE Usuario_id = '" + this.id + "' OR Usuario_id1 = '" + this.id + "';" +
+            "DELETE FROM Usuario" +
+            " WHERE id = " + this.id;
+    if (password == this.password){
+      for (Evento e: this.eventos) {
+        e.eliminar();
+      }
+      rs = DB.getInstance().executeUpdate(consulta);
+    }
 
-    // Consultar a la bd mail password
-    String consulta = "SELECT mail,password FROM Usuario u where u.mail = " + this.email + " AND u.password = " + password + " ;";
-    //si existe eliminar
-    consulta =  "DELETE FROM Usuario u WHERE u.id = " + this.id;
-    return false;
+    return rs;
   }
 
   public boolean recibirValoracion(Valoracion valoracion){
@@ -139,25 +150,6 @@ public class Usuario{
             " WHERE Usuario_id = " + this.id + " AND id = " + id + ";";
     //boolean rs = DB.getInstance().executeUpdate(consulta);
     return true;
-  }
-
-  public boolean unirseEvento(int id){
-    //String consulta = "SELECT `id`,`usuario_id`,`nombre`,`ubicacion`, `fecha`, `valoracion` FROM `Evento` WHERE id =" + id + " AND usuario_id != " + this.id + ";";
-    //ResultSet rs = DB.getInstance().executeQuery(consulta);
-
-    //Insertar en la bd
-    String consulta = "INSERT INTO Participante" +
-            "(`Usuario_id`,`Evento_id`) VALUES (" +
-            this.id + "," + id + ");";
-    boolean rs = DB.getInstance().executeUpdate(consulta);
-    return rs;
-  }
-
-  public boolean abandonarEvento(int id){
-    String consulta = "DELETE FROM `FindMyParty`.`Participante` WHERE " +
-            "Evento_id = " + id + " AND Usuario_id = " + this.id ;
-    boolean rs = DB.getInstance().executeUpdate(consulta);
-    return rs;
   }
 
   public boolean modificarEvento(String nombre, Punto ubicacion,String fecha, int id) {
