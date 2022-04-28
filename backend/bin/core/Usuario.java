@@ -17,7 +17,8 @@ public class Usuario{
   private String password;
   private String foto;
   private String email;
-  private ArrayList<Evento> eventos; //esto lo cambiamos si hacemos herencia
+  private ArrayList<Evento> eventos;
+  //private ArrayList<Evento> participa;
   private float valoracion;
   private ArrayList<Comentario> comentarios;
   private List<Valoracion> valoraciones;
@@ -34,6 +35,7 @@ public class Usuario{
     this.valoraciones = new ArrayList<>();
     this.comentarios = new ArrayList<>();
     this.eventos = new ArrayList<>();
+    //this.participa = new ArrayList<>();
 
     String consulta = "INSERT INTO Usuario (nombre,mail,password) " +
             "VALUES ('" + nombre + "','" +
@@ -137,6 +139,18 @@ public class Usuario{
             " WHERE Usuario_id = " + this.id + " AND id = " + id + ";";
     //boolean rs = DB.getInstance().executeUpdate(consulta);
     return true;
+  }
+
+  public boolean unirseEvento(int id){
+    //String consulta = "SELECT `id`,`usuario_id`,`nombre`,`ubicacion`, `fecha`, `valoracion` FROM `Evento` WHERE id =" + id + " AND usuario_id != " + this.id + ";";
+    //ResultSet rs = DB.getInstance().executeQuery(consulta);
+
+    //Insertar en la bd
+    String consulta = "INSERT INTO Participante" +
+            "(`Usuario_id`,`Evento_id`) VALUES (" +
+            this.id + "," + id + ");";
+    boolean rs = DB.getInstance().executeUpdate(consulta);
+    return rs;
   }
 
   public boolean modificarEvento(String nombre, Punto ubicacion,String fecha, int id) {
