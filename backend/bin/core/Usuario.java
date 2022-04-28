@@ -38,9 +38,9 @@ public class Usuario{
     this.eventos = new ArrayList<>();
     //this.participa = new ArrayList<>();
 
-    String consulta = "INSERT INTO Usuario (nombre,mail,password) " +
+    String consulta = "INSERT INTO Usuario (nombre,mail,password,valoracion) " +
             "VALUES ('" + nombre + "','" +
-            email + "','" + password + "' );";
+            email + "','" + password + "',0 );";
     ResultSet rs = DB.getInstance().executeUpdateWithKeys(consulta);
     try {
       if(rs.next())
@@ -125,6 +125,10 @@ public class Usuario{
       total +=this.valoraciones.get(i).getValor();
     }
     this.valoracion = total/this.valoraciones.size();
+    String consulta = "UPDATE Usuario" +
+            " SET valoracion = " + this.valoracion +
+            " WHERE id = " + this.id + ";";
+    boolean rs = DB.getInstance().executeUpdate(consulta);
   }
 
   public boolean recibirComentario(String contenido, Usuario usuario){
