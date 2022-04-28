@@ -153,6 +153,13 @@ public class Usuario{
     return rs;
   }
 
+  public boolean abandonarEvento(int id){
+    String consulta = "DELETE FROM `FindMyParty`.`Participante` WHERE " +
+            "Evento_id = " + id + " AND Usuario_id = " + this.id ;
+    boolean rs = DB.getInstance().executeUpdate(consulta);
+    return rs;
+  }
+
   public boolean modificarEvento(String nombre, Punto ubicacion,String fecha, int id) {
 
     boolean owner = false;

@@ -11,7 +11,10 @@ public class Main {
     etiquetas.add("rave");
     //Crear evento
     u1.crearEvento("Test Lis",new Punto(41,92),"26/4/2022",etiquetas);
-    u2.unirseEvento(u1.getEventos().get(0).getId());
+    int id = u1.getEventos().get(0).getId();
+    u2.unirseEvento(id);
+    u2.abandonarEvento(id);
+
     //System.out.print(u1.toJson());
   }
   private static void creacion(){
