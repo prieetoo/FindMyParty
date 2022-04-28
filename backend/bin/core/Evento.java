@@ -95,9 +95,9 @@ public class Evento {
       }
       val /= valoraciones.size();
       this.valoracion = val;
-      String consulta = "UPDATE EVENTO" +
-          "SET valoracion = '" + val +
-          "WHERE id = '" + this.id + "';";
+      String consulta = "UPDATE Evento" +
+          " SET valoracion = " + val +
+          " WHERE id = " + this.id + ";";
       //Ejecutar consulta propuesta:
       boolean rs = DB.getInstance().executeUpdate(consulta);
       return rs;
@@ -141,7 +141,9 @@ public class Evento {
     ResultSet rs = DB.getInstance().executeQuery(consulta);
     try {
       if (rs.next()){
-        String consulta1 = "DELETE FROM Participante" +
+        String consulta1 = "DELETE FROM `Valoracionevento`" +
+                " WHERE Evento_id = " + this.id + ";" +
+                "DELETE FROM Participante" +
                 " WHERE Evento_id = " + this.id + " ;" +
                 " DELETE FROM Etiqueta" +
                 " WHERE evento_id = " + this.id + ";" +

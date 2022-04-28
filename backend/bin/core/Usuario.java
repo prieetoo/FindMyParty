@@ -89,7 +89,9 @@ public class Usuario{
 
   public boolean eliminar(String password){
     boolean rs = false;
-    String consulta =  "DELETE FROM `Participante`" +
+    String consulta = "DELETE FROM `Comentariousuario" +
+            " WHERE Usuario_id = " + this.id + "OR Usuario_id1 = " + this.id +";" +
+            " DELETE FROM `Participante`" +
             " WHERE Usuario_id = '" + this.id + "';" +
             "DELETE FROM `Valoracionevento`" +
             " WHERE Usuario_id = '" + this.id + "';" +
@@ -111,7 +113,6 @@ public class Usuario{
 
     if (valoracion.getValor() >= 0 && valoracion.getValor() <= 10){
       valoraciones.add(valoracion);
-      // Añadir a la bd
       calcularValoracion();
       return true;
     }
@@ -177,12 +178,20 @@ public class Usuario{
     return owner;
   }
 
-  public void valorarEvento(Evento destinatario, float valoracion) {
-    //Valoracion val = new Valoracion(this, valoracion);
-    //destinatario.valorar(val);
+  public boolean valorarEvento(Evento destinatario, float valoracion) {
+    String consulta = "SELECT * FROM `Comentarioevento` Where Usuario_id != " + this.id + " AND Evento_id != " + destinatario.getId() + " ;";
+    ResultSet rs = DB.getInstance().executeQuery(consulta);
+    try {
+      if (!rs.next()) {
+        return destinatario.valorar(new Valoracion(this, destinatario, valoracion));
+      }
+    } catch (SQLException throwables) {
+      throwables.printStackTrace();
+    }
+    return false;
   }
 
-  public boolean valorarUsuario(Usuario destinatario, float valoracion) {
+    public boolean valorarUsuario(Usuario destinatario, float valoracion) {
     boolean firstTime = true;
     int i = 0;
     while (firstTime && i < destinatario.getValoraciones().size() ){

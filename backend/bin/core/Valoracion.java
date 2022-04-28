@@ -7,14 +7,25 @@ import java.sql.ResultSet;
 public class Valoracion {
     private Usuario autor;
     private Usuario destino;
+    private Evento evento;
     private float valor;
+
     public Valoracion( Usuario autor, Usuario destino, float valoracion) {
          this.autor = autor;
          this.valor = valoracion;
          this.destino = destino;
          //guardamos en la base de datos
-         String consulta = ("INSERT INTO Valoracionusuario VALUES (" +valor+","+autor.getId()+","+destino.getId()+")"); //revisar
-         boolean rs = DB.getInstance().executeUpdate(consulta);
+         String consulta = ("INSERT INTO Valoracionusuario VALUES (" +valor+","+autor.getId()+","+destino.getId()+")");
+         DB.getInstance().executeUpdate(consulta);
+    }
+
+    public Valoracion( Usuario autor, Evento destino, float valoracion) {
+        this.autor = autor;
+        this.valor = valoracion;
+        this.evento = destino;
+        //guardamos en la base de datos
+        String consulta = ("INSERT INTO Valoracionevento VALUES (" +valor+","+autor.getId()+","+destino.getId()+")");
+        DB.getInstance().executeUpdate(consulta);
     }
 
     //setters y getters

@@ -14,8 +14,8 @@ public class Main {
     u2.crearEvento("Test eliminar",new Punto(41,92),"26/4/2022",etiquetas);
     u1.getEventos().get(0).anadirParticipante(u2);
     u1.recibirComentario("Comentario",u2);
-
-
+    u2.valorarUsuario(u1,4);
+    u2.valorarEvento(u1.getEventos().get(0),1);
     //System.out.print(u1.toJson());
   }
   private static void creacion(){
