@@ -75,6 +75,83 @@ const loginStyles = StyleSheet.create({
         paddingTop: 50,
         alignItems: 'center',
     },
+
+    button: {
+        backgroundColor: 'rgb(63, 152, 246)',
+        width: 300,
+        height: 50,
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius: 8,
+    },
+
+    container: {
+        flex: 3,
+        flexDirection: 'column',
+        backgroundColor: "white",
+        alignItems: 'center',
+        justifyContent: 'space-evenly',
+        
+    },
+    statusbar: {
+        backgroundColor: "#020",
+    },
+    titleBox: {
+        marginTop: 50,
+        marginBottom: 20,
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+
+    formFieldsBox: {
+        flex: 1,
+        justifyContent: 'space-evenly',
+
+    },
+
+    title: {
+        flex: 1,
+        flexDirection: 'row',
+        marginHorizontal: 30,
+        fontSize: 30,
+        fontFamily: 'RalewayTitle',
+        textAlign: 'center',
+    },
+
+    formFields: {
+        backgroundColor: 'rgb(248, 248, 248)',
+        width: 350,
+        height: 50,
+        borderRadius: 8,
+        paddingHorizontal: 15,
+        fontFamily: 'RalewayUI',
+    },
+
+    register: {
+        backgroundColor: 'rgb(63, 152, 246)',
+        width: 300,
+        height: 50,
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius: 8,
+    },
+
+    registerBox: {
+        flex: 1,
+        marginTop: 20,
+        alignItems: 'center',
+    },
+
+    loginSpace: {
+        flex: 1,
+        flexDirection: 'row',
+        alignItems: 'flex-end',
+
+    },
+
+    loginText: {
+        color: 'rgb(63, 152, 246)',
+    }
 })
 
 //Styles for RegisterScreen
