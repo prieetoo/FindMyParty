@@ -1,24 +1,26 @@
 import { createAppContainer } from 'react-navigation'
 import { createStackNavigator } from 'react-navigation-stack'
 import LoginScreen from '../screens/LoginScreen'
-import MainScreen from '../screens/MainScreen'
+import WelcomeScreen from '../screens/WelcomeScreen'
 import RegisterFormScreen from '../screens/RegisterFormScreen'
 import RecuperarPasswordScreen from '../screens/RecuperarPasswordScreen'
 
 const AppNavigation = createStackNavigator({
     
+    Welcome:{
+        screen: WelcomeScreen,
+        navigationOptions:{
+            headerShown: false,
+        }
+    },
+
     Login:{
         screen: LoginScreen,
         navigationOptions:{
             headerShown: false,
         }
     },
-    Main:{
-        screen: MainScreen,
-        navigationOptions:{
-            headerShown: false,
-        }
-    },
+    
     RecuperarPassword:{
         screen: RecuperarPasswordScreen,
         navigationOptions:{

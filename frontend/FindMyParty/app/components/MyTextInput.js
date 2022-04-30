@@ -8,7 +8,8 @@ export default function MyTextInput(props){
     return (
       <Input
         style={{alignItems: 'center'}}
-        containerStyle={{marginBottom:20,borderBottomColor: color.LIGHTPRIMARYCOLOR, borderBottomWidth: 1}}
+        placeholder = "Password"
+        containerStyle={{}}
         inputStyle={{ backgroundColor: 'rgb(248, 248, 248)',
         width: 350,
         height: 50,
@@ -16,7 +17,7 @@ export default function MyTextInput(props){
         paddingHorizontal: 15,}}
         rightIcon={props.bolGone?
         <TouchableOpacity activeOpacity = { 0.8 } style={styles.btnVisibility} onPress = {props.onPress}>
-        <Image style={ styles.btnImage} tintColor={color.PRIMARYCOLOR} 
+        <Image style={styles.btnImage} tintColor={color.PRIMARYCOLOR} 
         source = { (props.secureTextEntry) ? require('../assets/ic_show_password.png') : require('../assets/ic_hide_password.png')}/>
         </TouchableOpacity>:
         <Icon size={24} color={color.PRIMARYCOLOR}

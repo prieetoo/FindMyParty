@@ -1,72 +1,82 @@
-import React, { useState, useContext} from 'react'
-import { Text, View, SafeAreaView, TouchableOpacity, TouchableWithoutFeedback, Pressable, Keyboard, Image, TextInput } from 'react-native'
-import { mainStyles, loginStyles } from '../styles/styles'
-import MyTextInput from '../components/MyTextInput'
-import MyButton from '../components/MyButton'
-import color from '../styles/colors'
+import React, { useState, useRef} from 'react'
+import { Text, View, SafeAreaView, TouchableWithoutFeedback, Pressable, Keyboard, TextInput } from 'react-native'
+import { logStyles } from '../styles/styles'
+import { SocialIcon } from 'react-native-elements'
 
 export default function LoginScreen(props){
 
   
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
-    const [hidePassword, setHidePassword] = useState(false)
+    const ref_input2 = useRef();
 
     return(
     <DismissKeyboard>
-            <SafeAreaView style={loginStyles.container}>
+           <SafeAreaView style = {logStyles.container}>
+                        <View>
 
-
-                <View style = {loginStyles.container}>
-                
-                    <View style={loginStyles.logo}>
-                        <Image source={require('../assets/icon.png')}
-                        style={{ height:250, width:250}}/>    
-                    </View>
-
-                    <View style = {mainStyles.formFieldsBox}>
-                        
-                        <View style = {loginStyles.formFieldsBox}>
-                            <TextInput 
-                            style = {mainStyles.formFields} 
-                            keyboardType='email-address' 
-                            placeholder='E-mail' 
-                            image='user'
-                            value={email} 
-                            onChangeText={(email)=> setEmail(email)}/>
-                        </View>
-                        
-                        <View style = {loginStyles.formFieldsBox}></View>
-                            <TextInput 
-                            style = {mainStyles.formFields} 
-                            keyboardType={null} placeholder='Contraseña' 
-                            image='lock' 
-                            bolGone={true}
-                            secureTextEntry={hidePassword}
-                            onPress={() => setHidePassword(!hidePassword)}
-                            value={password} 
-                            onChangeText={(password)=> setPassword(password)}/>
                         </View>
 
-                    </View>
+                        <View style = {logStyles.container}>
 
-                    
+                            <View style = {logStyles.titleBox}>
+                                <Text style = {logStyles.title}>Log in using your account</Text>
+                            </View>
+                            
+                            <View style = {logStyles.formFieldsBoxLogin}>
 
-                    <View style = {loginStyles.registerBox}>
+                                <View>
+                                    <TextInput
+                                    style = {logStyles.formFields} 
+                                    placeholder = "Email address" 
+                                    keyboardType='email-address' 
+                                    autoCorrect = {false} 
+                                    autoCapitalize='none' 
+                                    returnKeyType='next'
+                                    onSubmitEditing={() => ref_input2.current.focus()}/>
+                                </View>
+                                
+                                <View>
+                                    <TextInput 
+                                    style = {logStyles.formFields}
+                                    placeholder = "Password" 
+                                    keyboardType='default' 
+                                    autoCorrect = {false} 
+                                    autoCapitalize='none' 
+                                    returnKeyType='next' 
+                                    onChangeText={text => setPassword(text)}
+                                    secureTextEntry = {true}
+                                    ref={ref_input2}
+                                    />
+                                </View>
+                                
+                            </View>
 
-                        <Pressable style = {loginStyles.button}>
-                            <Text style = {{color: "white", fontSize: 20, fontFamily: 'RalewayUI',}}>Register</Text>
-                        </Pressable>
-                    </View>
-                
-                
-                <View style = {loginStyles.loginSpace}>
-                    <TouchableOpacity onPress={() => goToScreen('RecuperarPassword')}>
-                        <Text style={ [mainStyles.txtTransparent, { textDecorationLine: 'underline'}]}>Forgot your password?</Text>
-                    </TouchableOpacity>
-                </View>
+                            <View style = {logStyles.loginBox}>
+                                <View>
+                                    <Pressable style = {logStyles.register} onPress = {() => iniciarSesion}> 
+                                        <Text style = {{color: "white", fontSize: 20, fontFamily: 'RalewayUI',}}> Log in </Text>
+                                    </Pressable>
+                                </View>
 
-            </SafeAreaView>
+                                <View style={logStyles.containerSocial}>
+                                    <SocialIcon
+                                        style = {logStyles.buttonSocialIcon}
+                                        title = 'Continue with Google' button 
+                                        type='google-plus-official'
+                                        fontFamily='RalewayUI'
+                                        />
+                                </View>
+                            </View>
+                            
+                        </View>
+
+                        <View style = {logStyles.loginSpace}>
+                            <Text>  Don't have an account? </Text>
+                            <Text style = {logStyles.loginText} onPress={()=> goToScreen('Registro')}> Register </Text>
+                        </View>
+
+                    </SafeAreaView>
         </DismissKeyboard>
 )
 

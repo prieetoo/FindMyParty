@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react'
 import { StyleSheet, SafeAreaView, Pressable, Text, TextInput, View, Keyboard, TouchableWithoutFeedback } from 'react-native'
-import { mainStyles, registerStyles } from '../styles/styles'
+import { logStyles } from '../styles/styles'
 import { CheckBox, SocialIcon, Button } from 'react-native-elements'
 
 function goToScreen(props, routeName) {
@@ -15,21 +15,21 @@ export default function RegistroScreen(props) {
 
     return (
         <DismissKeyboard>
-                    <SafeAreaView style = {styles.container}>
+                    <SafeAreaView style = {logStyles.container}>
                         <View>
 
                         </View>
 
-                        <View style = {styles.container}>
+                        <View style = {logStyles.container}>
 
-                            <View style = {styles.titleBox}>
-                                <Text style = {styles.title}>Register using your email address</Text>
+                            <View style = {logStyles.titleBox}>
+                                <Text style = {logStyles.title}>Register using your email address</Text>
                             </View>
                             
-                            <View style = {styles.formFieldsBox}>
+                            <View style = {logStyles.formFieldsBoxRegister}>
                                 <View>
                                     <TextInput
-                                    style = {styles.formFields} 
+                                    style = {logStyles.formFields} 
                                     placeholder = "Email address" 
                                     keyboardType='email-address' 
                                     autoCorrect = {false} 
@@ -38,10 +38,9 @@ export default function RegistroScreen(props) {
                                     onSubmitEditing={() => ref_input2.current.focus()}/>
                                 </View>
 
-                            <View style = {styles.formFieldsBox}>
                                 <View>
                                     <TextInput
-                                    style = {styles.formFields} 
+                                    style = {logStyles.formFields} 
                                     placeholder = "Username" 
                                     keyboardType='default' 
                                     autoCorrect = {false} 
@@ -53,7 +52,7 @@ export default function RegistroScreen(props) {
                                 
                                 <View>
                                     <TextInput 
-                                    style = {styles.formFields}
+                                    style = {logStyles.formFields}
                                     placeholder = "Password" 
                                     keyboardType='default' 
                                     autoCorrect = {false} 
@@ -66,7 +65,7 @@ export default function RegistroScreen(props) {
 
                                 <View>
                                     <TextInput 
-                                    style = {styles.formFields}
+                                    style = {logStyles.formFields}
                                     placeholder = "Repeat password" 
                                     keyboardType='default' 
                                     autoCorrect = {false} 
@@ -77,16 +76,16 @@ export default function RegistroScreen(props) {
                                 </View>
                             </View>
 
-                            <View style = {styles.registerBox}>
+                            <View style = {logStyles.registerBox}>
                                 <View>
-                                    <Pressable style = {styles.register}>
+                                    <Pressable style = {logStyles.mainButton}>
                                         <Text style = {{color: "white", fontSize: 20, fontFamily: 'RalewayUI',}}>Register</Text>
                                     </Pressable>
                                 </View>
 
-                                <View styles={registerStyles.containerSocial}>
+                                <View styles={logStyles.containerSocial}>
                                 <SocialIcon
-                                    style = {registerStyles.buttonSocialIcon}
+                                    style = {logStyles.buttonSocialIcon}
                                     title = 'Continue with Google' button 
                                     type='google-plus-official'
                                     fontFamily='RalewayUI'
@@ -96,11 +95,10 @@ export default function RegistroScreen(props) {
                             </View>
                             
                         </View>
-                        </View>
 
-                        <View style = {styles.loginSpace}>
+                        <View style = {logStyles.loginSpace}>
                             <Text> Already have an account?</Text>
-                            <Text style = {styles.loginText} onPress={()=> goToScreen(props, 'Login')}> Log in </Text>
+                            <Text style = {logStyles.loginText} onPress={()=> goToScreen(props, 'Login')}> Log in </Text>
                         </View>
 
                     </SafeAreaView>
@@ -113,74 +111,4 @@ const DismissKeyboard = ({ children }) => (
     {children}
     </TouchableWithoutFeedback>
     );
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 3,
-        flexDirection: 'column',
-        backgroundColor: "white",
-        alignItems: 'center',
-        justifyContent: 'space-evenly',
-        
-    },
-    statusbar: {
-        backgroundColor: "#020",
-    },
-    titleBox: {
-        marginTop: 50,
-        marginBottom: 20,
-        flexDirection: 'row',
-        alignItems: 'center',
-    },
-
-    formFieldsBox: {
-        flex: 1,
-        justifyContent: 'space-evenly',
-
-    },
-
-    title: {
-        flex: 1,
-        flexDirection: 'row',
-        marginHorizontal: 30,
-        fontSize: 30,
-        fontFamily: 'RalewayTitle',
-        textAlign: 'center',
-    },
-
-    formFields: {
-        backgroundColor: 'rgb(248, 248, 248)',
-        width: 350,
-        height: 50,
-        borderRadius: 8,
-        paddingHorizontal: 15,
-        fontFamily: 'RalewayUI',
-    },
-
-    register: {
-        backgroundColor: 'rgb(63, 152, 246)',
-        width: 300,
-        height: 50,
-        alignItems: 'center',
-        justifyContent: 'center',
-        borderRadius: 8,
-    },
-
-    registerBox: {
-        flex: 1,
-        marginTop: 20,
-        alignItems: 'center',
-    },
-
-    loginSpace: {
-        flex: 1,
-        flexDirection: 'row',
-        alignItems: 'flex-end',
-
-    },
-
-    loginText: {
-        color: 'rgb(63, 152, 246)',
-    }
-})
 

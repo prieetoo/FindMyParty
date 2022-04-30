@@ -32,7 +32,7 @@ const mainStyles = StyleSheet.create({
 
     formFieldsBox: {
         flex: 1,
-        justifyContent: 'space-evenly',
+        justifyContent: 'center',
 
     },
 
@@ -69,10 +69,9 @@ const mainStyles = StyleSheet.create({
 })
 
 //Styles for LoginScreen
-const loginStyles = StyleSheet.create({
+const logStyles = StyleSheet.create({
 
-    logo: {
-        paddingTop: 50,
+    logoBox: {
         alignItems: 'center',
     },
 
@@ -97,16 +96,22 @@ const loginStyles = StyleSheet.create({
         backgroundColor: "#020",
     },
     titleBox: {
-        marginTop: 50,
+        marginTop: 20,
         marginBottom: 20,
         flexDirection: 'row',
         alignItems: 'center',
     },
 
-    formFieldsBox: {
+    formFieldsBoxLogin: {
         flex: 1,
-        justifyContent: 'space-evenly',
+        justifyContent: 'space-around',
+        paddingBottom: 5,
+    },
 
+    formFieldsBoxRegister: {
+        flex: 1,
+        justifyContent: 'space-around',
+        paddingBottom: 10,
     },
 
     title: {
@@ -127,8 +132,18 @@ const loginStyles = StyleSheet.create({
         fontFamily: 'RalewayUI',
     },
 
-    register: {
+    mainButton: {
         backgroundColor: 'rgb(63, 152, 246)',
+        width: 300,
+        height: 50,
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius: 8,
+        marginBottom: 10,
+    },
+
+    secondaryButton: {
+        backgroundColor: 'rgb(255, 255, 255)',
         width: 300,
         height: 50,
         alignItems: 'center',
@@ -136,26 +151,33 @@ const loginStyles = StyleSheet.create({
         borderRadius: 8,
     },
 
+    loginBox: {
+        flex: 3,
+        alignItems: 'center',
+        paddingTop: 20,
+    },
+
+    proceedBox: {
+        flex: 5,
+        alignItems: 'center',
+        justifyContent: 'flex-start',
+    },
+
     registerBox: {
         flex: 1,
-        marginTop: 20,
         alignItems: 'center',
+        paddingTop: 15,
     },
 
     loginSpace: {
         flex: 1,
         flexDirection: 'row',
         alignItems: 'flex-end',
-
     },
 
     loginText: {
         color: 'rgb(63, 152, 246)',
-    }
-})
-
-//Styles for RegisterScreen
-const registerStyles = StyleSheet.create({
+    },
 
     checkBox: {
         marginLeft: 0,
@@ -165,13 +187,12 @@ const registerStyles = StyleSheet.create({
     },
 
     containerSocial: {
-        paddingTop: 30,
+        paddingTop: 5,
         alignItems: 'center',
         marginBottom: 10,
     },
 
     buttonSocialIcon: {
-        marginBottom: 10,
         width: 300,
         height: 50,
         alignItems: 'center',
@@ -181,4 +202,4 @@ const registerStyles = StyleSheet.create({
     },
 })
 
-export { loginStyles, mainStyles, registerStyles }
+export { mainStyles, logStyles }
