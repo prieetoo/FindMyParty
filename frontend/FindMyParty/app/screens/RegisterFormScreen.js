@@ -16,13 +16,10 @@ export default function RegistroScreen(props) {
     return (
         <DismissKeyboard>
                     <SafeAreaView style = {logStyles.container}>
-                        <View>
-
-                        </View>
 
                         <View style = {logStyles.container}>
 
-                            <View style = {logStyles.titleBox}>
+                            <View style = {logStyles.titleBoxRegister}>
                                 <Text style = {logStyles.title}>Register using your email address</Text>
                             </View>
                             
@@ -78,7 +75,7 @@ export default function RegistroScreen(props) {
 
                             <View style = {logStyles.registerBox}>
                                 <View>
-                                    <Pressable style = {logStyles.mainButton}>
+                                    <Pressable style = {({ pressed }) => [{ backgroundColor: pressed ? 'rgb(62, 167, 253)' : 'rgb(63, 152, 246)'}, logStyles.mainButton]}>
                                         <Text style = {{color: "white", fontSize: 20, fontFamily: 'RalewayUI',}}>Register</Text>
                                     </Pressable>
                                 </View>
@@ -90,15 +87,13 @@ export default function RegistroScreen(props) {
                                     type='google-plus-official'
                                     fontFamily='RalewayUI'
                                     />
+                                </View>
                             </View>
 
+                            <View style = {logStyles.loginSpace}>
+                                <Text style = {{color: 'rgb(255, 255, 255)'}}> Register </Text>
                             </View>
                             
-                        </View>
-
-                        <View style = {logStyles.loginSpace}>
-                            <Text> Already have an account?</Text>
-                            <Text style = {logStyles.loginText} onPress={()=> goToScreen(props, 'Login')}> Log in </Text>
                         </View>
 
                     </SafeAreaView>

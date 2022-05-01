@@ -54,7 +54,7 @@ export default function LoginScreen(props){
 
                             <View style = {logStyles.loginBox}>
                                 <View>
-                                    <Pressable style = {logStyles.register} onPress = {() => iniciarSesion}> 
+                                    <Pressable style = {({ pressed }) => [{ backgroundColor: pressed ? 'rgb(62, 167, 253)' : 'rgb(63, 152, 246)'}, logStyles.mainButton]} onPress = {() => goToScreen('MapList')}> 
                                         <Text style = {{color: "white", fontSize: 20, fontFamily: 'RalewayUI',}}> Log in </Text>
                                     </Pressable>
                                 </View>
@@ -72,8 +72,7 @@ export default function LoginScreen(props){
                         </View>
 
                         <View style = {logStyles.loginSpace}>
-                            <Text>  Don't have an account? </Text>
-                            <Text style = {logStyles.loginText} onPress={()=> goToScreen('Registro')}> Register </Text>
+                            <Text style = {logStyles.loginText} onPress={()=> goToScreen('RecuperarPassword')}> Forgot your password? </Text>
                         </View>
 
                     </SafeAreaView>

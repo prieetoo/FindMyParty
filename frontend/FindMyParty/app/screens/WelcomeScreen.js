@@ -28,16 +28,18 @@ export default function WelcomeScreen(props){
                                 </View>
 
                                 <View>
-                                    <Pressable style = {logStyles.mainButton} onPress = {(props) => goToScreen(props, 'Login')}> 
+                                    <Pressable style = {({ pressed }) => [{ backgroundColor: pressed ? 'rgb(62, 167, 253)' : 'rgb(63, 152, 246)'}, logStyles.mainButton]} onPress = {() => goToScreenMain('Login')}> 
                                         <Text style = {{color: "white", fontSize: 20, fontFamily: 'RalewayUI',}}> Log in </Text>
                                     </Pressable>
                                 </View>
 
                                 <View>
-                                    <Pressable style = {logStyles.secondaryButton} onPress = {() => goToScreen('Registro')}> 
-                                        <Text style = {{color: 'rgb(63, 152, 246)', fontSize: 20, fontFamily: 'RalewayUI',}}> Register </Text>
+                                    <Pressable style = {logStyles.secondaryButton} onPress = {() => goToScreenSecondary('Registro')}> 
+                                        {({ pressed }) => ( <Text style={[{ color: pressed ? 'rgb(62, 167, 253)' : 'rgb(63, 152, 246)' }, logStyles.registerSecondary]}> Register </Text>)}
                                     </Pressable>
                                 </View>
+
+                               {/*style = {{color: 'rgb(63, 152, 246)', fontSize: 20, fontFamily: 'RalewayUI',}} */}
 
                             </View>
                             
@@ -45,7 +47,11 @@ export default function WelcomeScreen(props){
                     </SafeAreaView>
 )
 
-    function goToScreen(routeName){
+    function goToScreenMain(routeName){
+        props.navigation.navigate(routeName)
+    }
+
+    function goToScreenSecondary(routeName){
         props.navigation.navigate(routeName)
     }
     

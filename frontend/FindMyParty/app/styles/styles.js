@@ -95,9 +95,16 @@ const logStyles = StyleSheet.create({
     statusbar: {
         backgroundColor: "#020",
     },
+
     titleBox: {
         marginTop: 20,
         marginBottom: 20,
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+
+    titleBoxRegister: {
+        marginTop: 20,
         flexDirection: 'row',
         alignItems: 'center',
     },
@@ -110,8 +117,8 @@ const logStyles = StyleSheet.create({
 
     formFieldsBoxRegister: {
         flex: 1,
-        justifyContent: 'space-around',
-        paddingBottom: 10,
+        justifyContent: 'space-between',
+        paddingVertical: 20,
     },
 
     title: {
@@ -133,7 +140,6 @@ const logStyles = StyleSheet.create({
     },
 
     mainButton: {
-        backgroundColor: 'rgb(63, 152, 246)',
         width: 300,
         height: 50,
         alignItems: 'center',
@@ -157,6 +163,11 @@ const logStyles = StyleSheet.create({
         paddingTop: 20,
     },
 
+    registerSecondary: {
+        fontFamily: 'RalewayUI',
+        fontSize: 20
+    },
+
     proceedBox: {
         flex: 5,
         alignItems: 'center',
@@ -166,7 +177,6 @@ const logStyles = StyleSheet.create({
     registerBox: {
         flex: 1,
         alignItems: 'center',
-        paddingTop: 15,
     },
 
     loginSpace: {
@@ -189,7 +199,7 @@ const logStyles = StyleSheet.create({
     containerSocial: {
         paddingTop: 5,
         alignItems: 'center',
-        marginBottom: 10,
+        marginBottom: 10
     },
 
     buttonSocialIcon: {
