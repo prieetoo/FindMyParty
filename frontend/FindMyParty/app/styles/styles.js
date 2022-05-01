@@ -68,7 +68,7 @@ const mainStyles = StyleSheet.create({
     
 })
 
-//Styles for LoginScreen
+// Styles for WelcomeScreen, LoginScreen, RegisterScreen
 const logStyles = StyleSheet.create({
 
     logoBox: {
@@ -92,6 +92,7 @@ const logStyles = StyleSheet.create({
         justifyContent: 'space-evenly',
         
     },
+
     statusbar: {
         backgroundColor: "#020",
     },
@@ -212,4 +213,32 @@ const logStyles = StyleSheet.create({
     },
 })
 
-export { mainStyles, logStyles }
+const mapListEvents = StyleSheet.create({
+
+    titleBox: {
+        marginTop: 20,
+        marginBottom: 20,
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+
+    title: {
+        flex: 1,
+        flexDirection: 'row',
+        marginHorizontal: 30,
+        fontSize: 20,
+        fontFamily: 'RalewayTitle',
+        textAlign: 'center',
+    },
+
+    containerMapEvent: {
+        flex: 3,
+        flexDirection: 'column',
+        backgroundColor: "#111",
+        alignItems: 'center',
+        justifyContent: 'space-evenly',
+        
+    },
+})
+
+export { mainStyles, logStyles, mapListEvents }
