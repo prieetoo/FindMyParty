@@ -4,6 +4,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -23,6 +24,24 @@ public class Publicacion {
         this.fecha = new Date(fecha.getTime());
         this.img = new ArrayList<>(img);
         this.contenido = contenido;
+
+        //tema de las fotos revisar
+        String consulta = "INSERT INTO Publicacion (id, autor, fecha, img, contenido) " +
+                "VALUES ('" +
+                id + "', '" +
+                autor + "', " +
+                "STR_TO_DATE('" + fecha.toString() + "','%Y-%m-%d'), '" +
+                img + "', '" +
+                contenido + "');";
+        ResultSet rs = DB.getInstance().executeUpdateWithKeys(consulta);
+        try {
+            if(rs.next())
+                this.id = rs.getInt(1);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+
 
     }
     private boolean eliminar() //revisar

@@ -3,7 +3,7 @@ package core;
 import org.json.JSONObject;
 
 import java.sql.ResultSet;
-import java.time.LocalDate;
+import java.sql.SQLException;
 import java.time.LocalDateTime;
 
 public class Comentario {
@@ -19,6 +19,21 @@ public class Comentario {
         this.destinatario = destinatario;
         this.fecha = fecha;
         this.contenido = contenido;
+        String consulta = "INSERT INTO Comentario (id, autor, destinatario, fecha, contenido) " + //aqui mirar que esto coincida con la bd
+                "VALUES ('" +
+                id + "', '" +
+                autor + "', " +
+                destinatario + "', " +
+                "STR_TO_DATE('" + fecha.toString() + "','%Y-%m-%d'), '" +
+               contenido + "', ');";
+        ResultSet rs = DB.getInstance().executeUpdateWithKeys(consulta);
+        try {
+            if(rs.next())
+                this.id = rs.getInt(1);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
     }
     private boolean eliminar() //revisar
     {
