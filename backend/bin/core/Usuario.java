@@ -25,8 +25,7 @@ public class Usuario{
   private List<Valoracion> valoraciones;
   private LocalDate fechaNacimiento;
 
-
-  public Usuario(String nombre,String password, String foto, String email){
+  public Usuario(String nombre,String password, LocalDate fechaNacimiento, String foto, String email){
     this.nombre = nombre;
     this.id = 0;
     this.password = password;
@@ -36,10 +35,11 @@ public class Usuario{
     this.valoraciones = new ArrayList<>();
     this.comentarios = new ArrayList<>();
     this.eventos = new ArrayList<>();
+    this.fechaNacimiento = fechaNacimiento;
     //this.participa = new ArrayList<>();
 
-    String consulta = "INSERT INTO Usuario (nombre,mail,password,valoracion) " +
-            "VALUES ('" + nombre + "','" +
+    String consulta = "INSERT INTO Usuario (nombre, fecha_nacimiento, mail,password,valoracion) " +
+            "VALUES ('" + nombre + "','" + fechaNacimiento.toString() + "','" +
             email + "','" + password + "',0 );";
     ResultSet rs = DB.getInstance().executeUpdateWithKeys(consulta);
     try {
@@ -50,14 +50,46 @@ public class Usuario{
     }
   }
 
-  public static Usuario iniciarSesion(String email, String password){
-
-    // Consultar a la bd mail password
-    String consulta = "SELECT mail,password FROM Usuario u where u.mail = " + email + " AND u.password = " + password + " ;";
-    //si existe iniciar y true
+  public static int iniciarSesion(String email, String password){
+    // Consultar en la BBDD mail i id
+    String consulta = "SELECT id, password FROM Usuario u where u.mail = '" + email + "';";
     ResultSet rs = DB.getInstance().executeQuery(consulta);
-    //por que devolvemos un usuario nuevo si esta iniciando sesion?????
-    return new Usuario("nombre",password, "foto",email);
+    try {
+      if(rs.next()) {
+        if(rs.getString("password") == password){
+          return rs.getInt("id");
+        }
+      }
+      return -1;
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+    return -1;
+  }
+
+  public static int registrar(String nombre, String password, LocalDate fechaNacimiento, String foto, String email) {
+    //Comprovar mail inexistente
+    String consulta_mail = "SELECT password FROM Usuario u where u.mail = '" + email + "';";
+    ResultSet rs_mail = DB.getInstance().executeQuery(consulta_mail);
+    try {
+      if(rs_mail.next()) {
+        return -1;
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+    //Añadir a la BBDD
+    String consulta = "INSERT INTO Usuario (nombre, fecha_nacimiento, mail, foto, password, valoracion) " +
+        "VALUES ('" + nombre + "','" + fechaNacimiento.toString() + "','" +
+        email + "','" + foto + "','" + password + "',0 );";
+    ResultSet rs = DB.getInstance().executeUpdateWithKeys(consulta);
+    try {
+      if(rs.next())
+        return rs.getInt(1);
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+    return -1;
   }
 
   public boolean recuperarPassword(String email){
@@ -217,7 +249,7 @@ public class Usuario{
     json.put("id", this.id);
     json.put("nombre", this.nombre);
     json.put("password", this.password);
-    json.put("fechaNacimiento", this.fechaNacimiento);
+    json.put("fechaNacimiento", this.fechaNacimiento.toString());
     json.put("foto", this.foto);
     json.put("email", this.email);
     json.put("valoracion", this.valoracion);
