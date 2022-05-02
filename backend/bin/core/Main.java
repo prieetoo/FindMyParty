@@ -1,12 +1,13 @@
 package core;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Main {
   public static void main(String[] args) {
-    Usuario u1 = new Usuario("Alex","123","/foto.png","a@gmail.com");
-    Usuario u2 = new Usuario("Kike","567","/foto.png","k@gmail.com");
+    Usuario u1 = new Usuario("Alex","123", LocalDate.now(),"/foto.png","a@gmail.com");
+    Usuario u2 = new Usuario("Kike","567", LocalDate.now(),"/foto.png","k@gmail.com");
     ArrayList<String> etiquetas = new ArrayList<>();
     etiquetas.add("rave");
     //Crear evento
@@ -21,8 +22,8 @@ public class Main {
   }
   private static void creacion(){
     List<Usuario> usuarios = new ArrayList<>();
-    Usuario u1 = new Usuario("Alex","123","/foto.png","a@gmail.com");
-    Usuario u2 = new Usuario("Kike","567","/foto.png","k@gmail.com");
+    Usuario u1 = new Usuario("Alex","123", LocalDate.now(),"/foto.png","a@gmail.com");
+    Usuario u2 = new Usuario("Kike","567", LocalDate.now(),"/foto.png","k@gmail.com");
     System.out.print(u1.getId() + " \n");
     usuarios.add(u1);
     usuarios.add(u2);

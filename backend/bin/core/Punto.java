@@ -17,6 +17,11 @@ public class Punto {
     return Math.sqrt(Math.pow(resX,2) + Math.pow(resY,2));
   }
 
+  public String toString() {
+    String str = this.x + "," + this.y;
+    return str;
+  }
+
   //Getters y setters
 
   public float getX() {
