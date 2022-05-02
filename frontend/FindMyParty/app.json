@@ -18,12 +18,20 @@
     ],
     "ios": {
       "supportsTablet": false,
-      "bundleIdentifier": "com.prieetoo.FindMyParty"
+      "bundleIdentifier": "com.prieetoo.FindMyParty",
+      "config": {
+        "googleMapsApiKey": "AIzaSyB7YzcfDqmO64jdMnHqS-I9SPMv8NM7DTY"
+      }
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./app/assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
+      },
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyB7YzcfDqmO64jdMnHqS-I9SPMv8NM7DTY"
+        }
       },
       "package": "com.prieetoo.FindMyParty"
     },

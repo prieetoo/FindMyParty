@@ -234,7 +234,6 @@ const mapListEvents = StyleSheet.create({
     containerMapEvent: {
         flex: 3,
         flexDirection: 'column',
-        backgroundColor: "#111",
         alignItems: 'center',
         justifyContent: 'space-evenly',
         
