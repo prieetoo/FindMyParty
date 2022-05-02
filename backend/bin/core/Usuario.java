@@ -9,6 +9,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 
@@ -23,6 +24,7 @@ public class Usuario{
   private float valoracion;
   private ArrayList<Comentario> comentarios;
   private List<Valoracion> valoraciones;
+  private List<Publicacion> publicacions;
   private LocalDate fechaNacimiento;
 
   public Usuario(String nombre,String password, LocalDate fechaNacimiento, String foto, String email){
@@ -35,6 +37,7 @@ public class Usuario{
     this.valoraciones = new ArrayList<>();
     this.comentarios = new ArrayList<>();
     this.eventos = new ArrayList<>();
+    this.publicacions = new ArrayList<>();
     this.fechaNacimiento = fechaNacimiento;
     //this.participa = new ArrayList<>();
 
@@ -179,6 +182,13 @@ public class Usuario{
             " AND Usuario_id1 = " + usuario.getId() +";";
     return DB.getInstance().executeUpdate(consulta);
   }
+
+  public boolean añadirPublicacion(Usuario autor, List<String> img, String contenido){
+    LocalDateTime fecha = LocalDateTime.now();
+    this.publicacions.add(new Publicacion(this,fecha,img,contenido));
+    return true;
+    }
+
   public boolean recibirComentario(String contenido, Usuario usuario){
     //Esperar hasta que comentario este
     LocalDateTime localDate = LocalDateTime.now();

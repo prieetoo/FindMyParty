@@ -5,6 +5,7 @@ import org.json.JSONObject;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -13,20 +14,19 @@ public class Publicacion {
 
     private int id;
     private Usuario autor;
-    private Date fecha;
+    private LocalDateTime fecha;
     private ArrayList<String> img;
     private String contenido;
 
-    public Publicacion(int id, Usuario autor, Date fecha, List<String> img, String contenido)
+    public Publicacion(Usuario autor, LocalDateTime fecha, List<String> img, String contenido)
     {
-        this.id = id;
         this.autor = autor;
-        this.fecha = new Date(fecha.getTime());
+        this.fecha = fecha;
         this.img = new ArrayList<>(img);
         this.contenido = contenido;
 
         //tema de las fotos revisar
-        String consulta = "INSERT INTO Publicacion (id, autor, fecha, img, contenido) " +
+        String consulta = "INSERT INTO Publicacion (autor, fecha, img, contenido) " +
                 "VALUES ('" +
                 id + "', '" +
                 autor + "', " +
@@ -47,7 +47,7 @@ public class Publicacion {
     private boolean eliminar() //revisar
     {
         String consulta = "DELETE FROM Publicacion p WHERE p.id = " + this.id +";";
-        boolean rs = DB.getInstance().executeUpdate(consulta); //esto de dudosa procedencia por cambiar execute a static
+        boolean rs = DB.getInstance().executeUpdate(consulta);
         return rs;
     }
     public JSONObject toJson(){
@@ -73,11 +73,11 @@ public class Publicacion {
         this.autor = autor;
     }
 
-    public Date getFecha() {
+    public LocalDateTime getFecha() {
         return fecha;
     }
 
-    public void setFecha(Date fecha) {
+    public void setFecha(LocalDateTime fecha) {
         this.fecha = fecha;
     }
 
