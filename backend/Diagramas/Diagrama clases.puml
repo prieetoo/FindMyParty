@@ -14,6 +14,7 @@ class Usuario {
   + modificarPerfil(nombre : String, password : String, fechaNacimiento : LocalDate, foto : String, email : String) : bool
   + eliminar(password : String) : bool
   + seguirUsuario(usuario : Usuario) : bool
+  + dejarSeguirUsuario(usuario : Usuario) : bool
   + recibirValoracion(valoracion : Valoracion)
   - calcularValoracion()
   + recibirComentario(comentario : Comentario) : bool
@@ -22,6 +23,7 @@ class Usuario {
   + valorarEvento(destinatario : Usuario, valoracion : float)
   + valorarUsuario(destinatario : Usuario, valoracion : float)
   + toJson() : JSONObject
+}
 }
 
 class Evento {
