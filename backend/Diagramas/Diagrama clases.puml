@@ -8,7 +8,8 @@ class Usuario {
   - email : String
   - valoracion : float
   + Usuario(nombre : String, password : String, fechaNacimiento : LocalDate, foto : String, email : String)
-  + {static} iniciarSesion(email : String, password : String) : Usuario
+  + {static} iniciarSesion(email : String, password : String) : int
+  + {static} registrar(nombre : String, password : String, fechaNacimiento : LocalDate, foto : String, email : String) : int
   + recuperarPassword(email : String) : bool
   + modificarPerfil(nombre : String, password : String, fechaNacimiento : LocalDate, foto : String, email : String) : bool
   + eliminar(password : String) : bool
@@ -16,7 +17,7 @@ class Usuario {
   + recibirValoracion(valoracion : Valoracion)
   - calcularValoracion()
   + recibirComentario(comentario : Comentario) : bool
-  + crearEvento(nombre : String, ubicacion : String, fecha : LocalDate, etiqueta : ArrayList<String>) : bool
+  + crearEvento(nombre : String, ubicacion : Punto, fecha : LocalDate, etiqueta : ArrayList<String>) : bool
   + modificarEvento(evento : Evento) : bool
   + valorarEvento(destinatario : Usuario, valoracion : float)
   + valorarUsuario(destinatario : Usuario, valoracion : float)
@@ -26,14 +27,14 @@ class Usuario {
 class Evento {
   - id : int
   - nombre : String
-  - ubicacion : String
+  - ubicacion : Punto
   - fecha : Date
   - host : Usuario
   - valoracion : float
   - etiquetas : List<String>
   - activo : bool
-  + Evento(nombre : String, ubicacion : String, fecha : LocalDate, host : Usuario, etiquetas : List<String>)
-  + modificar(nombre : String, ubicacion : String, fecha : LocalDate, host : Usuario, etiquetas : List<String>) : bool
+  + Evento(nombre : String, ubicacion : Punto, fecha : LocalDate, host : Usuario, etiquetas : List<String>)
+  + modificar(nombre : String, ubicacion : Punto, fecha : LocalDate, host : Usuario, etiquetas : List<String>) : bool
   + comentar(comentario : Comentario) : bool
   + valorar(valoracion : Valoracion)) : bool
   + añadirParticipante(participante : Usuario) : bool
@@ -70,6 +71,14 @@ class Valoracion {
   - valor : float
   + Valoracion(autor : Usuario, valor : float)
   + toJson() : JSONObject
+}
+
+class Punto {
+  - x : float
+  - y : float
+  + Punto(x : float, y : float)
+  + distanciaHasta(destino : Punto) : double
+  + toString() : String
 }
 
 Usuario "0" *--> "*" Evento : eventos
