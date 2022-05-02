@@ -39,7 +39,7 @@ public class Evento {
     String consulta = "INSERT INTO Evento (nombre, ubicacion, fecha, valoracion, usuario_id) " +
         "VALUES ('" +
         nombre + "', '" +
-        ubicacion + "', STR_TO_DATE('" +
+        ubicacion.toString() + "', STR_TO_DATE('" +
         fecha.toString() + "','%Y-%m-%d'), '" +
         this.valoracion + "', '" +
         host.getId() + "');";
@@ -62,7 +62,7 @@ public class Evento {
     //Modificar la BD
     String consulta1 = "UPDATE Evento " +
         "SET nombre = '" + nombre + "', " +
-        "    ubicacion = '" + ubicacion + "', " +
+        "    ubicacion = '" + ubicacion.toString() + "', " +
         "    fecha = STR_TO_DATE('" + fecha + "','%Y-%m-%d'), " +
         "    usuario_id = " + host.getId() +
         " WHERE id = " + this.id + ";";
@@ -162,7 +162,7 @@ public class Evento {
     JSONObject json = new JSONObject();
     json.put("id", this.id);
     json.put("nombre", this.nombre);
-    json.put("ubicacion", this.ubicacion);
+    json.put("ubicacion", this.ubicacion.toString());
     json.put("fecha", this.fecha);
     json.put("host", this.host.toJson());
     json.put("valoracion", this.valoracion);
