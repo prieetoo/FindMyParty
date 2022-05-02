@@ -39,7 +39,7 @@ public class Usuario{
     //this.participa = new ArrayList<>();
 
     String consulta = "INSERT INTO Usuario (nombre, fecha_nacimiento, mail,password,valoracion) " +
-            "VALUES ('" + nombre + "','" + fechaNacimiento.toString() + "','" +
+            "VALUES ('" + nombre + "', STR_TO_DATE('" + fechaNacimiento.toString() + "','%Y-%m-%d'),'" +
             email + "','" + password + "',0 );";
     ResultSet rs = DB.getInstance().executeUpdateWithKeys(consulta);
     try {

@@ -24,7 +24,7 @@ public class Comentario {
                 id + "', '" +
                 autor + "', " +
                 destinatario + "', " +
-                "STR_TO_DATE('" + fecha.toString() + "','%Y-%m-%d'), '" +
+                "STR_TO_DATE('" + fecha.toString() + "','%Y-%m-%dT%H:%i:%s'), '" +
                contenido + "', ');";
         ResultSet rs = DB.getInstance().executeUpdateWithKeys(consulta);
         try {
