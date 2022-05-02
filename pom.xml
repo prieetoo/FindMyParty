@@ -11,7 +11,7 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>1.5.9.RELEASE</version>
+        <version>2.6.7</version>
     </parent>
 
     <!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
@@ -53,7 +53,9 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
+            <version>2.6.7</version>
         </dependency>
+
 
     </dependencies>
     <properties>
