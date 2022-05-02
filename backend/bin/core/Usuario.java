@@ -172,6 +172,13 @@ public class Usuario{
             usuario.getId() + ");";
     return DB.getInstance().executeUpdate(consulta);
   }
+  public boolean dejarSeguirUsuario(Usuario usuario){
+
+    String consulta = "DELETE FROM Sigue " +
+            "WHERE Usuario_id = " + this.id +
+            " AND Usuario_id1 = " + usuario.getId() +";";
+    return DB.getInstance().executeUpdate(consulta);
+  }
   public boolean recibirComentario(String contenido, Usuario usuario){
     //Esperar hasta que comentario este
     LocalDateTime localDate = LocalDateTime.now();

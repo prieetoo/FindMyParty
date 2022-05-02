@@ -12,7 +12,7 @@ public class Main {
     etiquetas.add("rave");
     //Crear evento
     u1.seguirUsuario(u2);
-    u2.seguirUsuario(u1);
+    u1.dejarSeguirUsuario(u2);
     //u1.crearEvento("Test Lis",new Punto(41,92),"26/4/2022",etiquetas);
     //u1.getEventos().get(0).anadirParticipante(u2);
     //u1.recibirComentario("Comentario",u2);
