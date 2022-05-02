@@ -6,6 +6,8 @@ import org.json.JSONObject;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 
@@ -76,12 +78,18 @@ public class Evento {
     return rs;
   }
 
-  public boolean comentar(Comentario comentario) {
-    this.comentarios.add(comentario);
-    String consulta = "UPDATE EVENTO" +
-                      "SET Evento_id = '" + this.id +
-                      "WHERE id = '" + comentario.getId() + "';";
-    //Ejecutar propuesta:
+  public boolean comentar(String contenido, Usuario usuario) {
+
+    LocalDateTime localDate = LocalDateTime.now();
+    //TODO: Cambiar comentario => comentarioUser comentarioEvento
+    this.comentarios.add(new Comentario(usuario,null,localDate, contenido));
+    int a = 0;
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
+    String formattedDate= localDate.format(formatter);
+
+    String consulta = "INSERT INTO `Comentarioevento` (`fecha`,`contenido`,`Usuario_id`,`Evento_id`)" +
+            " VALUES ( STR_TO_DATE('" + formattedDate+ "','%Y-%m-%d %T'),'" + contenido + "'," + usuario.getId() + ","  + this.id +  " );";
     boolean rs = DB.getInstance().executeUpdate(consulta);
     return rs;
   }

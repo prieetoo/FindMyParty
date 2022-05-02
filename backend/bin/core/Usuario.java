@@ -130,12 +130,21 @@ public class Usuario{
             " WHERE id = " + this.id + ";";
     boolean rs = DB.getInstance().executeUpdate(consulta);
   }
+  public boolean seguirUsuario(Usuario usuario){
 
+    String consulta = "INSERT INTO `Sigue`" +
+            "(`Usuario_id`," +
+            "`Usuario_id1`)" +
+            "VALUES " +
+            "(" + this.id + "," +
+            usuario.getId() + ");";
+    return DB.getInstance().executeUpdate(consulta);
+  }
   public boolean recibirComentario(String contenido, Usuario usuario){
     //Esperar hasta que comentario este
     LocalDateTime localDate = LocalDateTime.now();
-    Comentario c = new Comentario(id, usuario, this, localDate, contenido);
-    comentarios.add(c);
+    Comentario c = new Comentario(usuario, this, localDate, contenido);
+    this.comentarios.add(c);
     //Añadir comentario
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
     // Format LocalDateTime
