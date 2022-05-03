@@ -9,28 +9,36 @@ import java.time.LocalDateTime;
 public class Comentario {
     private Usuario autor;
     private Usuario destinatario;
+    private Evento evento;
     private LocalDateTime fecha;
     private String contenido;
-    //TODO: cambiar a 2 clases =>
     public Comentario(Usuario autor,Usuario destinatario, LocalDateTime fecha, String contenido){
 
         this.autor = autor;
         this.destinatario = destinatario;
         this.fecha = fecha;
         this.contenido = contenido;
-        String consulta = "INSERT INTO Comentario (autor, destinatario, fecha, contenido) " + //aqui mirar que esto coincida con la bd
-                "VALUES ('" +
-                autor + "', " +
-                destinatario + "', " +
-                "STR_TO_DATE('" + fecha.toString() + "','%Y-%m-%dT%H:%i:%s'), '" +
-               contenido + "', ');";
-
+        this.evento = null;
 
     }
-    private boolean eliminar() //revisar
+    public Comentario(Usuario autor,Evento evento, LocalDateTime fecha, String contenido){
+
+        this.autor = autor;
+        this.destinatario = null;
+        this.fecha = fecha;
+        this.contenido = contenido;
+        this.evento = evento;
+
+    }
+    public boolean eliminar() //revisar
     {
-        String consulta = "DELETE FROM Comentario p WHERE p.Usuario_id = " + this.destinatario.getId()+";";
-        boolean rs = DB.getInstance().executeUpdate(consulta); //esto de dudosa procedencia por cambiar execute a static
+        String consulta = "";
+        if (this.evento == null)
+            consulta = "DELETE FROM Comentariousuario  WHERE Usuario_id1 = " + this.destinatario.getId()+" AND Usuario_id = " + this.autor.getId() + " ;";
+        else
+            consulta = "DELETE FROM Comentarioevento  WHERE Usuario_id = " + this.autor.getId()+" AND Evento_id = " + this.evento.getId() + ";";
+
+        boolean rs = DB.getInstance().executeUpdate(consulta);
         return rs;
     }
     public JSONObject toJson(){

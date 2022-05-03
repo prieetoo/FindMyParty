@@ -200,7 +200,7 @@ public class Usuario{
     String formattedDateTime = localDate.format(formatter);
 
     String consulta = "INSERT INTO `Comentariousuario` (`fecha`,`contenido`,`Usuario_id`,`Usuario_id1`)" +
-            " VALUES ( STR_TO_DATE('" + formattedDateTime + "','%Y-%m-%d %T'),'" + contenido + "'," + this.id + "," + usuario.getId() + " );";
+            " VALUES ( STR_TO_DATE('" + formattedDateTime + "','%Y-%m-%d %T'),'" + contenido + "'," + usuario.getId() + "," + this.id + " );";
     boolean rs = DB.getInstance().executeUpdate(consulta);
     return rs;
   }

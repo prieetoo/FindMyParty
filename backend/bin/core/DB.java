@@ -11,9 +11,9 @@ public final class DB {
 
         try {
             Class.forName("software.aws.rds.jdbc.mysql.Driver");
-            //connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/FMP","root","root");
-            connection = DriverManager.getConnection("jdbc:mysql:aws://findmyparty.czmqfepetvak.eu-central-1.rds.amazonaws.com:3306/FindMyParty?allowMultiQueries=true",
-                "admin","FindMyParty");
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/FMP","root","root");
+            //connection = DriverManager.getConnection("jdbc:mysql:aws://findmyparty.czmqfepetvak.eu-central-1.rds.amazonaws.com:3306/FindMyParty?allowMultiQueries=true",
+                //"admin","FindMyParty");
             statement = connection.createStatement();
         } catch (Exception e) {
             e.printStackTrace();

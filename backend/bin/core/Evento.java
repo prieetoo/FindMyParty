@@ -81,8 +81,7 @@ public class Evento {
   public boolean comentar(String contenido, Usuario usuario) {
 
     LocalDateTime localDate = LocalDateTime.now();
-    //TODO: Cambiar comentario => comentarioUser comentarioEvento
-    this.comentarios.add(new Comentario(usuario,null,localDate, contenido));
+    this.comentarios.add(new Comentario(usuario,this,localDate, contenido));
     int a = 0;
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
