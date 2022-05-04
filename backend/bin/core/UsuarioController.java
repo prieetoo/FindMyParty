@@ -48,6 +48,11 @@ public class UsuarioController {
     LocalDate nacimiento = LocalDate.parse(birth_date, formatter);
     return new Usuario(name,pwd, nacimiento,foto,email);
   }
+
+  @PostMapping("/user/get_password/{email}")
+  public String get_password(@RequestBody String email){
+    
+  }
 /*
   @PutMapping("/blog/{id}")
   public Blog update(@PathVariable String id, @RequestBody Map<String, String> body){
