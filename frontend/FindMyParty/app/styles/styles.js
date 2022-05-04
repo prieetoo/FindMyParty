@@ -1,5 +1,8 @@
 import { StyleSheet, Keyboard } from 'react-native'
+import { getStatusBarHeight } from 'react-native-status-bar-height'
 import color from '../styles/colors'
+
+const statusBarHeight = getStatusBarHeight();
 
 //Styles for MainScreen
 const mainStyles = StyleSheet.create({
@@ -213,31 +216,39 @@ const logStyles = StyleSheet.create({
     },
 })
 
-const mapListEvents = StyleSheet.create({
+const listEvents = StyleSheet.create({
+
+    statusBarBlur: {
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        right: 0,
+        height: statusBarHeight,
+      },
 
     titleBox: {
-        marginTop: 20,
-        marginBottom: 20,
         flexDirection: 'row',
-        alignItems: 'center',
+        paddingTop: 5,
     },
 
     title: {
-        flex: 1,
         flexDirection: 'row',
-        marginHorizontal: 30,
-        fontSize: 20,
-        fontFamily: 'RalewayTitle',
-        textAlign: 'center',
+        fontSize: 27,
+        fontFamily: 'RalewayTitleBold',
+        paddingLeft: 10,
     },
 
-    containerMapEvent: {
-        flex: 3,
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'space-evenly',
-        
-    },
+    eventElement: {
+        borderTopWidth: 1,
+        borderTopStartRadius: 40,
+        borderTopEndRadius: 40,
+        borderBottomStartRadius: 40,
+        borderBottomEndRadius: 40,
+        borderBottomWidth: 1,
+        borderTopColor: 'rgb(230, 230, 230)',
+        borderBottomColor: 'rgb(230, 230, 230)',
+        height: 70,
+    }
 })
 
-export { mainStyles, logStyles, mapListEvents }
+export { mainStyles, logStyles, listEvents }

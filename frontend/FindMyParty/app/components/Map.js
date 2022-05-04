@@ -1,9 +1,11 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import { StyleSheet, View, Dimensions } from 'react-native';
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
 import { mapStyle } from '../styles/mapStyle';
 
-export function MapScreen() {
+
+export function MapScreen() { 
+
   return (
     <View>
       <MapView

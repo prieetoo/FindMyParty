@@ -7,6 +7,7 @@ export default function App() {
   const [loaded] = useFonts({
     RalewayTitle: require('./app/assets/fonts/Raleway/static/Raleway-Light.ttf'),
     RalewayUI: require('./app/assets/fonts/Raleway/static/Raleway-Medium.ttf'),
+    RalewayTitleBold: require('./app/assets/fonts/Raleway/static/Raleway-Medium.ttf')
   });
 
   if (!loaded) {
