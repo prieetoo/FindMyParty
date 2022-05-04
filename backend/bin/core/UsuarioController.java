@@ -23,6 +23,16 @@ public class UsuarioController {
     LocalDate nacimiento = LocalDate.parse(birth_date, formatter);
     return new Usuario(name,pwd, nacimiento,foto,email);
   }
+
+  @PostMapping("/user/login/{email}&{password}")
+  public Usuario login(@RequestBody String email, String password){
+    int id = Usuario.iniciarSesion(email, password);
+    if (id > 0){
+      //Recoger los datos de la BBDD
+    }
+    return new Usuario("name","pwd", LocalDate.now(),"foto",email);
+  }
+
  //Ejemplo de internet para ver los diferentes tipos de peticiones y como hacer la respuesta
   @GetMapping("/user/{id}")
   public String search(@PathVariable String id){
