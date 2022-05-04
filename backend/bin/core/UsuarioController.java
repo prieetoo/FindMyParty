@@ -18,13 +18,12 @@ public class UsuarioController {
     String email = body.get("email");
     return new Usuario(name,pwd, LocalDate.now(),foto,email);
   }
-/* Ejemplo de internet para ver los diferentes tipos de peticiones y como hacer la respuesta
-  @PostMapping("/blog/search")
-  public List<Blog> search(@RequestBody Map<String, String> body){
-    String searchTerm = body.get("text");
-    return blogMockedData.searchBlogs(searchTerm);
+ //Ejemplo de internet para ver los diferentes tipos de peticiones y como hacer la respuesta
+  @GetMapping("/user/{id}")
+  public String search(@PathVariable String id){
+    return id;
   }
-
+/*
   @PostMapping("/blog")
   public Blog create(@RequestBody Map<String, String> body){
     int id = Integer.parseInt(body.get("id"));
