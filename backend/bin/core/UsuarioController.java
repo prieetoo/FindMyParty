@@ -1,5 +1,6 @@
 package core;
 
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -12,14 +13,15 @@ import java.util.Map;
 public class UsuarioController {
 
   //creacion usuario despues de recibir request y los datos de este
-  @PostMapping("/user/create")
+  @PostMapping(value = "/user/create", consumes = MediaType.APPLICATION_JSON_VALUE,
+      produces = MediaType.APPLICATION_JSON_VALUE)
   public Usuario create_user(@RequestBody Map<String, String> body){
     String name = body.get("name");
     String pwd = body.get("password");
     String foto = body.get("photo");
     String email = body.get("email");
     String birth_date = body.get("date_birth");
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     LocalDate nacimiento = LocalDate.parse(birth_date, formatter);
     return new Usuario(name,pwd, nacimiento,foto,email);
   }
