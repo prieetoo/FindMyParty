@@ -24,7 +24,6 @@ class Usuario {
   + valorarUsuario(destinatario : Usuario, valoracion : float)
   + toJson() : JSONObject
 }
-}
 
 class Evento {
   - id : int
@@ -81,6 +80,14 @@ class Punto {
   + Punto(x : float, y : float)
   + distanciaHasta(destino : Punto) : double
   + toString() : String
+}
+
+class UsuarioController {
+
+}
+
+class MainApplicationClass {
+  + {static} main(args : String[])
 }
 
 Usuario "0" *--> "*" Evento : eventos
