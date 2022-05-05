@@ -11,6 +11,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 
 public class Usuario{
@@ -53,46 +54,50 @@ public class Usuario{
     }
   }
 
-  public static int iniciarSesion(String email, String password){
+  public static String iniciarSesion(String email, String password){
     // Consultar en la BBDD mail i id
     String consulta = "SELECT id, password FROM Usuario u where u.mail = '" + email + "';";
     ResultSet rs = DB.getInstance().executeQuery(consulta);
     try {
       if(rs.next()) {
-        if(rs.getString("password") == password){
-          return rs.getInt("id");
+        if(Objects.equals(rs.getString("password"), password)){
+          return "Id del usuario: " + String.valueOf(rs.getInt("id"));
+        }else{
+          return "Wrong Password";
         }
+      }else{
+        return "This Email has no user";
       }
-      return -1;
     } catch (SQLException e) {
       e.printStackTrace();
     }
-    return -1;
+    return "-1";
   }
 
-  public static int registrar(String nombre, String password, LocalDate fechaNacimiento, String foto, String email) {
-    //Comprovar mail inexistente
+  public static String registrar(String nombre, String password, LocalDate fechaNacimiento, String foto, String email) {
+    //Comprobar existencia de mail
     String consulta_mail = "SELECT password FROM Usuario u where u.mail = '" + email + "';";
     ResultSet rs_mail = DB.getInstance().executeQuery(consulta_mail);
     try {
-      if(rs_mail.next()) {
-        return -1;
+      if(!rs_mail.next()) {
+        //Añadir a la BD en caso que no exista
+        String consulta = "INSERT INTO Usuario (nombre, fecha_nacimiento, mail, foto, password, valoracion) " +
+            "VALUES ('" + nombre + "','" + fechaNacimiento.toString() + "','" +
+            email + "','" + foto + "','" + password + "',0 );";
+        ResultSet rs = DB.getInstance().executeUpdateWithKeys(consulta);
+        try {
+          if(rs.next())
+            return String.valueOf(rs.getInt(1));
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }else{
+        return "This Email has already a user account";
       }
     } catch (SQLException e) {
       e.printStackTrace();
     }
-    //Añadir a la BBDD
-    String consulta = "INSERT INTO Usuario (nombre, fecha_nacimiento, mail, foto, password, valoracion) " +
-        "VALUES ('" + nombre + "','" + fechaNacimiento.toString() + "','" +
-        email + "','" + foto + "','" + password + "',0 );";
-    ResultSet rs = DB.getInstance().executeUpdateWithKeys(consulta);
-    try {
-      if(rs.next())
-        return rs.getInt(1);
-    } catch (SQLException e) {
-      e.printStackTrace();
-    }
-    return -1;
+    return "-1";
   }
 
   public boolean recuperarPassword(String email){

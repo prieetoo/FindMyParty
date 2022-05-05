@@ -1,5 +1,6 @@
 package core;
 
+import org.json.JSONObject;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,9 +27,12 @@ public class UsuarioController {
     return new Usuario(name,pwd, nacimiento,foto,email);
   }
 
-  @PostMapping("/user/login/{email}&{password}")
-  public int login(@RequestBody String email, String password){
-    return Usuario.iniciarSesion(email, password);
+  @PostMapping(value = "/user/login", consumes = MediaType.APPLICATION_JSON_VALUE,
+      produces = MediaType.ALL_VALUE)
+  public String login(@RequestBody Map<String, String> body){
+    String pwd = body.get("password");
+    String email = body.get("email");
+    return Usuario.iniciarSesion(email, pwd);
   }
 
  //Ejemplo de internet para ver los diferentes tipos de peticiones y como hacer la respuesta
@@ -37,21 +41,22 @@ public class UsuarioController {
     return id;
   }
 
-  @PostMapping("/user/register")
-  public Usuario register_user(@RequestBody Map<String, String> body){
+  @PostMapping(value = "/user/register", consumes = MediaType.APPLICATION_JSON_VALUE,
+      produces = MediaType.ALL_VALUE)
+  public String register_user(@RequestBody Map<String, String> body){
     String name = body.get("name");
     String pwd = body.get("password");
     String foto = body.get("photo");
     String email = body.get("email");
     String birth_date = body.get("date_birth");
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     LocalDate nacimiento = LocalDate.parse(birth_date, formatter);
-    return new Usuario(name,pwd, nacimiento,foto,email);
+    return Usuario.registrar(name,pwd, nacimiento,foto,email);
   }
 
   @PostMapping("/user/get_password/{email}")
   public String get_password(@RequestBody String email){
-    
+    return "";
   }
 /*
   @PutMapping("/blog/{id}")
