@@ -14,7 +14,7 @@ import java.util.ArrayList;
 public class Evento {
   private int id;
   private String nombre;
-  private Punto ubicacion;
+  private Punto ubicacion; //esto hay que cambiarlo en la bd sigue como varchar
   private LocalDate fecha;
   private Usuario host;
   private float valoracion;
@@ -24,6 +24,35 @@ public class Evento {
   private ArrayList<Usuario> participantes;
   private ArrayList<Publicacion> publicaciones;
   private boolean activo;
+
+  public Evento(Evento ev) {
+    this.nombre = ev.getNombre();
+    this.ubicacion = ev.getUbicacion();
+    this.fecha = ev.getFecha();
+    this.host = ev.getHost();
+    this.etiquetas = ev.getEtiquetas();
+    this.valoracion = 0;
+    this.valoraciones = new ArrayList<Valoracion>();
+    this.comentarios = new ArrayList<Comentario>();
+    this.participantes = new ArrayList<Usuario>();
+    this.publicaciones = new ArrayList<Publicacion>();
+    this.activo = fecha.isBefore(LocalDate.now());
+    //Añadir a la BD
+    String consulta = "INSERT INTO Evento (nombre, ubicacion, fecha, valoracion, usuario_id) " +
+            "VALUES ('" +
+            nombre + "', '" +
+            ubicacion.toString() + "', STR_TO_DATE('" +
+            fecha.toString() + "','%Y-%m-%d'), '" +
+            this.valoracion + "', '" +
+            host.getId() + "');";
+    ResultSet rs = DB.getInstance().executeUpdateWithKeys(consulta);
+    try {
+      if(rs.next())
+        this.id = rs.getInt(1);
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+  }
 
   public Evento(String nombre, Punto ubicacion, LocalDate fecha, Usuario host, ArrayList<String> etiquetas) {
     this.nombre = nombre;
@@ -302,4 +331,5 @@ public class Evento {
   public void setActivo(boolean activo) {
     this.activo = activo;
   }
+
 }
