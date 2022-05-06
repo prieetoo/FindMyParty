@@ -139,9 +139,9 @@ public class Usuario{
             " WHERE Usuario_id = '" + this.id + "' OR Usuario_id1 = '" + this.id + "';" +
             "DELETE FROM Usuario" +
             " WHERE id = " + this.id;
-    if (password == this.password){
+    if (Objects.equals(password, this.password)){
       for (Evento e: this.eventos) {
-        e.eliminar();
+        Evento.eliminar(e.getId());
       }
       rs = DB.getInstance().executeUpdate(consulta);
     }

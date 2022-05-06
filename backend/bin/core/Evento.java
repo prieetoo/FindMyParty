@@ -170,28 +170,26 @@ public class Evento {
     return false;
   }
 
-  public boolean eliminar() {
+  public static void eliminar(int id) {
     String consulta = "SELECT * " +
         "              FROM Evento" +
-        "              WHERE id = '" + this.id + "';";
+        "              WHERE id = '" + id + "';";
     ResultSet rs = DB.getInstance().executeQuery(consulta);
     try {
       if (rs.next()){
         String consulta1 = "DELETE FROM `Valoracionevento`" +
-                " WHERE Evento_id = " + this.id + ";" +
+                " WHERE Evento_id = " + id + ";" +
                 "DELETE FROM Participante" +
-                " WHERE Evento_id = " + this.id + " ;" +
+                " WHERE Evento_id = " + id + " ;" +
                 " DELETE FROM Etiqueta" +
-                " WHERE evento_id = " + this.id + ";" +
+                " WHERE evento_id = " + id + ";" +
                 " DELETE FROM Evento" +
-                " WHERE id = '" + this.id + "';";
+                " WHERE id = '" + id + "';";
         boolean rs1 = DB.getInstance().executeUpdate(consulta1);
-        return rs1;
       }
     } catch (SQLException e) {
       e.printStackTrace();
     }
-    return false;
   }
 
   public JSONObject toJson() {
