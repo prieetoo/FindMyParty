@@ -56,8 +56,9 @@ public class UsuarioController {
 
   @PostMapping("/user/get_password/{email}")
   public String get_password(@RequestBody String email){
-    return "";
+    return Usuario.recuperarPassword(email);
   }
+  
 /*
   @PutMapping("/blog/{id}")
   public Blog update(@PathVariable String id, @RequestBody Map<String, String> body){

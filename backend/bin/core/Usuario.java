@@ -100,13 +100,18 @@ public class Usuario{
     return "-1";
   }
 
-  public boolean recuperarPassword(String email){
+  public static String recuperarPassword(String email){
 
     String consulta = "SELECT password FROM Usuario u where u.mail = " + email + ";";
-    // Consultar a la bd password, si no existe email return false
-    // ResultSet rs = DB.getInstance().execute(consulta);
-    // if(rs.next() == false) { return false}
-    return true;
+    // Consultar a la bd password, si no existe email devolver mensaje de error
+    ResultSet rs = DB.getInstance().executeQuery(consulta);
+    try {
+      if(rs.next() == false) { return "This email doesn't belong to any user"; }
+      return rs.getString("password");
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+    return "-1";
   }
 
   public boolean modificarPerfil(String nombre,String password, String fechaNacimiento, String foto, String email){
