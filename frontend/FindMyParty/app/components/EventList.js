@@ -12,7 +12,12 @@ export function EventList() {
 
         <View style = {{paddingTop: 20}}>
             <Pressable style = {listEvents.eventElement}>
-                <Text style = {{padding: 25}}> Example </Text>
+                <Image source={require('../assets/rave.jpeg')} style = {listEvents.eventPic}/> 
+                <View style = {listEvents.eventDetails}>
+                    <Text style = {listEvents.eventTitle}> Rave Cave </Text>
+                    <Text style = {listEvents.eventDistance}> 2km away </Text>
+                </View>
+                <Image source={require('../assets/arrow.png')} style = {listEvents.eventNavigate}/>
             </Pressable>
         </View>
     </View>

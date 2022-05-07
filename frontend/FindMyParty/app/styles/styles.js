@@ -239,6 +239,7 @@ const listEvents = StyleSheet.create({
     },
 
     eventElement: {
+        flexDirection: 'row',
         borderTopWidth: 1,
         borderTopStartRadius: 40,
         borderTopEndRadius: 40,
@@ -247,8 +248,39 @@ const listEvents = StyleSheet.create({
         borderBottomWidth: 1,
         borderTopColor: 'rgb(230, 230, 230)',
         borderBottomColor: 'rgb(230, 230, 230)',
-        height: 70,
+        height: 80,
+        alignItems: 'center',
+    },
+
+    eventPic:  {
+        width: 50,
+        height: 50,
+        borderRadius: 50,
+        marginLeft: 18,
+    },
+
+    eventDetails: {
+        flexDirection: 'column',
+        marginLeft: 7,
+    },
+
+    eventTitle: {
+        fontWeight: 'bold',
+        fontSize: 16.5,
+    },
+
+    eventDistance: {
+        color: 'rgb(100, 100, 100)'
+    },
+
+    eventNavigate: {
+        width: 30,
+        height: 30,
+        transform:[{ rotateY: '180deg' }],
+        position: 'absolute',
+        right: 15,
     }
+    
 })
 
 export { mainStyles, logStyles, listEvents }
