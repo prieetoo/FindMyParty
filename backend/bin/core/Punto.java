@@ -21,6 +21,12 @@ public class Punto {
     String str = this.x + "," + this.y;
     return str;
   }
+   public static Punto fromString(String punto) {
+    String[] coords = punto.split(",");
+    int x = Integer.parseInt(coords[0]);
+    int y = Integer.parseInt(coords[1]);
+    return new Punto(x,y);
+   }
 
   //Getters y setters
 
