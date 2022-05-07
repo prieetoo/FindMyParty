@@ -54,11 +54,12 @@ public class UsuarioController {
     return Usuario.registrar(name,pwd, nacimiento,foto,email);
   }
 
-  @PostMapping("/user/get_password/{email}")
-  public String get_password(@RequestBody String email){
+  @PostMapping("/user/get_password")
+  public String get_password(@RequestBody Map<String, String> body){
+    String email = body.get("email");
     return Usuario.recuperarPassword(email);
   }
-  
+
 /*
   @PutMapping("/blog/{id}")
   public Blog update(@PathVariable String id, @RequestBody Map<String, String> body){
