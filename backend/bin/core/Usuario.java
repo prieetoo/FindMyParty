@@ -54,6 +54,24 @@ public class Usuario{
     }
   }
 
+  public Usuario(int id){
+    String consulta = "SELECT * FROM Usuario e" +
+        "WHERE e.id = '" + id + "';";
+    ResultSet rs = DB.getInstance().executeQuery(consulta);
+    try {
+      if (rs.next()) {
+        this.id = id;
+        this.nombre = rs.getString(2);
+        this.email = rs.getString(3);
+        this.password = rs.getString(4);
+        this.fechaNacimiento = LocalDate.parse(rs.getString(5));
+        this.valoracion = rs.getFloat(6);
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+  }
+
   public static String iniciarSesion(String email, String password){
     // Consultar en la BBDD mail i id
     String consulta = "SELECT id, password FROM Usuario u where u.mail = '" + email + "';";

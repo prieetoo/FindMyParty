@@ -83,6 +83,23 @@ public class Evento {
     }
   }
 
+  public Evento(int id){
+    String consulta = "SELECT * FROM Evento e" +
+        "WHERE e.id = '" + id + "';";
+    ResultSet rs = DB.getInstance().executeQuery(consulta);
+    try {
+      if (rs.next()) {
+        this.id = id;
+        this.nombre = rs.getString(3);
+        this.ubicacion = Punto.fromString(rs.getString(4));
+        this.fecha = LocalDate.parse(rs.getString(5));
+        this.valoracion = rs.getFloat(6);
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+  }
+
   public boolean modificar(String nombre, Punto ubicacion, LocalDate fecha, Usuario host, ArrayList<String> etiquetas) {
     this.nombre = nombre;
     this.ubicacion = ubicacion;
@@ -142,11 +159,11 @@ public class Evento {
     }
   }
 
-  public boolean anadirParticipante(Usuario participante) {
-    this.participantes.add(participante);
+  public boolean anadirParticipante(int participante_id) {
+    this.participantes.add(new Usuario(participante_id));
     String consulta = "INSERT INTO Participante (Evento_id, Usuario_id) VALUES (" +
         "'" + this.id + "', " +
-        "'" + participante.getId() + "');";
+        "'" + participante_id + "');";
     boolean rs = DB.getInstance().executeUpdate(consulta);
     return rs;
   }
