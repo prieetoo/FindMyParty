@@ -12,7 +12,7 @@ public class Main {
     etiquetas.add("rave");
     //Crear evento
     u1.crearEvento("Test Lis",new Punto(41,92),"26/4/2022",etiquetas);
-    u1.getEventos().get(0).anadirParticipante(u2);
+    u1.getEventos().get(0).anadirParticipante(u2.getId());
     u1.recibirComentario("Comentario",u2);
     u1.getEventos().get(0).comentar("NewComentario",u2);
     int id = u1.getEventos().get(0).getId();
