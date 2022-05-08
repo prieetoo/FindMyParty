@@ -1,4 +1,4 @@
-import React, { useState, useRef} from 'react'
+import React, { useState, useRef } from 'react'
 import { Text, View, SafeAreaView, TouchableWithoutFeedback, Pressable, Keyboard, TextInput } from 'react-native'
 import { logStyles } from '../styles/styles'
 import { SocialIcon } from 'react-native-elements'

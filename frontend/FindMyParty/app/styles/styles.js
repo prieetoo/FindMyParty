@@ -229,6 +229,20 @@ const listEvents = StyleSheet.create({
     titleBox: {
         flexDirection: 'row',
         paddingTop: 5,
+        paddingBottom: 5,
+    },
+
+    actionsBox: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        borderTopStartRadius: 20,
+        borderTopEndRadius: 20,
+        borderTopColor: 'rgb(220, 220, 220)',
+        marginLeft: 20,
+        marginRight: 20,
+        paddingTop: 20,
+        paddingBottom: 15,
     },
 
     title: {
@@ -238,16 +252,20 @@ const listEvents = StyleSheet.create({
         paddingLeft: 10,
     },
 
+    firstEventElement: {
+        flexDirection: 'row',
+        borderTopWidth: 1,
+        borderTopColor: 'rgb(230, 230, 230)',
+        height: 80,
+        alignItems: 'center',
+    },
+
     eventElement: {
         flexDirection: 'row',
         borderTopWidth: 1,
         borderTopStartRadius: 40,
         borderTopEndRadius: 40,
-        borderBottomStartRadius: 40,
-        borderBottomEndRadius: 40,
-        borderBottomWidth: 1,
         borderTopColor: 'rgb(230, 230, 230)',
-        borderBottomColor: 'rgb(230, 230, 230)',
         height: 80,
         alignItems: 'center',
     },
@@ -279,8 +297,12 @@ const listEvents = StyleSheet.create({
         transform:[{ rotateY: '180deg' }],
         position: 'absolute',
         right: 15,
+    },
+
+    listActions: {
+        fontSize: 17,
+        color: 'rgb(62, 167, 253)'
     }
-    
 })
 
 export { mainStyles, logStyles, listEvents }

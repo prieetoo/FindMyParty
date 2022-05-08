@@ -6,7 +6,6 @@ import { MapScreen } from '../components/Map'
 import { EventList } from '../components/EventList'
 import { BlurView } from 'expo-blur'
 import { listEvents } from '../styles/styles'
-import { Fabutton } from '../components/Fabutton'
 
 export default function MapListScreen(props){
 
