@@ -27,6 +27,7 @@ public class Usuario{
   private List<Valoracion> valoraciones;
   private List<Publicacion> publicacions;
   private LocalDate fechaNacimiento;
+  private Punto ubicacion;
 
   public Usuario(String nombre,String password, LocalDate fechaNacimiento, String foto, String email){
     this.nombre = nombre;
@@ -54,9 +55,17 @@ public class Usuario{
     }
   }
 
+  public Punto getUbicacion() {
+    return ubicacion;
+  }
+
+  public void setUbicacion(Punto ubicacion) {
+    this.ubicacion = ubicacion;
+  }
+
   public Usuario(int id){
     String consulta = "SELECT * FROM Usuario e" +
-        "WHERE e.id = '" + id + "';";
+        " WHERE e.id = '" + id + "';";
     ResultSet rs = DB.getInstance().executeQuery(consulta);
     try {
       if (rs.next()) {
@@ -150,26 +159,10 @@ public class Usuario{
     return rs;
   }
 
-  public boolean eliminar(String password){
+  public static boolean eliminar(String id){
     boolean rs = false;
-    String consulta = "DELETE FROM `Comentariousuario" +
-            " WHERE Usuario_id = " + this.id + "OR Usuario_id1 = " + this.id +";" +
-            " DELETE FROM `Participante`" +
-            " WHERE Usuario_id = '" + this.id + "';" +
-            "DELETE FROM `Valoracionevento`" +
-            " WHERE Usuario_id = '" + this.id + "';" +
-            "DELETE FROM `Valoracionusuario`" +
-            " WHERE Usuario_id = '" + this.id + "' OR Usuario_id1 = '" + this.id + "';" +
-            "DELETE FROM Usuario" +
-            " WHERE id = " + this.id;
-    if (Objects.equals(password, this.password)){
-      for (Evento e: this.eventos) {
-        Evento.eliminar(e.getId());
-      }
-      rs = DB.getInstance().executeUpdate(consulta);
-    }
-
-    return rs;
+    String consulta = "DELETE FROM Usuario" + " WHERE id = " + id;
+    return DB.getInstance().executeUpdate(consulta);
   }
 
   public static boolean recibirValoracion(int id){
@@ -193,22 +186,21 @@ public class Usuario{
             " WHERE id = " + id + ";";
     return DB.getInstance().executeUpdate(consulta);
   }
-
   public boolean seguirUsuario(Usuario usuario){
 
     String consulta = "INSERT INTO `Sigue`" +
             "(`Usuario_id`," +
             "`Usuario_id1`)" +
             "VALUES " +
-            "(" + this.id + "," +
-            usuario.getId() + ");";
+            "(" + seguidor_id + "," +
+            seguido_id + ");";
     return DB.getInstance().executeUpdate(consulta);
   }
-  public boolean dejarSeguirUsuario(Usuario usuario){
+  public static boolean dejarSeguirUsuario(String seguidor_id, String seguido_id){
 
     String consulta = "DELETE FROM Sigue " +
-            "WHERE Usuario_id = " + this.id +
-            " AND Usuario_id1 = " + usuario.getId() +";";
+            "WHERE Usuario_id = " + seguidor_id +
+            " AND Usuario_id1 = " + seguido_id +";";
     return DB.getInstance().executeUpdate(consulta);
   }
 
@@ -218,38 +210,18 @@ public class Usuario{
     return true;
     }
 
-  public boolean recibirComentario(String contenido, Usuario usuario){
-    //Esperar hasta que comentario este
+  public static boolean comentar(int autor_id, int destinatario_id, String contenido){
     LocalDateTime localDate = LocalDateTime.now();
-    Comentario c = new Comentario(usuario, this, localDate, contenido);
-    this.comentarios.add(c);
-    //Añadir comentario
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-    // Format LocalDateTime
     String formattedDateTime = localDate.format(formatter);
 
-    String consulta = "INSERT INTO `Comentariousuario` (`fecha`,`contenido`,`Usuario_id`,`Usuario_id1`)" +
-            " VALUES ( STR_TO_DATE('" + formattedDateTime + "','%Y-%m-%d %T'),'" + contenido + "'," + usuario.getId() + "," + this.id + " );";
+    String consulta = "INSERT INTO `Comentariousuario` (`fecha`,`contenido`,`autor_id`,`destinatario_id`)" +
+            " VALUES ( STR_TO_DATE('" + formattedDateTime + "','%Y-%m-%d %T'),'" + contenido + "'," + autor_id + "," + destinatario_id + " );";
     boolean rs = DB.getInstance().executeUpdate(consulta);
     return rs;
   }
 
-  public boolean crearEvento(String nombre, Punto ubicacion, String fecha, ArrayList<String> etiquetas){
-    //Esperar hasta que evento este
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/M/yyyy");
-    LocalDate localDate = LocalDate.parse(fecha,formatter);
-    this.eventos.add(new Evento(nombre,ubicacion,localDate,this,etiquetas));
-    //Modificar en la bd
-    String consulta = "UPDATE Evento SET " +
-            " nombre = " + nombre  + "," +
-            " ubicacion = " + ubicacion + "," +
-            " fecha = TO_DATE('" + fecha + "'.'yyyy/mm/dd')" +
-            " WHERE Usuario_id = " + this.id + " AND id = " + id + ";";
-    //boolean rs = DB.getInstance().executeUpdate(consulta);
-    return true;
-  }
-
-  public boolean modificarEvento(String nombre, Punto ubicacion,String fecha, int id) {
+  public boolean modificarEvento(String nombre, String ubicacion, Punto coordenadas, String fecha, int id) {
 
     boolean owner = false;
     int y = 0;
@@ -263,14 +235,14 @@ public class Usuario{
       LocalDate localDate = LocalDate.parse(fecha,formatter);
       for (int i = 0; i < this.eventos.size(); i++) {
         if (eventos.get(i).getId() == id)
-          return eventos.get(i).modificar(nombre, ubicacion, localDate, this, eventos.get(i).getEtiquetas());
+          return eventos.get(i).modificar(nombre, ubicacion, localDate, this, eventos.get(i).getEtiquetas(), coordenadas);
       }
     }
     return owner;
   }
 
   public boolean valorarEvento(Evento destinatario, float valoracion) {
-    String consulta = "SELECT * FROM `Comentarioevento` Where Usuario_id != " + this.id + " AND Evento_id != " + destinatario.getId() + " ;";
+    String consulta = "SELECT * FROM `Comentarioevento` Where autor_id != " + this.id + " AND Evento_id != " + destinatario.getId() + " ;";
     ResultSet rs = DB.getInstance().executeQuery(consulta);
     try {
       if (!rs.next()) {
@@ -299,6 +271,7 @@ public class Usuario{
       return Usuario.recibirValoracion(id);
     }
     else return false;
+
   }
 
   public JSONObject toJson(){

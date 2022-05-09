@@ -26,7 +26,7 @@ public class Busqueda {
         /*
         String consulta = "SELECT * "+
                 "FROM Evento e" +
-                "WHERE "+ radio +" >= SQRT(POWER("+ u.getUbicacion().getX() + "-e.x,2)+ POWER("+u.getUbicacion().getY() +" -e.y,2));";
+                "WHERE "+ radio +" >= SQRT(POWER("+ "u.getUbicacion().getX()" + "-e.x,2)+ POWER("+"u.getUbicacion().getY()" +" -e.y,2));";
         try{
             ResultSet rs = DB.getInstance().executeQuery(consulta);
             int i = 1; //pone que tiene que ser 1
@@ -50,7 +50,7 @@ public class Busqueda {
         /*
         String consulta = "SELECT * "+
                 "FROM Evento e" +
-                "WHERE "+ this.radio+" >= SQRT(POWER("+ u.getUbicacion().getX() + "-e.x,2)+ POWER("+u.getUbicacion().getY() +" -e.y,2));";
+                "WHERE "+ this.radio+" >= SQRT(POWER("+ "u.getUbicacion().getX()" + "-e.x,2)+ POWER("+"u.getUbicacion().getY()" +" -e.y,2));";
         try{
             ResultSet rs = DB.getInstance().executeQuery(consulta);
             int i = 1; //pone que tiene que ser 1

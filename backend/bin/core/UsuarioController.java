@@ -13,21 +13,6 @@ import java.util.Map;
 @RestController
 public class UsuarioController {
 
-
-  //creacion usuario despues de recibir request y los datos de este
-  @PostMapping(value = "/user/create", consumes = MediaType.APPLICATION_JSON_VALUE,
-      produces = MediaType.APPLICATION_JSON_VALUE)
-  public Usuario create_user(@RequestBody Map<String, String> body){
-    String name = body.get("name");
-    String pwd = body.get("password");
-    String foto = body.get("photo");
-    String email = body.get("email");
-    String birth_date = body.get("date_birth");
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-    LocalDate nacimiento = LocalDate.parse(birth_date, formatter);
-    return new Usuario(name,pwd, nacimiento,foto,email);
-  }
-
   @PostMapping(value = "/user/login", consumes = MediaType.APPLICATION_JSON_VALUE,
       produces = MediaType.ALL_VALUE)
   public String login(@RequestBody Map<String, String> body){
@@ -61,26 +46,36 @@ public class UsuarioController {
     return Usuario.recuperarPassword(email);
   }
 
-  @PostMapping("/user/valorar_usuario")
-  public boolean valorar_usuario(@RequestBody Map<String, String> body){
-    int autor = Integer.parseInt(body.get("autor"));
-    float valor = Float.parseFloat(body.get("valor"));
-    int destinatario = Integer.parseInt(body.get("destinatario"));
-    return Usuario.valorarUsuario(destinatario,valor,autor);
-  }
-/*
-  @PutMapping("/blog/{id}")
-  public Blog update(@PathVariable String id, @RequestBody Map<String, String> body){
-    int blogId = Integer.parseInt(id);
-    String title = body.get("title");
-    String content = body.get("content");
-    return blogMockedData.updateBlog(blogId, title, content);
+  @GetMapping("/user/comment/{autor_id}/{destinatario_id}/{contenido}")
+  public String comment(@PathVariable("autor_id") String autor_id, @PathVariable("destinatario_id") String destinatario_id, @PathVariable("contenido") String contenido){
+    if (Usuario.comentar(Integer.parseInt(autor_id), Integer.parseInt(destinatario_id), contenido)) {
+      return "Comment sent";
+    }
+    return "Error commenting this user";
   }
 
-  @DeleteMapping("blog/{id}")
-  public boolean delete(@PathVariable String id){
-    int blogId = Integer.parseInt(id);
-    return blogMockedData.delete(blogId);
+  @GetMapping("/user/eliminate/{user_id}")
+  public String eliminate_user(@PathVariable("user_id") String user_id){
+    if (!Usuario.eliminar(user_id)) {
+      return "Error while eliminating User";
+    }
+    return "User eliminated successfully";
   }
-*/
+
+  @GetMapping("/user/follow/{follower_id}/{followed_id}")
+  public String follow_user(@PathVariable("follower_id") String follower_id, @PathVariable("followed_id") String followed_id){
+    if (!Usuario.seguirUsuario(follower_id, followed_id)) {
+      return "Error while following the User";
+    }
+    return "User followed successfully";
+  }
+
+  @GetMapping("/user/unfollow/{follower_id}/{unfollowed_id}")
+  public String unfollow_user(@PathVariable("follower_id") String follower_id, @PathVariable("unfollowed_id") String followed_id){
+    if (!Usuario.dejarSeguirUsuario(follower_id, followed_id)) {
+      return "Error while unfollowing the User";
+    }
+    return "User unfollowed successfully";
+  }
+
 }
