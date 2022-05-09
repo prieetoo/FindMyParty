@@ -159,10 +159,9 @@ public class Evento {
     }
   }
 
-  public boolean anadirParticipante(int participante_id) {
-    this.participantes.add(new Usuario(participante_id));
+  public static boolean anadirParticipante(int evento_id, int participante_id) {
     String consulta = "INSERT INTO Participante (Evento_id, Usuario_id) VALUES (" +
-        "'" + this.id + "', " +
+        "'" + evento_id + "', " +
         "'" + participante_id + "');";
     boolean rs = DB.getInstance().executeUpdate(consulta);
     return rs;
