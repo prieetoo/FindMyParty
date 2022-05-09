@@ -165,15 +165,15 @@ public class Usuario{
     return DB.getInstance().executeUpdate(consulta);
   }
 
-  public static boolean recibirValoracion(int id){
+  public static boolean recibirValoracion(int id,float valor){
 
     String consulta = "SELECT `valor`" +
-            "FROM `Valoracionusuario` WHERE Usuario_id1 = "+ id +";";
-    float total = 0F;
-    float n = 0;
+            "FROM `Valoracionusuario` WHERE destinatario_id = "+ id +";";
+    float total = valor;
+    float n = 1;
     ResultSet rs = DB.getInstance().executeQuery(consulta);
     try {
-      while(rs.next() == true) {
+      while(rs.next()) {
         total += rs.getInt("valor");
         n++;
       }
@@ -257,7 +257,7 @@ public class Usuario{
     public static boolean valorarUsuario(int destinatario, float valoracion, int id) {
     boolean firstTime = true;
       String consulta = "SELECT `valor`" +
-              "FROM `Valoracionusuario` WHERE Usuario_id1 = "+ destinatario +" AND Usuario_id = " + id + ";";
+              "FROM `Valoracionusuario` WHERE destinatario_id = "+ destinatario +" AND autor_id = " + id + ";";
       ResultSet rs = DB.getInstance().executeQuery(consulta);
       try {
         if(rs.next()) {
@@ -267,8 +267,8 @@ public class Usuario{
         e.printStackTrace();
       }
     if(firstTime){
-      new Valoracion(id,destinatario, valoracion);
-      return Usuario.recibirValoracion(id);
+      Valoracion val = new Valoracion(id,destinatario, valoracion);
+      return Usuario.recibirValoracion(destinatario, val.getValor());
     }
     else return false;
 

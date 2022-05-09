@@ -78,4 +78,12 @@ public class UsuarioController {
     return "User unfollowed successfully";
   }
 
+  @PostMapping("/user/valorar_usuario")
+  public String valorar_usuario(@RequestBody Map<String, String> body){
+    if (!Usuario.valorarUsuario(Integer.parseInt(body.get("destinatario")),Float.parseFloat(body.get("valor")), Integer.parseInt(body.get("autor")))) {
+      return "Error while valuating user";
+    }
+    return "User valuating successfully";
+  }
+
 }

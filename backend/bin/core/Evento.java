@@ -90,7 +90,7 @@ public class Evento {
   }
   public Evento(int id,String nombre, Punto ubicacion, LocalDate fecha, Usuario host, ArrayList<String> etiquetas) {
     this.nombre = nombre;
-    this.ubicacion = ubicacion;
+    this.coordenadas = ubicacion;
     this.fecha = fecha;
     this.host = host;
     this.etiquetas = etiquetas;
