@@ -74,7 +74,7 @@ public class Usuario{
         this.email = rs.getString(3);
         this.password = rs.getString(4);
         this.fechaNacimiento = LocalDate.parse(rs.getString(5));
-        this.valoracion = rs.getFloat(6);
+        this.valoracion = rs.getFloat(7);
       }
     } catch (SQLException e) {
       e.printStackTrace();
@@ -239,19 +239,6 @@ public class Usuario{
       }
     }
     return owner;
-  }
-
-  public boolean valorarEvento(Evento destinatario, float valoracion) {
-    String consulta = "SELECT * FROM `Comentarioevento` Where autor_id != " + this.id + " AND Evento_id != " + destinatario.getId() + " ;";
-    ResultSet rs = DB.getInstance().executeQuery(consulta);
-    try {
-      if (!rs.next()) {
-        //return destinatario.valorar(new Valoracion(id, destinatario, valoracion));
-      }
-    } catch (SQLException throwables) {
-      throwables.printStackTrace();
-    }
-    return false;
   }
 
     public static boolean valorarUsuario(int destinatario, float valoracion, int id) {

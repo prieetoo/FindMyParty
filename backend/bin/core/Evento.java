@@ -159,24 +159,36 @@ public class Evento {
     return rs;
   }
 
-  public boolean valorar(Valoracion valoracion) {
-    if (valoracion.getValor() >= 0 && valoracion.getValor() <= 5) {
-      this.valoraciones.add(valoracion);
-      float val = 0;
-      for (int i = 0; i < valoraciones.size(); i++){
-        val += valoraciones.get(i).getValor();
+  public static boolean valorar(int evento, float valoracion, int autor) {
+    String consulta = "SELECT valor FROM `Valoracionevento` Where Usuario_id = " + autor + " AND Evento_id = " + evento + " ;";
+    ResultSet rs = DB.getInstance().executeQuery(consulta);
+    try {
+      if (rs.next()) {
+        return false;
       }
-      val /= valoraciones.size();
-      this.valoracion = val;
-      String consulta = "UPDATE Evento" +
-          " SET valoracion = " + val +
-          " WHERE id = " + this.id + ";";
-      //Ejecutar consulta propuesta:
-      boolean rs = DB.getInstance().executeUpdate(consulta);
-      return rs;
-    } else {
-      return false;
+    } catch (SQLException throwables) {
+      throwables.printStackTrace();
     }
+    new Valoracion(autor,evento, valoracion, true);
+
+    consulta = "SELECT `valor`" +
+            "FROM `Valoracionevento` WHERE Evento_id = "+ evento +";";
+    float total = 0;
+    float n = 0;
+    rs = DB.getInstance().executeQuery(consulta);
+    try {
+      while(rs.next()) {
+        total += rs.getInt("valor");
+        n++;
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+    total = total/n;
+    consulta = "UPDATE Evento" +
+        " SET valoracion = " + total +
+        " WHERE id = " + evento + ";";
+    return DB.getInstance().executeUpdate(consulta);
   }
 
   public static boolean anadirParticipante(int evento_id, int participante_id) {

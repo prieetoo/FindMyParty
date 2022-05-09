@@ -45,4 +45,13 @@ public class EventoController {
     }
     return "Event eliminated successfully";
   }
+
+  @PostMapping("/event/valorar_event")
+  public String valorar_usuario(@RequestBody Map<String, String> body){
+    if (!Evento.valorar(Integer.parseInt(body.get("destinatario")),Float.parseFloat(body.get("valor")), Integer.parseInt(body.get("autor")))) {
+      return "Error while valuating event";
+    }
+    return "Event valuating successfully";
+  }
+
 }
