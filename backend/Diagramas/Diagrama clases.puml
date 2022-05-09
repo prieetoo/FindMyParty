@@ -36,9 +36,9 @@ class Evento {
   - activo : bool
   + Evento(nombre : String, ubicacion : Punto, fecha : LocalDate, host : Usuario, etiquetas : List<String>)
   + modificar(nombre : String, ubicacion : Punto, fecha : LocalDate, host : Usuario, etiquetas : List<String>) : bool
-  + comentar(comentario : Comentario) : bool
+  + {static} }comentar(event_id : int, user_id : int, content : String) : bool
   + valorar(valoracion : Valoracion)) : bool
-  + añadirParticipante(participante : Usuario) : bool
+  + {static} añadirParticipante(evento_id : int, participante_id : int) : bool
   + eliminarParticipante(participante : Usuario)) : bool
   + eliminar() : bool
   + añadirPublicacion(publicacion : Publicacion) : bool

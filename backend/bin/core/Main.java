@@ -14,7 +14,7 @@ public class Main {
     u1.crearEvento("Test Lis",new Punto(41,92),"26/4/2022",etiquetas);
     Evento.anadirParticipante(u1.getEventos().get(0).getId(), u2.getId());
     u1.recibirComentario("Comentario",u2);
-    u1.getEventos().get(0).comentar("NewComentario",u2);
+    Evento.comentar(u1.getEventos().get(0).getId(), u2.getId(), "NewComentario");
     int id = u1.getEventos().get(0).getId();
     Evento.eliminar(id);
     u1.getComentarios().get(0).eliminar();

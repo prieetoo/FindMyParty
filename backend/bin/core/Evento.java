@@ -124,17 +124,12 @@ public class Evento {
     return rs;
   }
 
-  public boolean comentar(String contenido, Usuario usuario) {
-
+  public static boolean comentar(int event_id, int user_id,  String contenido) {
     LocalDateTime localDate = LocalDateTime.now();
-    this.comentarios.add(new Comentario(usuario,this,localDate, contenido));
-    int a = 0;
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-
     String formattedDate= localDate.format(formatter);
-
     String consulta = "INSERT INTO `Comentarioevento` (`fecha`,`contenido`,`Usuario_id`,`Evento_id`)" +
-            " VALUES ( STR_TO_DATE('" + formattedDate+ "','%Y-%m-%d %T'),'" + contenido + "'," + usuario.getId() + ","  + this.id +  " );";
+            " VALUES ( STR_TO_DATE('" + formattedDate+ "','%Y-%m-%d %T'),'" + contenido + "'," + user_id + ","  + event_id +  " );";
     boolean rs = DB.getInstance().executeUpdate(consulta);
     return rs;
   }
