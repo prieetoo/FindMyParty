@@ -14,7 +14,8 @@ import java.util.ArrayList;
 public class Evento {
   private int id;
   private String nombre;
-  private Punto ubicacion; //esto hay que cambiarlo en la bd sigue como varchar
+  private Punto coordenadas; //esto hay que cambiarlo en la bd sigue como varchar
+  private String ubicacion;
   private LocalDate fecha;
   private Usuario host;
   private float valoracion;
@@ -27,6 +28,7 @@ public class Evento {
 
   public Evento(Evento ev) {
     this.nombre = ev.getNombre();
+    this.coordenadas = ev.getCoordenadas();
     this.ubicacion = ev.getUbicacion();
     this.fecha = ev.getFecha();
     this.host = ev.getHost();
@@ -38,13 +40,15 @@ public class Evento {
     this.publicaciones = new ArrayList<Publicacion>();
     this.activo = fecha.isBefore(LocalDate.now());
     //Añadir a la BD
-    String consulta = "INSERT INTO Evento (nombre, ubicacion, fecha, valoracion, usuario_id) " +
+    String consulta = "INSERT INTO Evento (nombre, ubicacion, fecha, valoracion, usuario_id, x, y) " +
             "VALUES ('" +
             nombre + "', '" +
-            ubicacion.toString() + "', STR_TO_DATE('" +
+            ubicacion + "', STR_TO_DATE('" +
             fecha.toString() + "','%Y-%m-%d'), '" +
             this.valoracion + "', '" +
-            host.getId() + "');";
+            host.getId() + "','" +
+            coordenadas.getX() + "','" +
+            coordenadas.getY()+ "');";
     ResultSet rs = DB.getInstance().executeUpdateWithKeys(consulta);
     try {
       if(rs.next())
@@ -54,7 +58,7 @@ public class Evento {
     }
   }
 
-  public Evento(String nombre, Punto ubicacion, LocalDate fecha, Usuario host, ArrayList<String> etiquetas) {
+  public Evento(String nombre, String ubicacion, LocalDate fecha, Usuario host, ArrayList<String> etiquetas, Punto coordenadas) {
     this.nombre = nombre;
     this.ubicacion = ubicacion;
     this.fecha = fecha;
@@ -66,14 +70,17 @@ public class Evento {
     this.participantes = new ArrayList<Usuario>();
     this.publicaciones = new ArrayList<Publicacion>();
     this.activo = fecha.isBefore(LocalDate.now());
+    this.coordenadas = coordenadas;
     //Añadir a la BD
-    String consulta = "INSERT INTO Evento (nombre, ubicacion, fecha, valoracion, usuario_id) " +
+    String consulta = "INSERT INTO Evento (nombre, ubicacion, fecha, valoracion, usuario_id, x, y) " +
         "VALUES ('" +
         nombre + "', '" +
-        ubicacion.toString() + "', STR_TO_DATE('" +
+        ubicacion + "', STR_TO_DATE('" +
         fecha.toString() + "','%Y-%m-%d'), '" +
         this.valoracion + "', '" +
-        host.getId() + "');";
+        host.getId() + "','" +
+        coordenadas.getX() + "','" +
+        coordenadas.getY()+ "');";
     ResultSet rs = DB.getInstance().executeUpdateWithKeys(consulta);
     try {
       if(rs.next())
@@ -91,7 +98,7 @@ public class Evento {
       if (rs.next()) {
         this.id = id;
         this.nombre = rs.getString(3);
-        this.ubicacion = Punto.fromString(rs.getString(4));
+        this.ubicacion = rs.getString(4);
         this.fecha = LocalDate.parse(rs.getString(5));
         this.valoracion = rs.getFloat(6);
       }
@@ -100,7 +107,7 @@ public class Evento {
     }
   }
 
-  public boolean modificar(String nombre, Punto ubicacion, LocalDate fecha, Usuario host, ArrayList<String> etiquetas) {
+  public boolean modificar(String nombre, String ubicacion, LocalDate fecha, Usuario host, ArrayList<String> etiquetas, Punto coordenadas) {
     this.nombre = nombre;
     this.ubicacion = ubicacion;
     this.fecha = fecha;
@@ -110,7 +117,7 @@ public class Evento {
     //Modificar la BD
     String consulta1 = "UPDATE Evento " +
         "SET nombre = '" + nombre + "', " +
-        "    ubicacion = '" + ubicacion.toString() + "', " +
+        "    ubicacion = '" + ubicacion + "', " +
         "    fecha = STR_TO_DATE('" + fecha + "','%Y-%m-%d'), " +
         "    usuario_id = " + host.getId() +
         " WHERE id = " + this.id + ";";
@@ -207,7 +214,8 @@ public class Evento {
     JSONObject json = new JSONObject();
     json.put("id", this.id);
     json.put("nombre", this.nombre);
-    json.put("ubicacion", this.ubicacion.toString());
+    json.put("ubicacion", this.ubicacion);
+    json.put("coordenadas", this.coordenadas.toString());
     json.put("fecha", this.fecha);
     json.put("host", this.host.toJson());
     json.put("valoracion", this.valoracion);
@@ -261,12 +269,12 @@ public class Evento {
     this.nombre = nombre;
   }
 
-  public Punto getUbicacion() {
-    return ubicacion;
+  public Punto getCoordenadas() {
+    return coordenadas;
   }
 
-  public void setUbicacion(Punto ubicacion) {
-    this.ubicacion = ubicacion;
+  public void setCoordenadas(Punto coordenadas) {
+    this.coordenadas = coordenadas;
   }
 
   public LocalDate getFecha() {
@@ -341,4 +349,11 @@ public class Evento {
     this.activo = activo;
   }
 
+  public String getUbicacion() {
+    return ubicacion;
+  }
+
+  public void setUbicacion(String ubicacion) {
+    this.ubicacion = ubicacion;
+  }
 }

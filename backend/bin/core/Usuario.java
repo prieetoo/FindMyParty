@@ -228,11 +228,11 @@ public class Usuario{
     return rs;
   }
 
-  public boolean crearEvento(String nombre, Punto ubicacion, String fecha, ArrayList<String> etiquetas){
+  public boolean crearEvento(String nombre, String ubicacion, String fecha, ArrayList<String> etiquetas, Punto coordenadas){
     //Esperar hasta que evento este
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/M/yyyy");
     LocalDate localDate = LocalDate.parse(fecha,formatter);
-    this.eventos.add(new Evento(nombre,ubicacion,localDate,this,etiquetas));
+    this.eventos.add(new Evento(nombre,ubicacion,localDate,this,etiquetas, coordenadas));
     //Modificar en la bd
     String consulta = "UPDATE Evento SET " +
             " nombre = " + nombre  + "," +
@@ -243,7 +243,7 @@ public class Usuario{
     return true;
   }
 
-  public boolean modificarEvento(String nombre, Punto ubicacion,String fecha, int id) {
+  public boolean modificarEvento(String nombre, String ubicacion,String fecha, int id, Punto coordenadas) {
 
     boolean owner = false;
     int y = 0;
@@ -257,7 +257,7 @@ public class Usuario{
       LocalDate localDate = LocalDate.parse(fecha,formatter);
       for (int i = 0; i < this.eventos.size(); i++) {
         if (eventos.get(i).getId() == id)
-          return eventos.get(i).modificar(nombre, ubicacion, localDate, this, eventos.get(i).getEtiquetas());
+          return eventos.get(i).modificar(nombre, ubicacion, localDate, this, eventos.get(i).getEtiquetas(), coordenadas);
       }
     }
     return owner;

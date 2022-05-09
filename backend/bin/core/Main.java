@@ -11,7 +11,7 @@ public class Main {
     ArrayList<String> etiquetas = new ArrayList<>();
     etiquetas.add("rave");
     //Crear evento
-    u1.crearEvento("Test Lis",new Punto(41,92),"26/4/2022",etiquetas);
+    u1.crearEvento("Test Lis","Sitio","26/4/2022",etiquetas, new Punto(41,92));
     Evento.anadirParticipante(u1.getEventos().get(0).getId(), u2.getId());
     Usuario.comentar(u1.getId(), u2.getId(), "NewComentario");
     Evento.comentar(u1.getEventos().get(0).getId(), u2.getId(), "NewComentario");
@@ -36,9 +36,9 @@ public class Main {
     ArrayList<String> etiquetas = new ArrayList<>();
     etiquetas.add("rave");
     //Crear evento
-    u1.crearEvento("Test Lis",new Punto(41,92),"26/4/2022",etiquetas);
+    u1.crearEvento("Test Lis","Sitio","26/4/2022",etiquetas, new Punto(41,92));
     //Modificar
-    u1.modificarEvento("Test modificado",new Punto(78,23),"26/4/2022",u1.getEventos().get(0).getId());
+    u1.modificarEvento("Test modificado","Sitio","26/4/2022",u1.getEventos().get(0).getId(), new Punto(78,23));
     u1.modificarPerfil("Alex2","321","5/5/2002","/foto2.png","nuevo@gmai.com");
   }
 
