@@ -172,27 +172,28 @@ public class Usuario{
     return rs;
   }
 
-  public boolean recibirValoracion(Valoracion valoracion){
+  public static boolean recibirValoracion(int id){
 
-    if (valoracion.getValor() >= 0 && valoracion.getValor() <= 10){
-      valoraciones.add(valoracion);
-      calcularValoracion();
-      return true;
-    }
-    else return false;
-  }
-
-  private void calcularValoracion(){
+    String consulta = "SELECT `valor`" +
+            "FROM `Valoracionusuario` WHERE Usuario_id1 = "+ id +";";
     float total = 0F;
-    for (int i =0; i< this.valoraciones.size(); i++){
-      total +=this.valoraciones.get(i).getValor();
+    float n = 0;
+    ResultSet rs = DB.getInstance().executeQuery(consulta);
+    try {
+      while(rs.next() == true) {
+        total += rs.getInt("valor");
+        n++;
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
     }
-    this.valoracion = total/this.valoraciones.size();
-    String consulta = "UPDATE Usuario" +
-            " SET valoracion = " + this.valoracion +
-            " WHERE id = " + this.id + ";";
-    boolean rs = DB.getInstance().executeUpdate(consulta);
+    total = total/n;
+    consulta = "UPDATE Usuario" +
+            " SET valoracion = " + total +
+            " WHERE id = " + id + ";";
+    return DB.getInstance().executeUpdate(consulta);
   }
+
   public boolean seguirUsuario(Usuario usuario){
 
     String consulta = "INSERT INTO `Sigue`" +
@@ -273,7 +274,7 @@ public class Usuario{
     ResultSet rs = DB.getInstance().executeQuery(consulta);
     try {
       if (!rs.next()) {
-        return destinatario.valorar(new Valoracion(this, destinatario, valoracion));
+        //return destinatario.valorar(new Valoracion(id, destinatario, valoracion));
       }
     } catch (SQLException throwables) {
       throwables.printStackTrace();
@@ -281,21 +282,23 @@ public class Usuario{
     return false;
   }
 
-    public boolean valorarUsuario(Usuario destinatario, float valoracion) {
+    public static boolean valorarUsuario(int destinatario, float valoracion, int id) {
     boolean firstTime = true;
-    int i = 0;
-    while (firstTime && i < destinatario.getValoraciones().size() ){
-      if (destinatario.getValoraciones().get(i).getDestino().getId() == destinatario.getId())
-        firstTime = false;
-
-    }
+      String consulta = "SELECT `valor`" +
+              "FROM `Valoracionusuario` WHERE Usuario_id1 = "+ destinatario +" AND Usuario_id = " + id + ";";
+      ResultSet rs = DB.getInstance().executeQuery(consulta);
+      try {
+        if(rs.next()) {
+          firstTime = false;
+        }
+      } catch (SQLException e) {
+        e.printStackTrace();
+      }
     if(firstTime){
-      Valoracion val = new Valoracion(this,destinatario, valoracion);
-      destinatario.recibirValoracion(val);
-      return true;
+      new Valoracion(id,destinatario, valoracion);
+      return Usuario.recibirValoracion(id);
     }
     else return false;
-
   }
 
   public JSONObject toJson(){

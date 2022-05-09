@@ -99,6 +99,28 @@ public class Evento {
       e.printStackTrace();
     }
   }
+  public Evento(int id,String nombre, Punto ubicacion, LocalDate fecha, Usuario host, ArrayList<String> etiquetas) {
+    this.nombre = nombre;
+    this.ubicacion = ubicacion;
+    this.fecha = fecha;
+    this.host = host;
+    this.etiquetas = etiquetas;
+    this.valoracion = 0;
+    this.valoraciones = new ArrayList<Valoracion>();
+    this.comentarios = new ArrayList<Comentario>();
+    this.participantes = new ArrayList<Usuario>();
+    this.publicaciones = new ArrayList<Publicacion>();
+    this.activo = fecha.isBefore(LocalDate.now());
+    this.id = id;
+    String consulta = "";
+    ResultSet rs = DB.getInstance().executeUpdateWithKeys(consulta);
+    try {
+      if(rs.next())
+        this.id = rs.getInt(1);
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+  }
 
   public boolean modificar(String nombre, Punto ubicacion, LocalDate fecha, Usuario host, ArrayList<String> etiquetas) {
     this.nombre = nombre;

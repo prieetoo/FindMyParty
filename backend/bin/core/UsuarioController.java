@@ -13,6 +13,7 @@ import java.util.Map;
 @RestController
 public class UsuarioController {
 
+
   //creacion usuario despues de recibir request y los datos de este
   @PostMapping(value = "/user/create", consumes = MediaType.APPLICATION_JSON_VALUE,
       produces = MediaType.APPLICATION_JSON_VALUE)
@@ -60,6 +61,13 @@ public class UsuarioController {
     return Usuario.recuperarPassword(email);
   }
 
+  @PostMapping("/user/valorar_usuario")
+  public boolean valorar_usuario(@RequestBody Map<String, String> body){
+    int autor = Integer.parseInt(body.get("autor"));
+    float valor = Float.parseFloat(body.get("valor"));
+    int destinatario = Integer.parseInt(body.get("destinatario"));
+    return Usuario.valorarUsuario(destinatario,valor,autor);
+  }
 /*
   @PutMapping("/blog/{id}")
   public Blog update(@PathVariable String id, @RequestBody Map<String, String> body){
