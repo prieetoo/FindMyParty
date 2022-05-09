@@ -5,6 +5,7 @@ import WelcomeScreen from '../screens/WelcomeScreen'
 import RegisterFormScreen from '../screens/RegisterFormScreen'
 import RecuperarPasswordScreen from '../screens/RecuperarPasswordScreen'
 import MapListScreen from '../screens/MapListScreen'
+import CreateEventScreen from '../screens/CreateEvent'
 
 const AppNavigation = createStackNavigator({
     
@@ -38,6 +39,13 @@ const AppNavigation = createStackNavigator({
 
         MapList:{
             screen: MapListScreen,
+            navigationOptions:{
+                headerShown: false,
+            }
+        },
+
+        CreateEvent:{
+            screen: CreateEventScreen,
             navigationOptions:{
                 headerShown: false,
             }

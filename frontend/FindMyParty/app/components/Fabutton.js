@@ -1,8 +1,9 @@
-import React, { component } from 'react'
-import { View, Text, StyleSheet, TouchableWithoutFeedback } from 'react-native'
-import { AntDesign, Entypo } from '@expo/vector-icons'
+import React, { Component } from 'react'
+import { View, Text, StyleSheet, TouchableWithoutFeedback, Animated } from 'react-native'
+import {AntDesign, Entypo} from '@expo/vector-icons'
 
-export default class Fabutton extends component {
+export class Fabutton extends Component {
+
 
     animation = new Animated.Value(0);
 
@@ -72,13 +73,8 @@ const styles = StyleSheet.create ({
         borderRadius: 60 / 2,
         justifyContent: 'center',
         alignItems: 'center',
-        shadowRadius: 1,
-        shadowColor: '#00213b',
-        shadowOpacity: 0.3,
-        shadowOffset: {
-            height: 10,
-        }
     },
+
     menu:{
         backgroundColor: '#00213b'
     },
@@ -90,3 +86,4 @@ const styles = StyleSheet.create ({
         backgroundColor: '#00213b'
     }
 });
+
