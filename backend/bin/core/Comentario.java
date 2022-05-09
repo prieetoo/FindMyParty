@@ -34,7 +34,7 @@ public class Comentario {
     {
         String consulta = "";
         if (this.evento == null)
-            consulta = "DELETE FROM Comentariousuario  WHERE Usuario_id1 = " + this.destinatario.getId()+" AND Usuario_id = " + this.autor.getId() + " ;";
+            consulta = "DELETE FROM Comentariousuario  WHERE destinatario_id = " + this.destinatario.getId()+" AND autor_id = " + this.autor.getId() + " ;";
         else
             consulta = "DELETE FROM Comentarioevento  WHERE Usuario_id = " + this.autor.getId()+" AND Evento_id = " + this.evento.getId() + ";";
 

@@ -60,6 +60,14 @@ public class UsuarioController {
     return Usuario.recuperarPassword(email);
   }
 
+  @GetMapping("/user/comment/{autor_id}/{destinatario_id}/{contenido}")
+  public String comment(@PathVariable("autor_id") String autor_id, @PathVariable("destinatario_id") String destinatario_id, @PathVariable("contenido") String contenido){
+    if (Usuario.comentar(Integer.parseInt(autor_id), Integer.parseInt(destinatario_id), contenido)) {
+      return "Comment sent";
+    }
+    return "Error commenting this user";
+  }
+
 /*
   @PutMapping("/blog/{id}")
   public Blog update(@PathVariable String id, @RequestBody Map<String, String> body){

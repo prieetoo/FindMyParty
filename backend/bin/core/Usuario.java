@@ -153,13 +153,13 @@ public class Usuario{
   public boolean eliminar(String password){
     boolean rs = false;
     String consulta = "DELETE FROM `Comentariousuario" +
-            " WHERE Usuario_id = " + this.id + "OR Usuario_id1 = " + this.id +";" +
+            " WHERE autor_id = " + this.id + "OR destinatario_id = " + this.id +";" +
             " DELETE FROM `Participante`" +
-            " WHERE Usuario_id = '" + this.id + "';" +
+            " WHERE autor_id = '" + this.id + "';" +
             "DELETE FROM `Valoracionevento`" +
-            " WHERE Usuario_id = '" + this.id + "';" +
+            " WHERE autor_id = '" + this.id + "';" +
             "DELETE FROM `Valoracionusuario`" +
-            " WHERE Usuario_id = '" + this.id + "' OR Usuario_id1 = '" + this.id + "';" +
+            " WHERE autor_id = '" + this.id + "' OR destinatario_id = '" + this.id + "';" +
             "DELETE FROM Usuario" +
             " WHERE id = " + this.id;
     if (Objects.equals(password, this.password)){
@@ -196,8 +196,8 @@ public class Usuario{
   public boolean seguirUsuario(Usuario usuario){
 
     String consulta = "INSERT INTO `Sigue`" +
-            "(`Usuario_id`," +
-            "`Usuario_id1`)" +
+            "(`autor_id`," +
+            "`destinatario_id`)" +
             "VALUES " +
             "(" + this.id + "," +
             usuario.getId() + ");";
@@ -206,8 +206,8 @@ public class Usuario{
   public boolean dejarSeguirUsuario(Usuario usuario){
 
     String consulta = "DELETE FROM Sigue " +
-            "WHERE Usuario_id = " + this.id +
-            " AND Usuario_id1 = " + usuario.getId() +";";
+            "WHERE autor_id = " + this.id +
+            " AND destinatario_id = " + usuario.getId() +";";
     return DB.getInstance().executeUpdate(consulta);
   }
 
@@ -217,18 +217,13 @@ public class Usuario{
     return true;
     }
 
-  public boolean recibirComentario(String contenido, Usuario usuario){
-    //Esperar hasta que comentario este
+  public static boolean comentar(int autor_id, int destinatario_id, String contenido){
     LocalDateTime localDate = LocalDateTime.now();
-    Comentario c = new Comentario(usuario, this, localDate, contenido);
-    this.comentarios.add(c);
-    //Añadir comentario
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-    // Format LocalDateTime
     String formattedDateTime = localDate.format(formatter);
 
-    String consulta = "INSERT INTO `Comentariousuario` (`fecha`,`contenido`,`Usuario_id`,`Usuario_id1`)" +
-            " VALUES ( STR_TO_DATE('" + formattedDateTime + "','%Y-%m-%d %T'),'" + contenido + "'," + usuario.getId() + "," + this.id + " );";
+    String consulta = "INSERT INTO `Comentariousuario` (`fecha`,`contenido`,`autor_id`,`destinatario_id`)" +
+            " VALUES ( STR_TO_DATE('" + formattedDateTime + "','%Y-%m-%d %T'),'" + contenido + "'," + autor_id + "," + destinatario_id + " );";
     boolean rs = DB.getInstance().executeUpdate(consulta);
     return rs;
   }
@@ -243,7 +238,7 @@ public class Usuario{
             " nombre = " + nombre  + "," +
             " ubicacion = " + ubicacion + "," +
             " fecha = TO_DATE('" + fecha + "'.'yyyy/mm/dd')" +
-            " WHERE Usuario_id = " + this.id + " AND id = " + id + ";";
+            " WHERE autor_id = " + this.id + " AND id = " + id + ";";
     //boolean rs = DB.getInstance().executeUpdate(consulta);
     return true;
   }
@@ -269,7 +264,7 @@ public class Usuario{
   }
 
   public boolean valorarEvento(Evento destinatario, float valoracion) {
-    String consulta = "SELECT * FROM `Comentarioevento` Where Usuario_id != " + this.id + " AND Evento_id != " + destinatario.getId() + " ;";
+    String consulta = "SELECT * FROM `Comentarioevento` Where autor_id != " + this.id + " AND Evento_id != " + destinatario.getId() + " ;";
     ResultSet rs = DB.getInstance().executeQuery(consulta);
     try {
       if (!rs.next()) {
