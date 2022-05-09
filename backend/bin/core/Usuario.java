@@ -186,7 +186,7 @@ public class Usuario{
             " WHERE id = " + id + ";";
     return DB.getInstance().executeUpdate(consulta);
   }
-  public boolean seguirUsuario(Usuario usuario){
+  public static boolean seguirUsuario(String seguidor_id, String seguido_id){
 
     String consulta = "INSERT INTO `Sigue`" +
             "(`Usuario_id`," +
