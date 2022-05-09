@@ -27,6 +27,7 @@ public class Usuario{
   private List<Valoracion> valoraciones;
   private List<Publicacion> publicacions;
   private LocalDate fechaNacimiento;
+  private Punto ubicacion;
 
   public Usuario(String nombre,String password, LocalDate fechaNacimiento, String foto, String email){
     this.nombre = nombre;
@@ -52,6 +53,14 @@ public class Usuario{
     } catch (SQLException e) {
       e.printStackTrace();
     }
+  }
+
+  public Punto getUbicacion() {
+    return ubicacion;
+  }
+
+  public void setUbicacion(Punto ubicacion) {
+    this.ubicacion = ubicacion;
   }
 
   public Usuario(int id){
