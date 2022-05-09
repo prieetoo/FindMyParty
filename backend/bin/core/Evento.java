@@ -28,7 +28,6 @@ public class Evento {
 
   public Evento(Evento ev) {
     this.nombre = ev.getNombre();
-    this.coordenadas = ev.getCoordenadas();
     this.ubicacion = ev.getUbicacion();
     this.fecha = ev.getFecha();
     this.host = ev.getHost();
@@ -39,28 +38,11 @@ public class Evento {
     this.participantes = new ArrayList<Usuario>();
     this.publicaciones = new ArrayList<Publicacion>();
     this.activo = fecha.isBefore(LocalDate.now());
-    //Añadir a la BD
-    String consulta = "INSERT INTO Evento (nombre, ubicacion, fecha, valoracion, usuario_id, x, y) " +
-            "VALUES ('" +
-            nombre + "', '" +
-            ubicacion + "', STR_TO_DATE('" +
-            fecha.toString() + "','%Y-%m-%d'), '" +
-            this.valoracion + "', '" +
-            host.getId() + "','" +
-            coordenadas.getX() + "','" +
-            coordenadas.getY()+ "');";
-    ResultSet rs = DB.getInstance().executeUpdateWithKeys(consulta);
-    try {
-      if(rs.next())
-        this.id = rs.getInt(1);
-    } catch (SQLException e) {
-      e.printStackTrace();
-    }
   }
 
-  public Evento(String nombre, String ubicacion, LocalDate fecha, Usuario host, ArrayList<String> etiquetas, Punto coordenadas) {
+  public Evento(String nombre, Punto coordenadas, String ubicacion, LocalDate fecha, Usuario host, ArrayList<String> etiquetas) {
     this.nombre = nombre;
-    this.ubicacion = ubicacion;
+    this.coordenadas = coordenadas;
     this.fecha = fecha;
     this.host = host;
     this.etiquetas = etiquetas;
@@ -70,7 +52,7 @@ public class Evento {
     this.participantes = new ArrayList<Usuario>();
     this.publicaciones = new ArrayList<Publicacion>();
     this.activo = fecha.isBefore(LocalDate.now());
-    this.coordenadas = coordenadas;
+    this.ubicacion = ubicacion;
     //Añadir a la BD
     String consulta = "INSERT INTO Evento (nombre, ubicacion, fecha, valoracion, usuario_id, x, y) " +
         "VALUES ('" +
@@ -105,6 +87,20 @@ public class Evento {
     } catch (SQLException e) {
       e.printStackTrace();
     }
+  }
+
+  public static boolean crear(String nombre, Punto coordenadas, String ubicacion, LocalDate fecha, Usuario host, ArrayList<String> etiquetas) {
+    int valoracion = 0;
+    String consulta = "INSERT INTO Evento (nombre, ubicacion, fecha, valoracion, usuario_id, x, y) " +
+        "VALUES ('" +
+        nombre + "', '" +
+        ubicacion + "', STR_TO_DATE('" +
+        fecha.toString() + "','%Y-%m-%d'), '" +
+        valoracion + "', '" +
+        host.getId() + "','" +
+        coordenadas.getX() + "','" +
+        coordenadas.getY()+ "');";
+    return DB.getInstance().executeUpdate(consulta);
   }
 
   public boolean modificar(String nombre, String ubicacion, LocalDate fecha, Usuario host, ArrayList<String> etiquetas, Punto coordenadas) {
@@ -188,26 +184,21 @@ public class Evento {
     return false;
   }
 
-  public static void eliminar(int id) {
+  public static boolean eliminar(int id) {
     String consulta = "SELECT * " +
         "              FROM Evento" +
         "              WHERE id = '" + id + "';";
     ResultSet rs = DB.getInstance().executeQuery(consulta);
     try {
       if (rs.next()){
-        String consulta1 = "DELETE FROM `Valoracionevento`" +
-                " WHERE Evento_id = " + id + ";" +
-                "DELETE FROM Participante" +
-                " WHERE Evento_id = " + id + " ;" +
-                " DELETE FROM Etiqueta" +
-                " WHERE evento_id = " + id + ";" +
-                " DELETE FROM Evento" +
+        String consulta1 = " DELETE FROM Evento" +
                 " WHERE id = '" + id + "';";
-        boolean rs1 = DB.getInstance().executeUpdate(consulta1);
+        return DB.getInstance().executeUpdate(consulta1);
       }
     } catch (SQLException e) {
       e.printStackTrace();
     }
+    return false;
   }
 
   public JSONObject toJson() {
