@@ -11,34 +11,25 @@ import { Fabutton } from '../components/Fabutton'
 export default function MapListScreen(props){
 
     const sheetRef = useRef(null);
-    const [isOpen, setIsOpen] = useState(true);
-      
     const snapPoints = ["16%", "32%", "85%"];
 
     return(
-
         <GestureHandlerRootView style = {{ flex: 1 }}> 
             <View>
                 <MapScreen/>
                 <BlurView style={listEvents.statusBarBlur} intensity={100} />
-                <View style={styles.container}>
-                <Fabutton
-                    style = {{ bottom: 220, right: 40}}
-                />
-            </View>
+
+                <View style={listEvents.fabuttonView}>
+                    <Fabutton style = {listEvents.fabutton}/>
+                </View>
+
                 <BottomSheet ref={sheetRef} snapPoints={snapPoints} handleIndicatorStyle = {{width: 60, color: 'rgb(211, 211, 211)', alignSelf: 'center'}}>
                     <BottomSheetView>
                         <EventList> </EventList>
                     </BottomSheetView>
                 </BottomSheet>
+
             </View> 
         </GestureHandlerRootView>
     )
 }
-
-const styles = StyleSheet.create ({
-    container: {
-        flex: 1,
-        backgroundColor: '#fff',
-    },
-})

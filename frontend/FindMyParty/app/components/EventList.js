@@ -1,6 +1,7 @@
-import React from 'react'
-import { Text, Image, View, Pressable, Button } from 'react-native'
-import { listEvents } from '../styles/styles'
+import React, {useState} from 'react'
+import { Text, Image, View, Pressable, ScrollView } from 'react-native'
+import { listEvents } from '../styles/styles';
+import { Dropdown } from './FilterPicker';
 
 export function EventList(props) {
 
@@ -8,14 +9,12 @@ export function EventList(props) {
     <View>
         <View style = {listEvents.titleBox}>
             <Text style = {listEvents.title}> Events near you </Text>
+            <View style = {listEvents.filterDropdownView}>
+                <Dropdown/>
+            </View>
         </View>
 
-        <View style = {listEvents.actionsBox}>
-            <Text style = {listEvents.listActions} onPress = {(props) => goToScreen('MapList')}> xCreate event </Text>
-            <Text style = {listEvents.listActions}> Filters </Text>
-        </View>
-
-        <View>
+        <ScrollView style = {listEvents.eventScroll}>
             <Pressable style = {listEvents.firstEventElement}>
                 <Image source={require('../assets/rave.jpeg')} style = {listEvents.eventPic}/> 
                 <View style = {listEvents.eventDetails}>
@@ -32,7 +31,65 @@ export function EventList(props) {
                 </View>
                 <Image source={require('../assets/arrow.png')} style = {listEvents.eventNavigate}/>
             </Pressable>
-        </View>
+            <Pressable style = {listEvents.eventElement}>
+                <Image source={require('../assets/rave.jpeg')} style = {listEvents.eventPic}/> 
+                <View style = {listEvents.eventDetails}>
+                    <Text style = {listEvents.eventTitle}> Reggaeton party </Text>
+                    <Text style = {listEvents.eventDistance}> 2.5 km away </Text>
+                </View>
+                <Image source={require('../assets/arrow.png')} style = {listEvents.eventNavigate}/>
+            </Pressable>
+            <Pressable style = {listEvents.eventElement}>
+                <Image source={require('../assets/rave.jpeg')} style = {listEvents.eventPic}/> 
+                <View style = {listEvents.eventDetails}>
+                    <Text style = {listEvents.eventTitle}> Reggaeton party </Text>
+                    <Text style = {listEvents.eventDistance}> 2.5 km away </Text>
+                </View>
+                <Image source={require('../assets/arrow.png')} style = {listEvents.eventNavigate}/>
+            </Pressable>
+            <Pressable style = {listEvents.eventElement}>
+                <Image source={require('../assets/rave.jpeg')} style = {listEvents.eventPic}/> 
+                <View style = {listEvents.eventDetails}>
+                    <Text style = {listEvents.eventTitle}> Reggaeton party </Text>
+                    <Text style = {listEvents.eventDistance}> 2.5 km away </Text>
+                </View>
+                <Image source={require('../assets/arrow.png')} style = {listEvents.eventNavigate}/>
+            </Pressable>
+            <Pressable style = {listEvents.eventElement}>
+                <Image source={require('../assets/rave.jpeg')} style = {listEvents.eventPic}/> 
+                <View style = {listEvents.eventDetails}>
+                    <Text style = {listEvents.eventTitle}> Reggaeton party </Text>
+                    <Text style = {listEvents.eventDistance}> 2.5 km away </Text>
+                </View>
+                <Image source={require('../assets/arrow.png')} style = {listEvents.eventNavigate}/>
+            </Pressable>
+            <Pressable style = {listEvents.eventElement}>
+                <Image source={require('../assets/rave.jpeg')} style = {listEvents.eventPic}/> 
+                <View style = {listEvents.eventDetails}>
+                    <Text style = {listEvents.eventTitle}> Reggaeton party </Text>
+                    <Text style = {listEvents.eventDistance}> 2.5 km away </Text>
+                </View>
+                <Image source={require('../assets/arrow.png')} style = {listEvents.eventNavigate}/>
+            </Pressable>
+            <Pressable style = {listEvents.eventElement}>
+                <Image source={require('../assets/rave.jpeg')} style = {listEvents.eventPic}/> 
+                <View style = {listEvents.eventDetails}>
+                    <Text style = {listEvents.eventTitle}> Reggaeton party </Text>
+                    <Text style = {listEvents.eventDistance}> 2.5 km away </Text>
+                </View>
+                <Image source={require('../assets/arrow.png')} style = {listEvents.eventNavigate}/>
+            </Pressable>
+            <Pressable style = {listEvents.eventElement}>
+                <Image source={require('../assets/rave.jpeg')} style = {listEvents.eventPic}/> 
+                <View style = {listEvents.eventDetails}>
+                    <Text style = {listEvents.eventTitle}> Reggaeton party </Text>
+                    <Text style = {listEvents.eventDistance}> 2.5 km away </Text>
+                </View>
+                <Image source={require('../assets/arrow.png')} style = {listEvents.eventNavigate}/>
+            </Pressable>
+        </ScrollView>
+
+        <Text style = {{alignSelf: 'center', paddingTop: 20, fontSize: 20, color: 'rgb(62, 167, 253)'}}> Settings </Text>
     </View>
     )
 }

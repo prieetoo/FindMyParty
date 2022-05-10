@@ -1,4 +1,4 @@
-import { StyleSheet, Keyboard } from 'react-native'
+import { StyleSheet } from 'react-native'
 import { getStatusBarHeight } from 'react-native-status-bar-height'
 import color from '../styles/colors'
 
@@ -229,7 +229,10 @@ const listEvents = StyleSheet.create({
     titleBox: {
         flexDirection: 'row',
         paddingTop: 5,
-        paddingBottom: 5,
+        paddingBottom: 15,
+        paddingRight: 20,
+        justifyContent: "space-between",
+        textAlignVertical: "center",
     },
 
     actionsBox: {
@@ -254,8 +257,6 @@ const listEvents = StyleSheet.create({
 
     firstEventElement: {
         flexDirection: 'row',
-        borderTopWidth: 1,
-        borderTopColor: 'rgb(230, 230, 230)',
         height: 80,
         alignItems: 'center',
     },
@@ -299,10 +300,30 @@ const listEvents = StyleSheet.create({
         right: 15,
     },
 
+    eventScroll: {
+        height: 600,
+    },
+
     listActions: {
         fontSize: 17,
-        color: 'rgb(62, 167, 253)'
-    }
+        color: 'rgb(62, 167, 253)',
+        paddingTop: 8,
+        
+    },
+
+    fabutton: {
+        bottom: 220,
+        right: 40
+    },
+
+    fabuttonView: {
+        flex: 1,
+        backgroundColor: '#fff',
+    },
+
+    filterDropdownView: {
+        paddingTop: 8,
+    },
 })
 
 export { mainStyles, logStyles, listEvents }

@@ -12,6 +12,7 @@ export class Fabutton extends Component {
         Animated.spring(this.animation, {
             toValue,
             friction: 6,
+            useNativeDriver: "true",
         }).start();
 
         this.open = !this.open;
@@ -44,17 +45,20 @@ export class Fabutton extends Component {
 
         return (
             <View style={[styles.container, this.props.style]}>
+
                 <TouchableWithoutFeedback>
-                <Animated.View style={[styles.button, styles.submenu, locationStyle]}>
-                    <Entypo name="location-pin" size={20} color="#FFF"/>
-                </Animated.View>
+                    <Animated.View style={[styles.button, styles.submenu, locationStyle]}>
+                        <Entypo name="plus" size={23} color="#FFF"/>
+                    </Animated.View>
                 </TouchableWithoutFeedback>
                 
                 <TouchableWithoutFeedback onPress={this.toggleMenu}>
-                <Animated.View style={[styles.button, styles.menu, rotation]}>
-                    <AntDesign name="plus" size={24} color="#FFF"/>
-                </Animated.View>
+                    <Animated.View style={[styles.button, styles.menu, rotation]}>
+                        <AntDesign name="plus" size={29} color="#FFF"/>
+                    </Animated.View>
                 </TouchableWithoutFeedback>
+                
+
             </View>
         );
     }
@@ -84,6 +88,6 @@ const styles = StyleSheet.create ({
         height: 48,
         borderRadius: 48 /2,
         backgroundColor: '#00213b'
-    }
+    },
 });
 
