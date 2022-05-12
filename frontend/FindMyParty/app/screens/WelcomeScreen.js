@@ -24,6 +24,7 @@ export default function WelcomeScreen(props){
                                 <View style={logStyles.containerSocial}>
                                     <SocialIcon
                                         style = {logStyles.buttonSocialIcon}
+                                        onPress = {() => goToScreenMain('EventInfo')}
                                         title = 'Continue with Google' button 
                                         type='google-plus-official'
                                         fontFamily='RalewayUI'
