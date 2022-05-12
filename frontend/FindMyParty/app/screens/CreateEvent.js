@@ -1,11 +1,8 @@
-import React, { useState, useRef} from 'react'
+import React, {} from 'react'
 import { Text, View, SafeAreaView, TouchableWithoutFeedback, Pressable, Keyboard, TextInput } from 'react-native'
 import { logStyles } from '../styles/styles'
-import { SocialIcon } from 'react-native-elements'
 
-
-
-export default function CreateEventScreen() {
+export default function CreateEventScreen(props){
    
     return(
         <DismissKeyboard>
@@ -37,6 +34,18 @@ export default function CreateEventScreen() {
                                     <TextInput
                                     style = {logStyles.formFields} 
                                     placeholder = "Description" 
+                                    keyboardType='default'
+                                    autoComplete='postal-address-locality' 
+                                    autoCorrect = {true} 
+                                    autoCapitalize='sentences' 
+                                    returnKeyType='next'
+                                    onSubmitEditing={() => ref_input2.current.focus()}/>
+                                </View>
+
+                                <View>
+                                    <TextInput
+                                    style = {logStyles.formFields} 
+                                    placeholder = "Address" 
                                     keyboardType='default' 
                                     multiline={true}
                                     autoCorrect = {true} 
@@ -50,7 +59,7 @@ export default function CreateEventScreen() {
                             <View style = {logStyles.loginBox}>
                                 <View>
                                     <Pressable style = {({ pressed }) => [{ backgroundColor: pressed ? 'rgb(62, 167, 253)' : 'rgb(63, 152, 246)'}, logStyles.mainButton]} onPress = {() => goToScreen('MapList')}> 
-                                        <Text style = {{color: "white", fontSize: 20, fontFamily: 'RalewayUI',}}> Crear Evenento </Text>
+                                        <Text style = {{color: "white", fontSize: 20, fontFamily: 'RalewayUI',}}> Crear Evento </Text>
                                     </Pressable>
                                 </View>
 
@@ -61,16 +70,15 @@ export default function CreateEventScreen() {
                     </SafeAreaView>
         </DismissKeyboard>
     )
-}
 
-function CrearEvenento(){
-    goToScreen('Main')
+    function CrearEvenento(){
+        goToScreen('Main')
+    }
+    
+    function goToScreen(routeName){
+        props.navigation.navigate(routeName)
+    }
 }
-
-function goToScreen(routeName){
-    props.navigation.navigate(routeName)
-}
-
 
 const DismissKeyboard = ({ children }) => (
 <TouchableWithoutFeedback onPress = {() => Keyboard.dismiss()}> 

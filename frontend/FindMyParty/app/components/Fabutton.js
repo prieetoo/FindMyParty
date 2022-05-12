@@ -46,6 +46,12 @@ export class Fabutton extends Component {
         return (
             <View style={[styles.container, this.props.style]}>
 
+                <TouchableWithoutFeedback onPress={()=> goToScreen('CreateEvent')}>
+                    <Animated.View style={[styles.button, styles.submenu, locationStyle]}>
+                        <AntDesign name="heart" size={23} color="#FFF"/>
+                    </Animated.View>
+                </TouchableWithoutFeedback>
+
                 <TouchableWithoutFeedback>
                     <Animated.View style={[styles.button, styles.submenu, locationStyle]}>
                         <Entypo name="plus" size={23} color="#FFF"/>
@@ -61,6 +67,10 @@ export class Fabutton extends Component {
 
             </View>
         );
+
+        function goToScreen(routeName){
+            props.navigation.navigate(routeName)
+        }
     }
 }
 

@@ -59,8 +59,9 @@ export default function LoginScreen(props){
                                     </Pressable>
                                 </View>
 
-                                <View style={logStyles.containerSocial}>
+                                <View style={logStyles.containerSocial} >
                                     <SocialIcon
+                                        onPress={()=> goToScreen('CreateEvent')}
                                         style = {logStyles.buttonSocialIcon}
                                         title = 'Continue with Google' button 
                                         type='google-plus-official'
