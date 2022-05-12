@@ -16,8 +16,11 @@ export const Dropdown = () => {
             style = {pickerSelectStyles}
             onValueChange={(value) => console.log(value)}
             items={[
+                { label: 'Up next', value: 'upNext'},
                 { label: 'Distance', value: 'distance' },
                 { label: 'Assistants', value: 'assistants' },
+                { label: 'Host rating', value: 'hostRating'},
+                { label: 'Paid', value: 'isPaid'},
             ]}
         />
     );
@@ -29,7 +32,7 @@ const pickerSelectStyles = StyleSheet.create({
       color: 'black',
     },
     inputAndroid: {
-      fontSize: 16,
+      fontSize: 18,
       color: 'black',
     },
   });

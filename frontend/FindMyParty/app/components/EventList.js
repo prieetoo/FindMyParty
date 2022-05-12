@@ -1,12 +1,15 @@
 import React, {useState} from 'react'
-import { Text, Image, View, Pressable, ScrollView } from 'react-native'
+import { Text, Image, View, Pressable, ScrollView, SafeAreaView } from 'react-native'
 import { listEvents } from '../styles/styles';
 import { Dropdown } from './FilterPicker';
+import { useNavigation } from '@react-navigation/native';
 
 export function EventList(props) {
 
+    const navigation = useNavigation(); 
+
     return (
-    <View>
+    <SafeAreaView>
         <View style = {listEvents.titleBox}>
             <Text style = {listEvents.title}> Events near you </Text>
             <View style = {listEvents.filterDropdownView}>
@@ -15,7 +18,7 @@ export function EventList(props) {
         </View>
 
         <ScrollView style = {listEvents.eventScroll}>
-            <Pressable style = {listEvents.firstEventElement}>
+            <Pressable style = {listEvents.firstEventElement} onPress = {() => navigation.navigate(props, 'EventInfo')}>
                 <Image source={require('../assets/rave.jpeg')} style = {listEvents.eventPic}/> 
                 <View style = {listEvents.eventDetails}>
                     <Text style = {listEvents.eventTitle}> Rave Cave </Text>
@@ -89,7 +92,7 @@ export function EventList(props) {
             </Pressable>
         </ScrollView>
 
-        <Text style = {{alignSelf: 'center', paddingTop: 20, fontSize: 20, color: 'rgb(62, 167, 253)'}}> Settings </Text>
-    </View>
+        <Text style = {{alignSelf: 'center', paddingTop: 20, fontSize: 20, color: 'rgb(62, 167, 253)'}} onPress = {() => navigation.navigate('Settings')}> Settings </Text>
+    </SafeAreaView>
     )
 }

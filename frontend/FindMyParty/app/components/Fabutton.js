@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import { View, Text, StyleSheet, TouchableWithoutFeedback, Animated } from 'react-native'
 import {AntDesign, Entypo} from '@expo/vector-icons'
+import { useNavigation } from '@react-navigation/native'
 
 export class Fabutton extends Component {
-
 
     animation = new Animated.Value(0);
 
@@ -32,6 +32,18 @@ export class Fabutton extends Component {
             ]
         }
 
+        const likeStyle = {
+            transform: [
+                { scale: this.animation },
+                {
+                    translateY: this.animation.interpolate({
+                        inputRange: [0, 1],
+                        outputRange: [0, -140]
+                    })
+                }
+            ]
+        }
+
         const rotation = {
             transform: [
                 {
@@ -43,11 +55,12 @@ export class Fabutton extends Component {
             ]
         }
 
+
         return (
             <View style={[styles.container, this.props.style]}>
 
-                <TouchableWithoutFeedback onPress={()=> goToScreen('CreateEvent')}>
-                    <Animated.View style={[styles.button, styles.submenu, locationStyle]}>
+                <TouchableWithoutFeedback onPress={() => this.props}>
+                    <Animated.View style={[styles.button, styles.submenu, likeStyle]}>
                         <AntDesign name="heart" size={23} color="#FFF"/>
                     </Animated.View>
                 </TouchableWithoutFeedback>
@@ -67,10 +80,6 @@ export class Fabutton extends Component {
 
             </View>
         );
-
-        function goToScreen(routeName){
-            props.navigation.navigate(routeName)
-        }
     }
 }
 

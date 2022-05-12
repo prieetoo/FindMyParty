@@ -11,7 +11,7 @@ import { Fabutton } from '../components/Fabutton'
 export default function MapListScreen(props){
 
     const sheetRef = useRef(null);
-    const snapPoints = ["16%", "32%", "85%"];
+    const snapPoints = ["16%", "32%", "85%", "100%"];
 
     return(
         <GestureHandlerRootView style = {{ flex: 1 }}> 
@@ -25,7 +25,7 @@ export default function MapListScreen(props){
 
                 <BottomSheet ref={sheetRef} snapPoints={snapPoints} handleIndicatorStyle = {{width: 60, color: 'rgb(211, 211, 211)', alignSelf: 'center'}}>
                     <BottomSheetView>
-                        <EventList> </EventList>
+                        <EventList props = {props}> </EventList>
                     </BottomSheetView>
                 </BottomSheet>
 

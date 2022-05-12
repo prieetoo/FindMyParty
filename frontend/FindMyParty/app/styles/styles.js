@@ -301,7 +301,7 @@ const listEvents = StyleSheet.create({
     },
 
     eventScroll: {
-        height: 600,
+        height: 700,
     },
 
     listActions: {
@@ -324,6 +324,14 @@ const listEvents = StyleSheet.create({
     filterDropdownView: {
         paddingTop: 8,
     },
+
+    settingsOptions: {
+        flexDirection: 'row',
+        borderBottomWidth: 1,
+        borderBottomColor: 'rgb(230, 230, 230)',
+        height: 80,
+        alignItems: 'center',
+    }
 })
 
 export { mainStyles, logStyles, listEvents }

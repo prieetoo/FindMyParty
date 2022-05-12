@@ -1,9 +1,12 @@
 import React from 'react'
+import { useNavigation } from '@react-navigation/native';
 import { Text, Image, View, SafeAreaView, Pressable, TextInput } from 'react-native'
 import { logStyles } from '../styles/styles'
 import { SocialIcon } from 'react-native-elements'
 
 export default function WelcomeScreen(props){
+
+    const navigation = useNavigation(); 
 
     return(
            <SafeAreaView style = {logStyles.container}>
@@ -28,7 +31,7 @@ export default function WelcomeScreen(props){
                                 </View>
 
                                 <View>
-                                    <Pressable style = {({ pressed }) => [{ backgroundColor: pressed ? 'rgb(62, 167, 253)' : 'rgb(63, 152, 246)'}, logStyles.mainButton]} onPress = {() => goToScreenMain('Login')}> 
+                                    <Pressable style = {({ pressed }) => [{ backgroundColor: pressed ? 'rgb(62, 167, 253)' : 'rgb(63, 152, 246)'}, logStyles.mainButton]} onPress={() => navigation.navigate('Login')}> 
                                         <Text style = {{color: "white", fontSize: 20, fontFamily: 'RalewayUI',}}> Log in </Text>
                                     </Pressable>
                                 </View>
@@ -46,13 +49,5 @@ export default function WelcomeScreen(props){
                         </View>
                     </SafeAreaView>
 )
-
-    function goToScreenMain(routeName){
-        props.navigation.navigate(routeName)
-    }
-
-    function goToScreenSecondary(routeName){
-        props.navigation.navigate(routeName)
-    }
     
 }
