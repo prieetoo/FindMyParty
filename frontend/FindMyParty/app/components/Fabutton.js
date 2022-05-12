@@ -58,12 +58,7 @@ export class Fabutton extends Component {
 
         return (
             <View style={[styles.container, this.props.style]}>
-
-<<<<<<< HEAD
-                <TouchableWithoutFeedback onPress={() => this.props}>
-=======
                 <TouchableWithoutFeedback onPress={()=> goToScreen('CreateEvent')}>
->>>>>>> fe8b85628f855c357223edf83076f0eb69179465
                     <Animated.View style={[styles.button, styles.submenu, likeStyle]}>
                         <AntDesign name="heart" size={23} color="#FFF"/>
                     </Animated.View>
@@ -80,8 +75,6 @@ export class Fabutton extends Component {
                         <AntDesign name="plus" size={29} color="#FFF"/>
                     </Animated.View>
                 </TouchableWithoutFeedback>
-                
-
             </View>
         );
     }
