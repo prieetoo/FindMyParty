@@ -5,6 +5,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,13 +27,13 @@ public class EventoController {
   public String create_event(@RequestBody Map<String, ArrayList<String>> body){
     ArrayList<String> informacion = body.get("information");
     Punto p = new Punto(Float.parseFloat(informacion.get(1)), Float.parseFloat(informacion.get(2)));
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-    LocalDate fecha = LocalDate.parse(informacion.get(3), formatter);
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+    LocalDateTime fecha = LocalDateTime.parse(informacion.get(3), formatter);
     int user_id = Integer.parseInt(informacion.get(4));
     String ubicacion = informacion.get(5);
     Usuario anfitrion = new Usuario(user_id);
     ArrayList<String> etiquetas = body.get("tickets");
-    if (Evento.crear(informacion.get(0), p, ubicacion, fecha, anfitrion, etiquetas)) {
+    if (!Evento.crear(informacion.get(0), p, ubicacion, fecha, anfitrion, etiquetas)) {
       return "Error while creating Event";
     }
     return "Event created successfully";

@@ -16,7 +16,7 @@ public class Evento {
   private String nombre;
   private Punto coordenadas; //esto hay que cambiarlo en la bd sigue como varchar
   private String ubicacion;
-  private LocalDate fecha;
+  private LocalDateTime fecha;
   private Usuario host;
   private float valoracion;
   private ArrayList<Valoracion> valoraciones;
@@ -37,10 +37,10 @@ public class Evento {
     this.comentarios = new ArrayList<Comentario>();
     this.participantes = new ArrayList<Usuario>();
     this.publicaciones = new ArrayList<Publicacion>();
-    this.activo = fecha.isBefore(LocalDate.now());
+    this.activo = fecha.isBefore(LocalDateTime.now());
   }
 
-  public Evento(String nombre, Punto coordenadas, String ubicacion, LocalDate fecha, Usuario host, ArrayList<String> etiquetas) {
+  public Evento(String nombre, Punto coordenadas, String ubicacion, LocalDateTime fecha, Usuario host, ArrayList<String> etiquetas) {
     this.nombre = nombre;
     this.coordenadas = coordenadas;
     this.fecha = fecha;
@@ -51,7 +51,7 @@ public class Evento {
     this.comentarios = new ArrayList<Comentario>();
     this.participantes = new ArrayList<Usuario>();
     this.publicaciones = new ArrayList<Publicacion>();
-    this.activo = fecha.isBefore(LocalDate.now());
+    this.activo = fecha.isBefore(LocalDateTime.now());
     this.ubicacion = ubicacion;
     //Añadir a la BD
     String consulta = "INSERT INTO Evento (nombre, ubicacion, fecha, valoracion, usuario_id, x, y) " +
@@ -81,14 +81,14 @@ public class Evento {
         this.id = id;
         this.nombre = rs.getString(3);
         this.ubicacion = rs.getString(4);
-        this.fecha = LocalDate.parse(rs.getString(5));
+        this.fecha = LocalDateTime.parse(rs.getString(5));
         this.valoracion = rs.getFloat(6);
       }
     } catch (SQLException e) {
       e.printStackTrace();
     }
   }
-  public Evento(int id,String nombre, Punto ubicacion, LocalDate fecha, Usuario host, ArrayList<String> etiquetas) {
+  public Evento(int id,String nombre, Punto ubicacion, LocalDateTime fecha, Usuario host, ArrayList<String> etiquetas) {
     this.nombre = nombre;
     this.coordenadas = ubicacion;
     this.fecha = fecha;
@@ -99,7 +99,7 @@ public class Evento {
     this.comentarios = new ArrayList<Comentario>();
     this.participantes = new ArrayList<Usuario>();
     this.publicaciones = new ArrayList<Publicacion>();
-    this.activo = fecha.isBefore(LocalDate.now());
+    this.activo = fecha.isBefore(LocalDateTime.now());
     this.id = id;
     String consulta = "";
     ResultSet rs = DB.getInstance().executeUpdateWithKeys(consulta);
@@ -111,13 +111,13 @@ public class Evento {
     }
   }
 
-  public static boolean crear(String nombre, Punto coordenadas, String ubicacion, LocalDate fecha, Usuario host, ArrayList<String> etiquetas) {
+  public static boolean crear(String nombre, Punto coordenadas, String ubicacion, LocalDateTime fecha, Usuario host, ArrayList<String> etiquetas) {
     int valoracion = 0;
+    String aux = fecha.toString();
     String consulta = "INSERT INTO Evento (nombre, ubicacion, fecha, valoracion, usuario_id, x, y) " +
         "VALUES ('" +
         nombre + "', '" +
-        ubicacion + "', STR_TO_DATE('" +
-        fecha.toString() + "','%Y-%m-%d'), '" +
+        ubicacion + "', STR_TO_DATE('" + fecha.toString() + "','%Y-%m-%dT%H:%i:%s'), '" +
         valoracion + "', '" +
         host.getId() + "','" +
         coordenadas.getX() + "','" +
@@ -125,7 +125,7 @@ public class Evento {
     return DB.getInstance().executeUpdate(consulta);
   }
 
-  public boolean modificar(String nombre, String ubicacion, LocalDate fecha, Usuario host, ArrayList<String> etiquetas, Punto coordenadas) {
+  public boolean modificar(String nombre, String ubicacion, LocalDateTime fecha, Usuario host, ArrayList<String> etiquetas, Punto coordenadas) {
     this.nombre = nombre;
     this.ubicacion = ubicacion;
     this.fecha = fecha;
@@ -302,11 +302,11 @@ public class Evento {
     this.coordenadas = coordenadas;
   }
 
-  public LocalDate getFecha() {
+  public LocalDateTime getFecha() {
     return fecha;
   }
 
-  public void setFecha(LocalDate fecha) {
+  public void setFecha(LocalDateTime fecha) {
     this.fecha = fecha;
   }
 

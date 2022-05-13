@@ -232,10 +232,10 @@ public class Usuario{
     }
     if(owner) {
       DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/M/yyyy");
-      LocalDate localDate = LocalDate.parse(fecha,formatter);
+      LocalDateTime localDateTime = LocalDateTime.parse(fecha,formatter);
       for (int i = 0; i < this.eventos.size(); i++) {
         if (eventos.get(i).getId() == id)
-          return eventos.get(i).modificar(nombre, ubicacion, localDate, this, eventos.get(i).getEtiquetas(), coordenadas);
+          return eventos.get(i).modificar(nombre, ubicacion, localDateTime, this, eventos.get(i).getEtiquetas(), coordenadas);
       }
     }
     return owner;
