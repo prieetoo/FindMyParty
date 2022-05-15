@@ -24,7 +24,7 @@ export default function WelcomeScreen(props){
                                 <View style={logStyles.containerSocial}>
                                     <SocialIcon
                                         style = {logStyles.buttonSocialIcon}
-                                        onPress = {() => goToScreenMain('EventInfo')}
+                                        onPress = {() => navigation.navigate('CreateEvent')}
                                         title = 'Continue with Google' button 
                                         type='google-plus-official'
                                         fontFamily='RalewayUI'
@@ -38,7 +38,7 @@ export default function WelcomeScreen(props){
                                 </View>
 
                                 <View>
-                                    <Pressable style = {logStyles.secondaryButton} onPress = {() => goToScreenSecondary('Registro')}> 
+                                    <Pressable style = {logStyles.secondaryButton} onPress = {() => navigation.navigate('Register')}> 
                                         {({ pressed }) => ( <Text style={[{ color: pressed ? 'rgb(62, 167, 253)' : 'rgb(63, 152, 246)' }, logStyles.registerSecondary]}> Register </Text>)}
                                     </Pressable>
                                 </View>

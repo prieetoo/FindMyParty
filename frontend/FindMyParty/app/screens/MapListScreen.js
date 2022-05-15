@@ -19,10 +19,6 @@ export default function MapListScreen(props){
                 <MapScreen/>
                 <BlurView style={listEvents.statusBarBlur} intensity={100} />
 
-                <View style={listEvents.fabuttonView}>
-                    <Fabutton style = {listEvents.fabutton}/>
-                </View>
-
                 <BottomSheet ref={sheetRef} snapPoints={snapPoints} handleIndicatorStyle = {{width: 60, color: 'rgb(211, 211, 211)', alignSelf: 'center'}}>
                     <BottomSheetView>
                         <EventList props = {props}> </EventList>

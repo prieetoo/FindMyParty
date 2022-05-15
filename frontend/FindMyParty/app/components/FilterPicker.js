@@ -7,7 +7,7 @@ export const Dropdown = () => {
     const placeholder = {
         label: 'Filter by...',
         value: null,
-        color: '#9EA0A4',
+        color: 'black',
       };
 
     return (
@@ -28,11 +28,12 @@ export const Dropdown = () => {
 
 const pickerSelectStyles = StyleSheet.create({
     inputIOS: {
-      fontSize: 18,
-      color: 'black',
+      fontSize: 17,
+      color: 'rgb(62, 167, 253)',
+      marginRight: 25,
     },
     inputAndroid: {
-      fontSize: 18,
-      color: 'black',
+      fontSize: 17,
+      color: 'rgb(62, 167, 253)',
     },
   });

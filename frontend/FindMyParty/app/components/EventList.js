@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React from 'react'
 import { Text, Image, View, Pressable, ScrollView, SafeAreaView } from 'react-native'
 import { listEvents } from '../styles/styles';
 import { Dropdown } from './FilterPicker';
@@ -12,13 +12,18 @@ export function EventList(props) {
     <SafeAreaView>
         <View style = {listEvents.titleBox}>
             <Text style = {listEvents.title}> Events near you </Text>
+        </View>
+
+        <View style = {listEvents.actionsBox}>
+            <Text style = {listEvents.listActions} onPress = {() => navigation.navigate('CreateEvent')}> Create event </Text>
             <View style = {listEvents.filterDropdownView}>
                 <Dropdown/>
             </View>
         </View>
 
+
         <ScrollView style = {listEvents.eventScroll}>
-            <Pressable style = {listEvents.firstEventElement} onPress = {() => navigation.navigate(props, 'EventInfo')}>
+            <Pressable style = {listEvents.firstEventElement} onPress = {() => navigation.navigate('EventInfo')}>
                 <Image source={require('../assets/rave.jpeg')} style = {listEvents.eventPic}/> 
                 <View style = {listEvents.eventDetails}>
                     <Text style = {listEvents.eventTitle}> Rave Cave </Text>

@@ -229,7 +229,6 @@ const listEvents = StyleSheet.create({
     titleBox: {
         flexDirection: 'row',
         paddingTop: 5,
-        paddingBottom: 15,
         paddingRight: 20,
         justifyContent: "space-between",
         textAlignVertical: "center",
@@ -242,10 +241,11 @@ const listEvents = StyleSheet.create({
         borderTopStartRadius: 20,
         borderTopEndRadius: 20,
         borderTopColor: 'rgb(220, 220, 220)',
-        marginLeft: 20,
-        marginRight: 20,
-        paddingTop: 20,
+        paddingTop: 10,
         paddingBottom: 15,
+        borderBottomWidth: 1,
+        borderBottomColor: 'rgb(230, 230, 230)',
+
     },
 
     title: {
@@ -301,14 +301,14 @@ const listEvents = StyleSheet.create({
     },
 
     eventScroll: {
-        height: 700,
+        height: 670,
     },
 
     listActions: {
         fontSize: 17,
         color: 'rgb(62, 167, 253)',
         paddingTop: 8,
-        
+        marginLeft: 20,
     },
 
     fabutton: {

@@ -1,8 +1,11 @@
-import React, {} from 'react'
+import React, {useRef} from 'react'
 import { Text, View, SafeAreaView, TouchableWithoutFeedback, Pressable, Keyboard, TextInput } from 'react-native'
 import { logStyles } from '../styles/styles'
 
 export default function CreateEventScreen(props){
+
+    const ref_input2 = useRef();
+    const ref_input3 = useRef();
    
     return(
         <DismissKeyboard>
@@ -29,29 +32,29 @@ export default function CreateEventScreen(props){
                                     returnKeyType='next'
                                     onSubmitEditing={() => ref_input2.current.focus()}/>
                                 </View>
-                                
+
                                 <View>
                                     <TextInput
                                     style = {logStyles.formFields} 
                                     placeholder = "Description" 
+                                    keyboardType='default' 
+                                    autoCorrect = {true} 
+                                    autoCapitalize='sentences' 
+                                    ref={ref_input3}
+                                    returnKeyType='done' />
+                                </View>
+                                
+                                <View>
+                                    <TextInput
+                                    style = {logStyles.formFields} 
+                                    placeholder = "Address" 
                                     keyboardType='default'
                                     autoComplete='postal-address-locality' 
                                     autoCorrect = {true} 
                                     autoCapitalize='sentences' 
                                     returnKeyType='next'
-                                    onSubmitEditing={() => ref_input2.current.focus()}/>
-                                </View>
-
-                                <View>
-                                    <TextInput
-                                    style = {logStyles.formFields} 
-                                    placeholder = "Address" 
-                                    keyboardType='default' 
-                                    multiline={true}
-                                    autoCorrect = {true} 
-                                    autoCapitalize='sentences' 
-                                    returnKeyType='next'
-                                    onSubmitEditing={() => ref_input2.current.focus()}/>
+                                    ref={ref_input2}
+                                    onSubmitEditing={() => ref_input3.current.focus()}/>
                                 </View>
                                 
                             </View>
