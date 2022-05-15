@@ -125,6 +125,12 @@ public class Usuario{
     }
     return "-1";
   }
+  public ArrayList<Evento> buscarEventosCercanos()
+  {
+    Busqueda busqueda = new Busqueda(this);
+    return busqueda.getEventos();
+    //tema de controlador se me escapa aqui, pregunto clase
+  }
 
   public static String recuperarPassword(String email){
 

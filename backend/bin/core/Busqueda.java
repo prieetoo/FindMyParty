@@ -1,9 +1,7 @@
 package core;
 
 import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class Busqueda {
@@ -23,7 +21,6 @@ public class Busqueda {
         radio = 2; //yo guardaria un radio en usuario que sea el que ha predefinido el al crearse el usuario y que lo pueda modificar
         etiquetes = new ArrayList<>();
 
-        /*
         String consulta = "SELECT * "+
                 "FROM Evento e" +
                 "WHERE "+ radio +" >= SQRT(POWER("+ "u.getUbicacion().getX()" + "-e.x,2)+ POWER("+"u.getUbicacion().getY()" +" -e.y,2));";
@@ -39,7 +36,6 @@ public class Busqueda {
             e.printStackTrace();
         }
 
-         */
     }
     public Busqueda (Usuario u,float radio, ArrayList<String> etiquetes)
     {
@@ -47,7 +43,7 @@ public class Busqueda {
         this.radio = radio; //yo guardaria un radio en usuario que sea el que ha predefinido el al crearse el usuario y que lo pueda modificar
         this.etiquetes = new ArrayList<>(etiquetes);
         ArrayList<Evento> aux = new ArrayList<>();
-        /*
+
         String consulta = "SELECT * "+
                 "FROM Evento e" +
                 "WHERE "+ this.radio+" >= SQRT(POWER("+ "u.getUbicacion().getX()" + "-e.x,2)+ POWER("+"u.getUbicacion().getY()" +" -e.y,2));";
@@ -74,7 +70,6 @@ public class Busqueda {
             e.printStackTrace();
         }
 
-         */
     }
 
     public ArrayList<Evento> getEventos() {
