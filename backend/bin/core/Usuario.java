@@ -9,7 +9,6 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -141,22 +140,24 @@ public class Usuario{
     return "-1";
   }
 
-  public boolean modificarPerfil(String nombre,String password, String fechaNacimiento, String foto, String email){
+  public static String modificarPerfil( int id, String nombre,String password, String fechaNacimiento, String foto, String email){
     // Añadir a la bd
-
+    //comprobar existencia de usuario
     String consulta = "UPDATE Usuario " +
             "SET nombre =' " + nombre + "'," +
             "    password  = '" + password + "'," +
             "    fecha_nacimiento = STR_TO_DATE('" + fechaNacimiento + "','%d/%m/%Y')," +
             "    foto = '" + foto + "'," +
             "    mail = '" + email +
-            "' WHERE id = " + this.id  + ";";
-    this.nombre=nombre;
-    this.password=password;
-    this.foto=foto;
-    this.email=email;
-    boolean rs = DB.getInstance().executeUpdate(consulta);
-    return rs;
+            "' WHERE id = " + id  + ";";
+    ResultSet rs = DB.getInstance().executeUpdateWithKeys(consulta);
+    try {
+      if(rs.next())
+        return String.valueOf(rs.getInt(1));
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+    return "-1";
   }
 
   public static boolean eliminar(String id){

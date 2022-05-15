@@ -1,13 +1,10 @@
 package core;
 
-import org.json.JSONObject;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -38,6 +35,19 @@ public class UsuarioController {
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     LocalDate nacimiento = LocalDate.parse(birth_date, formatter);
     return Usuario.registrar(name,pwd, nacimiento,foto,email);
+  }
+  @PostMapping(value= "/user/modify_profile", consumes = MediaType.APPLICATION_JSON_VALUE,
+    produces = MediaType.ALL_VALUE)
+  public String modify_profile(@RequestBody Map<String, String> body){
+      int id = Integer.parseInt(body.get("id"));
+      String name = body.get("name");
+      String pwd = body.get("password");
+      String foto = body.get("photo");
+      String email = body.get("email");
+      String birth_date = body.get("date_birth");
+      DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+      LocalDate nacimiento = LocalDate.parse(birth_date, formatter);
+      return Usuario.modificarPerfil(id,name, pwd,birth_date, foto, email);
   }
 
   @PostMapping("/user/get_password")
