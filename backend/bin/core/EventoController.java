@@ -39,6 +39,14 @@ public class EventoController {
     return "Event created successfully";
   }
 
+  @GetMapping("/event/comment_event/{event_id}/{user_id}/{content}")
+  public String comment_event(@PathVariable("event_id") String event_id, @PathVariable("user_id") String user_id, @PathVariable("content") String content){
+    if (Evento.comentar(Integer.parseInt(event_id), Integer.parseInt(user_id), content)) {
+      return "Comment sent";
+    }
+    return "Error commenting this event";
+  }
+
   @GetMapping(value = "/event/eliminate/{event_id}")
   public String create_event(@PathVariable("event_id") String event_id){
     if (!Evento.eliminar(Integer.parseInt(event_id))) {
