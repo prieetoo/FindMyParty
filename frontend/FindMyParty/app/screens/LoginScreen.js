@@ -10,6 +10,8 @@ export default function LoginScreen(props){
     const [password, setPassword] = useState('')
     const ref_input2 = useRef();
 
+
+
     return(
     <DismissKeyboard>
            <SafeAreaView style = {logStyles.container}>
@@ -33,6 +35,7 @@ export default function LoginScreen(props){
                                     autoCorrect = {false} 
                                     autoCapitalize='none' 
                                     returnKeyType='next'
+                                    onChangeText={text => setEmail(text)}
                                     onSubmitEditing={() => ref_input2.current.focus()}/>
                                 </View>
                                 
@@ -54,7 +57,7 @@ export default function LoginScreen(props){
 
                             <View style = {logStyles.loginBox}>
                                 <View>
-                                    <Pressable style = {({ pressed }) => [{ backgroundColor: pressed ? 'rgb(62, 167, 253)' : 'rgb(63, 152, 246)'}, logStyles.mainButton]} onPress = {() => goToScreen('MapList')}> 
+                                    <Pressable style = {({ pressed }) => [{ backgroundColor: pressed ? 'rgb(62, 167, 253)' : 'rgb(63, 152, 246)'}, logStyles.mainButton]} onPress = {() => login(email, password)}> 
                                         <Text style = {{color: "white", fontSize: 20, fontFamily: 'RalewayUI',}}> Log in </Text>
                                     </Pressable>
                                 </View>
@@ -79,15 +82,6 @@ export default function LoginScreen(props){
                     </SafeAreaView>
         </DismissKeyboard>
 )
-
-    function iniciarSesion(){
-        loginAction({
-            type:'sign', data:{
-                email, password
-            }
-        })
-        goToScreen('Main')
-    }
 
     function goToScreen(routeName){
         props.navigation.navigate(routeName)
