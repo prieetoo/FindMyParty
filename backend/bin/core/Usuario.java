@@ -1,7 +1,10 @@
 package core;
 
+import org.apache.coyote.Response;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -102,6 +105,7 @@ public class Usuario{
 
   public static String registrar(String nombre, String password, LocalDate fechaNacimiento, String foto, String email) {
     //Comprobar existencia de mail
+    String result = "";
     String consulta_mail = "SELECT password FROM Usuario u where u.mail = '" + email + "';";
     ResultSet rs_mail = DB.getInstance().executeQuery(consulta_mail);
     try {
@@ -113,17 +117,17 @@ public class Usuario{
         ResultSet rs = DB.getInstance().executeUpdateWithKeys(consulta);
         try {
           if(rs.next())
-            return String.valueOf(rs.getInt(1));
+          return "{\"result\":\"" + (rs.getInt(1)) + "\"}";
         } catch (SQLException e) {
           e.printStackTrace();
         }
       }else{
-        return "This Email has already a user account";
+        return "{\"result\":\"This Email has already a user account\"}";
       }
     } catch (SQLException e) {
       e.printStackTrace();
     }
-    return "-1";
+    return "{\"result\":\"-1\"}";
   }
   public ArrayList<Evento> buscarEventosCercanos()
   {

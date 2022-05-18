@@ -1,6 +1,10 @@
 package core;
 
+import com.mysql.cj.jdbc.exceptions.MySQLQueryInterruptedException;
+import org.json.JSONObject;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -25,7 +29,7 @@ public class UsuarioController {
   }
 
   @PostMapping(value = "/user/register", consumes = MediaType.APPLICATION_JSON_VALUE,
-      produces = MediaType.ALL_VALUE)
+      produces = MediaType.APPLICATION_JSON_VALUE)
   public String register_user(@RequestBody Map<String, String> body){
     String name = body.get("name");
     String pwd = body.get("password");
@@ -36,6 +40,7 @@ public class UsuarioController {
     LocalDate nacimiento = LocalDate.parse(birth_date, formatter);
     return Usuario.registrar(name,pwd, nacimiento,foto,email);
   }
+
   @PostMapping(value= "/user/modify_profile", consumes = MediaType.APPLICATION_JSON_VALUE,
     produces = MediaType.ALL_VALUE)
   public String modify_profile(@RequestBody Map<String, String> body){
