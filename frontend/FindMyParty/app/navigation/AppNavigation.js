@@ -9,6 +9,7 @@ import MapListScreen from '../screens/MapListScreen';
 import CreateEventScreen from '../screens/CreateEvent';
 import EventInfoScreen from '../screens/EventInfoScreen';
 import Settings from '../screens/Settings';
+import EditEvent from '../screens/EditEvent'
 
 const Stack = createNativeStackNavigator();
 
@@ -24,6 +25,7 @@ export default function MyStack() {
                 <Stack.Screen name="CreateEvent" component={CreateEventScreen} options = {{headerShown: false}}/>
                 <Stack.Screen name="EventInfo" component={EventInfoScreen} options = {{headerShown: false}}/>
                 <Stack.Screen name="Settings" component={Settings} options = {{headerShown: true}}/>
+                <Stack.Screen name="EditEvent" component={EditEvent} options = {{headerShown: true}}/>
             </Stack.Navigator>
         </NavigationContainer>
     )

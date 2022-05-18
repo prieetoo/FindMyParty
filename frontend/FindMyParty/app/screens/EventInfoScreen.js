@@ -38,9 +38,13 @@ export default function EventInfoScreen(props){
             name="arrow-back-ios"
             size={28}
             color={colors.white}
-            onPress={() => navigation.goBack()}
+            onPress = {() => goToScreen('MapList')}
           />
-          <Icon name="bookmark-border" size={28} color={colors.white} />
+          <Icon 
+            name="border-color" 
+            size={28} color={colors.white}
+            onPress = {() => goToScreen('EditEvent')}
+            />
         </View>
       </ImageBackground>
       <View>
@@ -117,6 +121,11 @@ export default function EventInfoScreen(props){
       </View>
     </ScrollView>
   );
+
+  function goToScreen(routeName){
+    props.navigation.navigate(routeName)
+}
+
 };
 
 const style = StyleSheet.create({
