@@ -16,10 +16,11 @@ public class EventoController {
 
   @GetMapping("/event/join/{event_id}/{user_id}")
   public String join(@PathVariable("event_id") String event_id, @PathVariable("user_id") String user_id){
+    // 1 correct, -1 error
     if (Evento.anadirParticipante(Integer.parseInt(event_id), Integer.parseInt(user_id))) {
-      return "User joined the event successfully";
+      return "\"result\":1";
     }
-    return "Error joining user to event";
+    return "\"result\":-1";
   }
 
   @PostMapping(value = "/event/create", consumes = MediaType.APPLICATION_JSON_VALUE,
@@ -33,34 +34,38 @@ public class EventoController {
     String ubicacion = informacion.get(5);
     Usuario anfitrion = new Usuario(user_id);
     ArrayList<String> etiquetas = body.get("tickets");
+    // 1 correct, -1 error
     if (!Evento.crear(informacion.get(0), p, ubicacion, fecha, anfitrion, etiquetas)) {
-      return "Error while creating Event";
+      return "\"result\":-1";
     }
-    return "Event created successfully";
+    return "\"result\":1";
   }
 
   @GetMapping("/event/comment_event/{event_id}/{user_id}/{content}")
   public String comment_event(@PathVariable("event_id") String event_id, @PathVariable("user_id") String user_id, @PathVariable("content") String content){
+    // 1 correct, -1 error
     if (Evento.comentar(Integer.parseInt(event_id), Integer.parseInt(user_id), content)) {
-      return "Comment sent";
+      return "\"result\":1";
     }
-    return "Error commenting this event";
+    return "\"result\"-1";
   }
 
   @GetMapping(value = "/event/eliminate/{event_id}")
   public String create_event(@PathVariable("event_id") String event_id){
+    // 1 correct, -1 error
     if (!Evento.eliminar(Integer.parseInt(event_id))) {
-      return "Error while eliminating Event";
+      return "\"result\":-1";
     }
-    return "Event eliminated successfully";
+    return "\"result\":1";
   }
 
   @PostMapping("/event/valorar_event")
   public String valorar_usuario(@RequestBody Map<String, String> body){
+    // 1 correct, -1 error
     if (!Evento.valorar(Integer.parseInt(body.get("destinatario")),Float.parseFloat(body.get("valor")), Integer.parseInt(body.get("autor")))) {
-      return "Error while valuating event";
+      return "\"result\"-1";
     }
-    return "Event valuating successfully";
+    return "\"result\":1";
   }
 
 }

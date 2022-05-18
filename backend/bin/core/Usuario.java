@@ -90,17 +90,17 @@ public class Usuario{
     try {
       if(rs.next()) {
         if(Objects.equals(rs.getString("password"), password)){
-          return "Id del usuario: " + String.valueOf(rs.getInt("id"));
+          return "\"result\":" + rs.getInt("id");
         }else{
-          return "Wrong Password";
+          return "\"result\":-1";
         }
       }else{
-        return "This Email has no user";
+        return "\"result\":-2";
       }
     } catch (SQLException e) {
       e.printStackTrace();
     }
-    return "-1";
+    return "\"result\":0";
   }
 
   public static String registrar(String nombre, String password, LocalDate fechaNacimiento, String foto, String email) {
@@ -117,18 +117,19 @@ public class Usuario{
         ResultSet rs = DB.getInstance().executeUpdateWithKeys(consulta);
         try {
           if(rs.next())
-          return "{\"result\":\"" + (rs.getInt(1)) + "\"}";
+          return "{\"result\":" + (rs.getInt(1)) + "}";
         } catch (SQLException e) {
           e.printStackTrace();
         }
       }else{
-        return "{\"result\":\"This Email has already a user account\"}";
+        return "{\"result\":-1}";
       }
     } catch (SQLException e) {
       e.printStackTrace();
     }
-    return "{\"result\":\"-1\"}";
+    return "{\"result\":0}";
   }
+
   public ArrayList<Evento> buscarEventosCercanos()
   {
     Busqueda busqueda = new Busqueda(this);
@@ -137,17 +138,16 @@ public class Usuario{
   }
 
   public static String recuperarPassword(String email){
-
     String consulta = "SELECT password FROM Usuario u where u.mail = " + email + ";";
     // Consultar a la bd password, si no existe email devolver mensaje de error
     ResultSet rs = DB.getInstance().executeQuery(consulta);
     try {
-      if(rs.next() == false) { return "This email doesn't belong to any user"; }
-      return rs.getString("password");
+      if(rs.next() == false) { return "\"result\":-1"; }
+      return "\"result\":" + rs.getString("password");
     } catch (SQLException e) {
       e.printStackTrace();
     }
-    return "-1";
+    return "\"result\":0";
   }
 
   public static String modificarPerfil( int id, String nombre,String password, String fechaNacimiento, String foto, String email){
@@ -163,11 +163,11 @@ public class Usuario{
     ResultSet rs = DB.getInstance().executeUpdateWithKeys(consulta);
     try {
       if(rs.next())
-        return String.valueOf(rs.getInt(1));
+        return "\"result\":" + rs.getInt(1);
     } catch (SQLException e) {
       e.printStackTrace();
     }
-    return "-1";
+    return "\"result\":0";
   }
 
   public static boolean eliminar(String id){
