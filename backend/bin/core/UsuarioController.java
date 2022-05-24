@@ -69,45 +69,45 @@ public class UsuarioController {
   public String comment(@PathVariable("autor_id") String autor_id, @PathVariable("destinatario_id") String destinatario_id, @PathVariable("contenido") String contenido){
     // 1 comented, -1 error
     if (Usuario.comentar(Integer.parseInt(autor_id), Integer.parseInt(destinatario_id), contenido)) {
-      return "\"result\":1";
+      return "{\"result\":1}";
     }
-    return "\"result\":-1";
+    return "{\"result\":-1}";
   }
 
   @GetMapping("/user/eliminate/{user_id}")
   public String eliminate_user(@PathVariable("user_id") String user_id){
     // 1 correct, -1 error
     if (!Usuario.eliminar(user_id)) {
-      return "\"result\":-1";
+      return "{\"result\":1}";
     }
-    return "\"result\":1";
+    return "{\"result\":-1}";
   }
 
   @GetMapping("/user/follow/{follower_id}/{followed_id}")
   public String follow_user(@PathVariable("follower_id") String follower_id, @PathVariable("followed_id") String followed_id){
     // 1 correct, -1 error
     if (!Usuario.seguirUsuario(follower_id, followed_id)) {
-      return "\"result\":-1";
+      return "{\"result\":1}";
     }
-    return "\"result\":1";
+    return "{\"result\":-1}";
   }
 
   @GetMapping("/user/unfollow/{follower_id}/{unfollowed_id}")
   public String unfollow_user(@PathVariable("follower_id") String follower_id, @PathVariable("unfollowed_id") String followed_id){
     // 1 correct, -1 error
     if (!Usuario.dejarSeguirUsuario(follower_id, followed_id)) {
-      return "\"result\":-1";
+      return "{\"result\":1}";
     }
-    return "\"result\":1";
+    return "{\"result\":-1}";
   }
 
   @PostMapping("/user/valorar_usuario")
   public String valorar_usuario(@RequestBody Map<String, String> body){
     // 1 correct, -1 error
     if (!Usuario.valorarUsuario(Integer.parseInt(body.get("destinatario")),Float.parseFloat(body.get("valor")), Integer.parseInt(body.get("autor")))) {
-      return "\"result\":-1";
+      return "{\"result\":1}";
     }
-    return "\"result\":1";
+    return "{\"result\":-1}";
   }
 
 }
