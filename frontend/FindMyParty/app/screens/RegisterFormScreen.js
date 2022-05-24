@@ -2,16 +2,16 @@ import React, { useState, useRef } from 'react'
 import { StyleSheet, SafeAreaView, Pressable, Text, TextInput, View, Keyboard, TouchableWithoutFeedback } from 'react-native'
 import { logStyles } from '../styles/styles'
 import { CheckBox, SocialIcon, Button } from 'react-native-elements'
+import { useNavigation } from '@react-navigation/native';
 
-function goToScreen(props, routeName) {
-    props.navigation.navigate(routeName)
-}
 
 export default function RegistroScreen(props) {
 
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [username, setUsername] = useState('')
+    const navigation = useNavigation();
+
 
 
     const ref_input2 = useRef();
@@ -63,7 +63,6 @@ export default function RegistroScreen(props) {
                                     autoCapitalize='none' 
                                     returnKeyType='next' 
                                     secureTextEntry = {true}
-                                    onChangeText={text => setPassword(text)}
                                     onSubmitEditing={() => ref_input4.current.focus()}
                                     ref={ref_input3}/>
                                 </View>
@@ -77,24 +76,16 @@ export default function RegistroScreen(props) {
                                     autoCapitalize='none' 
                                     returnKeyType='done' 
                                     secureTextEntry = {true}
+                                    onChangeText={text => setPassword(text)}
                                     ref={ref_input4}/>
                                 </View>
                             </View>
 
                             <View style = {logStyles.registerBox}>
                                 <View>
-                                    <Pressable style = {({ pressed }) => [{ backgroundColor: pressed ? 'rgb(62, 167, 253)' : 'rgb(63, 152, 246)'}, logStyles.mainButton]} onPress = {(username, email, password) => register(username, email, password)} >
+                                    <Pressable style = {({ pressed }) => [{ backgroundColor: pressed ? 'rgb(62, 167, 253)' : 'rgb(63, 152, 246)'}, logStyles.mainButton]} onPress = {() => register(username, email, password, navigation)} >
                                         <Text style = {{color: "white", fontSize: 20, fontFamily: 'RalewayUI',}}>Register</Text>
                                     </Pressable>
-                                </View>
-
-                                <View styles={logStyles.containerSocial}>
-                                <SocialIcon
-                                    style = {logStyles.buttonSocialIcon}
-                                    title = 'Continue with Google' button 
-                                    type='google-plus-official'
-                                    fontFamily='RalewayUI'
-                                    />
                                 </View>
                             </View>
 
@@ -115,30 +106,57 @@ const DismissKeyboard = ({ children }) => (
     </TouchableWithoutFeedback>
     );
 
-    const register = async(username, email, password) => {
+    const register = (userUsername, userEmail, userPassword, userNavigation) => {
         
         try { 
-            let response = await fetch('http://192.168.68.102:8080/user/register', {
+            let response = fetch('http://192.168.68.107:8080/user/register', {
             method: 'POST',
             headers: {
                 Accept: 'application/json',
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                name: "prieetoo",
-                password: "hola1234",
+                name: userUsername,
+                password: userPassword,
                 photo: "jaja",
-                email: "email",
+                email: userEmail,
                 date_birth: "2001-03-18"
             })
         })
-        .then(header => {console.log(JSON.stringify(header))})
-        .then(body => {console.log(JSON.stringify(body))})
+        .then(response => response.json())
+        .then(login(userEmail, userPassword, userNavigation))
     }
     catch (error) {
         console.error(error);
      }
 
     };
+
+    const login = (userEmail, userPassword, navigation) => {
+        
+        try { 
+            let response = fetch('http://192.168.68.107:8080/user/login', {
+                method: 'POST',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    password: userPassword,
+                    email: userEmail,
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                    navigation.navigate('MapList')
+                
+            })
+    
+        }
+        catch (error) {
+            console.error(error);
+         }
+    
+        };
 
 

@@ -21,16 +21,6 @@ export default function WelcomeScreen(props){
                             
                             <View style = {logStyles.proceedBox}>
 
-                                <View style={logStyles.containerSocial}>
-                                    <SocialIcon
-                                        style = {logStyles.buttonSocialIcon}
-                                        onPress = {() => navigation.navigate('CreateEvent')}
-                                        title = 'Continue with Google' button 
-                                        type='google-plus-official'
-                                        fontFamily='RalewayUI'
-                                        />
-                                </View>
-
                                 <View>
                                     <Pressable style = {({ pressed }) => [{ backgroundColor: pressed ? 'rgb(62, 167, 253)' : 'rgb(63, 152, 246)'}, logStyles.mainButton]} onPress={() => navigation.navigate('Login')}> 
                                         <Text style = {{color: "white", fontSize: 20, fontFamily: 'RalewayUI',}}> Log in </Text>
@@ -42,8 +32,6 @@ export default function WelcomeScreen(props){
                                         {({ pressed }) => ( <Text style={[{ color: pressed ? 'rgb(62, 167, 253)' : 'rgb(63, 152, 246)' }, logStyles.registerSecondary]}> Register </Text>)}
                                     </Pressable>
                                 </View>
-
-                               {/*style = {{color: 'rgb(63, 152, 246)', fontSize: 20, fontFamily: 'RalewayUI',}} */}
 
                             </View>
                             
