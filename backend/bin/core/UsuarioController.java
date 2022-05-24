@@ -15,7 +15,7 @@ import java.util.Map;
 public class UsuarioController {
 
   @PostMapping(value = "/user/login", consumes = MediaType.APPLICATION_JSON_VALUE,
-      produces = MediaType.ALL_VALUE)
+      produces = MediaType.APPLICATION_JSON_VALUE)
   public String login(@RequestBody Map<String, String> body){
     String pwd = body.get("password");
     String email = body.get("email");

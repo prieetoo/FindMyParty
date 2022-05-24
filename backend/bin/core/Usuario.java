@@ -90,17 +90,17 @@ public class Usuario{
     try {
       if(rs.next()) {
         if(Objects.equals(rs.getString("password"), password)){
-          return "\"result\":" + rs.getInt("id");
+          return "{\"result\":" + rs.getInt("id") + "}";
         }else{
-          return "\"result\":-1";
+          return "{\"result\":-1}";
         }
       }else{
-        return "\"result\":-2";
+        return "{\"result\":-2}";
       }
     } catch (SQLException e) {
       e.printStackTrace();
     }
-    return "\"result\":0";
+    return "{\"result\":0}";
   }
 
   public static String registrar(String nombre, String password, LocalDate fechaNacimiento, String foto, String email) {
