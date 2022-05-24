@@ -77,6 +77,10 @@ public class Usuario{
         this.password = rs.getString(4);
         this.fechaNacimiento = LocalDate.parse(rs.getString(5));
         this.valoracion = rs.getFloat(7);
+        this.valoraciones = new ArrayList<>();
+        this.comentarios = new ArrayList<>();
+        this.eventos = new ArrayList<>();
+        this.publicacions = new ArrayList<>();
       }
     } catch (SQLException e) {
       e.printStackTrace();
@@ -276,9 +280,7 @@ public class Usuario{
     JSONObject json = new JSONObject();
     json.put("id", this.id);
     json.put("nombre", this.nombre);
-    json.put("password", this.password);
-    json.put("fechaNacimiento", this.fechaNacimiento.toString());
-    json.put("foto", this.foto);
+    json.put("fechaNacimiento", this.fechaNacimiento.toString());;
     json.put("email", this.email);
     json.put("valoracion", this.valoracion);
 

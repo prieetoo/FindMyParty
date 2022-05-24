@@ -68,4 +68,12 @@ public class EventoController {
     return "{\"result\":-1}";
   }
 
+  @GetMapping(value = "/event/get/{event_id}")
+  public String get_event(@PathVariable("event_id") String event_id){
+    // returns event in json format
+    Evento e = new Evento(Integer.parseInt(event_id));
+    return e.toJson().toString();
+
+  }
+
 }

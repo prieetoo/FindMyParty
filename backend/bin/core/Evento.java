@@ -19,6 +19,7 @@ public class Evento {
   private LocalDateTime fecha;
   private Usuario host;
   private float valoracion;
+  private int idHost;
   private ArrayList<Valoracion> valoraciones;
   private ArrayList<String> etiquetas;
   private ArrayList<Comentario> comentarios;
@@ -73,7 +74,7 @@ public class Evento {
   }
 
   public Evento(int id){
-    String consulta = "SELECT * FROM Evento e" +
+    String consulta = "SELECT * FROM Evento e " +
         "WHERE e.id = '" + id + "';";
     ResultSet rs = DB.getInstance().executeQuery(consulta);
     try {
@@ -81,8 +82,16 @@ public class Evento {
         this.id = id;
         this.nombre = rs.getString(3);
         this.ubicacion = rs.getString(4);
-        this.fecha = LocalDateTime.parse(rs.getString(5));
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        this.fecha = LocalDateTime.parse(rs.getString(5),formatter);
         this.valoracion = rs.getFloat(6);
+        this.coordenadas = new Punto(rs.getFloat("x"),rs.getFloat("y"));
+        this.idHost = rs.getInt(2);
+        this.valoraciones = new ArrayList<Valoracion>();
+        this.comentarios = new ArrayList<Comentario>();
+        this.participantes = new ArrayList<Usuario>();
+        this.publicaciones = new ArrayList<Publicacion>();
+        this.etiquetas = new ArrayList<String>();
       }
     } catch (SQLException e) {
       e.printStackTrace();
@@ -234,7 +243,17 @@ public class Evento {
     }
     return false;
   }
-
+  private void loadEtiquetas(){
+    String consulta = "SELECT * FROM FindMyParty.Etiqueta where evento_id = " + this.id ;
+    ResultSet rs = DB.getInstance().executeQuery(consulta);
+    try {
+      while (rs.next()) {
+        this.etiquetas.add(rs.getString("etiqueta"));
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+  }
   public JSONObject toJson() {
     JSONObject json = new JSONObject();
     json.put("id", this.id);
@@ -242,15 +261,12 @@ public class Evento {
     json.put("ubicacion", this.ubicacion);
     json.put("coordenadas", this.coordenadas.toString());
     json.put("fecha", this.fecha);
-    json.put("host", this.host.toJson());
     json.put("valoracion", this.valoracion);
+    Usuario u = new Usuario(this.idHost);
+    json.put("host",u.toJson());
 
     JSONArray jsonArray = new JSONArray();
-    for (int i = 0; i < this.valoraciones.size(); i++) {
-      jsonArray.put(this.valoraciones.get(i).toJson());
-    }
-    json.put("valoraciones", jsonArray);
-
+    this.loadEtiquetas();
     jsonArray = new JSONArray();
     for (int i = 0; i < this.etiquetas.size(); i++) {
       jsonArray.put(this.etiquetas.get(i));
