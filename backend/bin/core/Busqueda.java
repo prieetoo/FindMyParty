@@ -22,11 +22,11 @@ public class Busqueda {
     public Busqueda (Punto coord)
     {
         eventos = new ArrayList<>();
-        radio = 5000; //en kilómetros
+        radio = 5; //en kilómetros
         etiquetes = new ArrayList<>();
         eventos_json = new JSONObject();
 
-        String consulta =  "SELECT id, ( 6371 * acos( cos( radians(" + coord.getX() + ") ) * cos( radians( e.x ) ) " +
+        String consulta =  "SELECT id,nombre, ( 6371 * acos( cos( radians(" + coord.getX() + ") ) * cos( radians( e.x ) ) " +
             "* cos( radians( " + coord.getY() + " ) - radians(e.y) ) + sin( radians(" + coord.getX() + ") ) * sin(radians(e.x)) ) ) AS distance " +
             "FROM Evento e " +
             "HAVING distance <= " + radio +
@@ -35,12 +35,13 @@ public class Busqueda {
             ResultSet rs = DB.getInstance().executeQuery(consulta);
             JSONArray arrayjson = new JSONArray();
             while (rs.next()) {
-                Evento e = new Evento(rs.getInt("id"));
-                eventos.add(e);
+
+                //Evento e = new Evento(rs.getInt("id"));
+                //eventos.add(e);
                 JSONObject json_event = new JSONObject();
                 json_event.put("id", rs.getInt("id"));
-                json_event.put("nombre", e.getNombre());
-                json_event.put("distancia", rs.getInt("distance"));
+                json_event.put("nombre", rs.getString("nombre"));
+                json_event.put("distancia", rs.getFloat("distance"));
                 arrayjson.put(json_event);
             }
             eventos_json.put("lista_eventos", arrayjson);

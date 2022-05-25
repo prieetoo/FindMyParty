@@ -10,7 +10,8 @@ public class Main {
     //Usuario.registrar("Valorador","algo",LocalDate.now(),"foto","mail@mail.mail");
     //Usuario.registrar("Valorado","algo",LocalDate.now(),"foto","mail3@mail.mail");
     //Usuario.valorarUsuario(81,10,83);
-    Evento.crear("Algo", new Punto(1,1),"Nuevo", LocalDateTime.now(),new Usuario(81),new ArrayList<String>() );
+    Busqueda busqueda = new Busqueda(new Punto(1, 0.98f));
+    System.out.print(busqueda.getJsonEventos().toString());
   }
 
 

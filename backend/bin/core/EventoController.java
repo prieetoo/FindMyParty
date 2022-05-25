@@ -81,8 +81,8 @@ public class EventoController {
   @PostMapping(value = "/event/get_events")
   public String get_events(@RequestBody Map<String, String> body){
     // returns events in json format
-    Busqueda busqueda = new Busqueda(new Punto(Integer.parseInt(body.get("latitud")),
-                                                Integer.parseInt(body.get("longitud"))));
+    Busqueda busqueda = new Busqueda(new Punto(Float.parseFloat(body.get("latitud")),
+            Float.parseFloat(body.get("longitud"))));
     return busqueda.getJsonEventos().toString();
   }
 
