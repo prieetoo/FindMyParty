@@ -88,7 +88,7 @@ public class Usuario{
   }
 
   public static String ConvertToJson(String str){
-    return "\"result\":\"" + str + "\"}";
+    return "{\"result\":\"" + str + "\"}";
   }
 
   public static String iniciarSesion(String email, String password){
