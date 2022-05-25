@@ -45,16 +45,6 @@ public class Usuario{
     this.fechaNacimiento = fechaNacimiento;
     //this.participa = new ArrayList<>();
 
-    String consulta = "INSERT INTO Usuario (nombre, fecha_nacimiento, mail,password,valoracion) " +
-            "VALUES ('" + nombre + "', STR_TO_DATE('" + fechaNacimiento.toString() + "','%Y-%m-%d'),'" +
-            email + "','" + password + "',0 );";
-    ResultSet rs = DB.getInstance().executeUpdateWithKeys(consulta);
-    try {
-      if(rs.next())
-        this.id = rs.getInt(1);
-    } catch (SQLException e) {
-      e.printStackTrace();
-    }
   }
 
   public Punto getUbicacion() {
@@ -146,7 +136,7 @@ public class Usuario{
   }
 
   public static String recuperarPassword(String email){
-    String consulta = "SELECT password FROM Usuario u where u.mail = " + email + ";";
+    String consulta = "select password from Usuario where mail = \"" + email + "\";";
     // Consultar a la bd password, si no existe email devolver mensaje de error
     ResultSet rs = DB.getInstance().executeQuery(consulta);
     try {
@@ -180,9 +170,9 @@ public class Usuario{
     return ConvertToJson("0");
   }
 
-  public static boolean eliminar(String email){
+  public static boolean eliminar(String id){
     boolean rs = false;
-    String consulta = "DELETE FROM Usuario" + " WHERE mail = " + email;
+    String consulta = "DELETE FROM Usuario" + " WHERE id = " + id +";";
     return DB.getInstance().executeUpdate(consulta);
   }
 
