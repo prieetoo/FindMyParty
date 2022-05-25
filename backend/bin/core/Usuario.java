@@ -87,6 +87,10 @@ public class Usuario{
     }
   }
 
+  public static String ConvertToJson(String str){
+    return "\"result\":" + str + "}";
+  }
+
   public static String iniciarSesion(String email, String password){
     // Consultar en la BBDD mail i id
     String consulta = "SELECT id, password FROM Usuario u where u.mail = '" + email + "';";
@@ -94,17 +98,17 @@ public class Usuario{
     try {
       if(rs.next()) {
         if(Objects.equals(rs.getString("password"), password)){
-          return "{\"result\":" + rs.getInt("id") + "}";
+          return ConvertToJson(String.valueOf(rs.getInt("id")));
         }else{
-          return "{\"result\":-1}";
+          return ConvertToJson("-1");
         }
       }else{
-        return "{\"result\":-2}";
+        return ConvertToJson("-2");
       }
     } catch (SQLException e) {
       e.printStackTrace();
     }
-    return "{\"result\":0}";
+    return ConvertToJson("0");
   }
 
   public static String registrar(String nombre, String password, LocalDate fechaNacimiento, String foto, String email) {
@@ -121,17 +125,17 @@ public class Usuario{
         ResultSet rs = DB.getInstance().executeUpdateWithKeys(consulta);
         try {
           if(rs.next())
-          return "{\"result\":" + (rs.getInt(1)) + "}";
+            return ConvertToJson(String.valueOf(rs.getInt(1)));
         } catch (SQLException e) {
           e.printStackTrace();
         }
       }else{
-        return "{\"result\":-1}";
+        return ConvertToJson("-1");
       }
     } catch (SQLException e) {
       e.printStackTrace();
     }
-    return "{\"result\":0}";
+    return ConvertToJson("0");
   }
 
   public ArrayList<Evento> buscarEventosCercanos()
@@ -146,12 +150,14 @@ public class Usuario{
     // Consultar a la bd password, si no existe email devolver mensaje de error
     ResultSet rs = DB.getInstance().executeQuery(consulta);
     try {
-      if(rs.next() == false) { return "\"result\":-1"; }
+      if(!rs.next()){
+        return ConvertToJson("-1");
+      }
       return "\"result\":" + rs.getString("password");
     } catch (SQLException e) {
       e.printStackTrace();
     }
-    return "\"result\":0";
+    return ConvertToJson("0");
   }
 
   public static String modificarPerfil( int id, String nombre,String password, String fechaNacimiento, String foto, String email){
@@ -167,11 +173,11 @@ public class Usuario{
     ResultSet rs = DB.getInstance().executeUpdateWithKeys(consulta);
     try {
       if(rs.next())
-        return "\"result\":" + rs.getInt(1);
+        return ConvertToJson(String.valueOf(rs.getInt(1)));
     } catch (SQLException e) {
       e.printStackTrace();
     }
-    return "\"result\":0";
+    return ConvertToJson("0");
   }
 
   public static boolean eliminar(String id){
