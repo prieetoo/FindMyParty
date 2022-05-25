@@ -1,5 +1,8 @@
 package core;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -9,6 +12,7 @@ public class Busqueda {
     private ArrayList<Evento> eventos;
     private float radio;
     private ArrayList<String> etiquetes;
+    private JSONObject eventos_json;
 
     /**
      * metemos una ubicacion como string, convertimos
@@ -20,6 +24,7 @@ public class Busqueda {
         eventos = new ArrayList<>();
         radio = 5000; //en kilómetros
         etiquetes = new ArrayList<>();
+        eventos_json = new JSONObject();
 
         String consulta =  "SELECT id, ( 6371 * acos( cos( radians(" + coord.getX() + ") ) * cos( radians( e.x ) ) " +
             "* cos( radians( " + coord.getY() + " ) - radians(e.y) ) + sin( radians(" + coord.getX() + ") ) * sin(radians(e.x)) ) ) AS distance " +
@@ -28,10 +33,17 @@ public class Busqueda {
             " ORDER BY distance";
         try{
             ResultSet rs = DB.getInstance().executeQuery(consulta);
+            JSONArray arrayjson = new JSONArray();
             while (rs.next()) {
                 Evento e = new Evento(rs.getInt("id"));
                 eventos.add(e);
+                JSONObject json_event = new JSONObject();
+                json_event.put("id", rs.getInt("id"));
+                json_event.put("nombre", e.getNombre());
+                json_event.put("distancia", rs.getInt("distance"));
+                arrayjson.put(json_event);
             }
+            eventos_json.put("lista_eventos", arrayjson);
         }catch(SQLException e){
             e.printStackTrace();
         }
@@ -74,6 +86,10 @@ public class Busqueda {
 
     public ArrayList<Evento> getEventos() {
         return eventos;
+    }
+
+    public JSONObject getJsonEventos() {
+         return eventos_json;
     }
 
     public void setEventos(ArrayList<Evento> eventos) {
