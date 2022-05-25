@@ -35,7 +35,7 @@ public class EventoController {
     Usuario anfitrion = new Usuario(user_id);
     ArrayList<String> etiquetas = body.get("tickets");
     // 1 correct, -1 error
-    if (!Evento.crear(informacion.get(0), p, ubicacion, fecha, anfitrion, etiquetas)) {
+    if (Evento.crear(informacion.get(0), p, ubicacion, fecha, anfitrion, etiquetas)) {
       return "{\"result\":1}";
     }
     return "{\"result\":-1}";

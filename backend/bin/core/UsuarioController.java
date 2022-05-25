@@ -74,10 +74,10 @@ public class UsuarioController {
     return "{\"result\":-1}";
   }
 
-  @GetMapping("/user/eliminate/{user_id}")
-  public String eliminate_user(@PathVariable("user_id") String user_id){
+  @GetMapping("/user/eliminate/{email_user}")
+  public String eliminate_user(@PathVariable("email_user") String user_id){
     // 1 correct, -1 error
-    if (!Usuario.eliminar(user_id)) {
+    if (Usuario.eliminar(user_id)) {
       return "{\"result\":1}";
     }
     return "{\"result\":-1}";
@@ -86,7 +86,7 @@ public class UsuarioController {
   @GetMapping("/user/follow/{follower_id}/{followed_id}")
   public String follow_user(@PathVariable("follower_id") String follower_id, @PathVariable("followed_id") String followed_id){
     // 1 correct, -1 error
-    if (!Usuario.seguirUsuario(follower_id, followed_id)) {
+    if (Usuario.seguirUsuario(follower_id, followed_id)) {
       return "{\"result\":1}";
     }
     return "{\"result\":-1}";
@@ -95,7 +95,7 @@ public class UsuarioController {
   @GetMapping("/user/unfollow/{follower_id}/{unfollowed_id}")
   public String unfollow_user(@PathVariable("follower_id") String follower_id, @PathVariable("unfollowed_id") String followed_id){
     // 1 correct, -1 error
-    if (!Usuario.dejarSeguirUsuario(follower_id, followed_id)) {
+    if (Usuario.dejarSeguirUsuario(follower_id, followed_id)) {
       return "{\"result\":1}";
     }
     return "{\"result\":-1}";
@@ -104,7 +104,7 @@ public class UsuarioController {
   @PostMapping("/user/valorar_usuario")
   public String valorar_usuario(@RequestBody Map<String, String> body){
     // 1 correct, -1 error
-    if (!Usuario.valorarUsuario(Integer.parseInt(body.get("destinatario")),Float.parseFloat(body.get("valor")), Integer.parseInt(body.get("autor")))) {
+    if (Usuario.valorarUsuario(Integer.parseInt(body.get("destinatario")),Float.parseFloat(body.get("valor")), Integer.parseInt(body.get("autor")))) {
       return "{\"result\":1}";
     }
     return "{\"result\":-1}";

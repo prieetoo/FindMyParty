@@ -153,7 +153,7 @@ public class Usuario{
       if(!rs.next()){
         return ConvertToJson("-1");
       }
-      return "\"result\":" + rs.getString("password");
+      return ConvertToJson(rs.getString("password"));
     } catch (SQLException e) {
       e.printStackTrace();
     }
@@ -180,9 +180,9 @@ public class Usuario{
     return ConvertToJson("0");
   }
 
-  public static boolean eliminar(String id){
+  public static boolean eliminar(String email){
     boolean rs = false;
-    String consulta = "DELETE FROM Usuario" + " WHERE id = " + id;
+    String consulta = "DELETE FROM Usuario" + " WHERE mail = " + email;
     return DB.getInstance().executeUpdate(consulta);
   }
 

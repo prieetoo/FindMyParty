@@ -164,8 +164,7 @@ public class Evento {
     String formattedDate= localDate.format(formatter);
     String consulta = "INSERT INTO `Comentarioevento` (`fecha`,`contenido`,`Usuario_id`,`Evento_id`)" +
             " VALUES ( STR_TO_DATE('" + formattedDate+ "','%Y-%m-%d %T'),'" + contenido + "'," + user_id + ","  + event_id +  " );";
-    boolean rs = DB.getInstance().executeUpdate(consulta);
-    return rs;
+    return DB.getInstance().executeUpdate(consulta);
   }
 
   public static boolean valorar(int evento, float valoracion, int autor) {
@@ -243,6 +242,7 @@ public class Evento {
     }
     return false;
   }
+
   private void loadEtiquetas(){
     String consulta = "SELECT * FROM FindMyParty.Etiqueta where evento_id = " + this.id ;
     ResultSet rs = DB.getInstance().executeQuery(consulta);
@@ -254,6 +254,7 @@ public class Evento {
       e.printStackTrace();
     }
   }
+
   public JSONObject toJson() {
     JSONObject json = new JSONObject();
     json.put("id", this.id);
