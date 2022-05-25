@@ -15,22 +15,22 @@ public class Busqueda {
      * hacemos una consulta y devolvemos los eventos que coincidan a ese radio
      * y esa direccion, cumpliendo tmb con las etiquetas si es que hay
      */
-    public Busqueda (Usuario u)
+    public Busqueda (Punto coord)
     {
         eventos = new ArrayList<>();
-        radio = 2; //yo guardaria un radio en usuario que sea el que ha predefinido el al crearse el usuario y que lo pueda modificar
+        radio = 5000; //en kilómetros
         etiquetes = new ArrayList<>();
 
-        String consulta = "SELECT * "+
-                "FROM Evento e" +
-                "WHERE "+ radio +" >= SQRT(POWER("+ "u.getUbicacion().getX()" + "-e.x,2)+ POWER("+"u.getUbicacion().getY()" +" -e.y,2));";
+        String consulta =  "SELECT id, ( 6371 * acos( cos( radians(" + coord.getX() + ") ) * cos( radians( e.x ) ) " +
+            "* cos( radians( " + coord.getY() + " ) - radians(e.y) ) + sin( radians(" + coord.getX() + ") ) * sin(radians(e.x)) ) ) AS distance " +
+            "FROM Evento e " +
+            "HAVING distance <= " + radio +
+            " ORDER BY distance";
         try{
             ResultSet rs = DB.getInstance().executeQuery(consulta);
-            int i = 1; //pone que tiene que ser 1
             while (rs.next()) {
-                Evento e = new Evento((Evento) rs.getObject(i));
+                Evento e = new Evento(rs.getInt("id"));
                 eventos.add(e);
-                i++;
             }
         }catch(SQLException e){
             e.printStackTrace();

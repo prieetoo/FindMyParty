@@ -51,7 +51,7 @@ public class EventoController {
   }
 
   @GetMapping(value = "/event/eliminate/{event_id}")
-  public String create_event(@PathVariable("event_id") String event_id){
+  public String delete_event(@PathVariable("event_id") String event_id){
     // 1 correct, -1 error
     if (!Evento.eliminar(Integer.parseInt(event_id))) {
       return "{\"result\":1}";
@@ -74,6 +74,12 @@ public class EventoController {
     Evento e = new Evento(Integer.parseInt(event_id));
     return e.toJson().toString();
 
+  }
+
+  @PostMapping(value = "/event/get_events}")
+  public String get_events(@RequestBody Map<String, String> body){
+    // returns events in json format
+    return "nada";
   }
 
 }

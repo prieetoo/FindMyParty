@@ -138,13 +138,6 @@ public class Usuario{
     return ConvertToJson("0");
   }
 
-  public ArrayList<Evento> buscarEventosCercanos()
-  {
-    Busqueda busqueda = new Busqueda(this);
-    return busqueda.getEventos();
-    //tema de controlador se me escapa aqui, pregunto clase
-  }
-
   public static String recuperarPassword(String email){
     String consulta = "SELECT password FROM Usuario u where u.mail = " + email + ";";
     // Consultar a la bd password, si no existe email devolver mensaje de error
