@@ -2,9 +2,12 @@ import React, {useState, useEffect} from 'react';
 import { StyleSheet, View, Dimensions } from 'react-native';
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
 import { mapStyle } from '../styles/mapStyle';
+import { useNavigation } from '@react-navigation/native';
 
 
 export function MapScreen() { 
+
+  const navigation = useNavigation();
 
   return (
     <View>
@@ -19,7 +22,14 @@ export function MapScreen() {
           longitudeDelta: 0.003,
         }}
         mapType="standard"
-      ></MapView>
+      >
+           <MapView.Marker
+           coordinate={{latitude: 41.3995345, longitude: 2.1909796}}
+           onPress={() => navigation.navigate('CreateEvent')}
+        />
+       
+
+      </MapView>
     </View>
   );
 }

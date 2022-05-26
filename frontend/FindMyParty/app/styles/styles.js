@@ -304,11 +304,18 @@ const listEvents = StyleSheet.create({
         height: 670,
     },
 
-    listActions: {
+    listCreateEvent: {
         fontSize: 17,
         color: 'rgb(62, 167, 253)',
         paddingTop: 8,
         marginLeft: 20,
+    },
+
+    listFilters: {
+        fontSize: 17,
+        color: 'rgb(62, 167, 253)',
+        paddingTop: 8,
+        marginRight: 20,
     },
 
     fabutton: {
@@ -322,7 +329,8 @@ const listEvents = StyleSheet.create({
     },
 
     filterDropdownView: {
-        paddingTop: 8,
+        paddingTop: 20,
+        paddingLeft: 20,
     },
 
     settingsOptions: {
@@ -331,7 +339,14 @@ const listEvents = StyleSheet.create({
         borderBottomColor: 'rgb(230, 230, 230)',
         height: 80,
         alignItems: 'center',
-    }
+    },
+
+    containerFilters: {
+        flex: 3,
+        flexDirection: 'column',
+        backgroundColor: "white",
+    },
+
 })
 
 export { mainStyles, logStyles, listEvents }

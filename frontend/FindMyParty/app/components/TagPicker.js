@@ -1,11 +1,12 @@
 import React from 'react';
 import { StyleSheet } from 'react-native'
 import RNPickerSelect from 'react-native-picker-select';
+import searchData from '../data/searchFilters.json'
 
-export const Dropdown = () => {
+export const TagDropdown = () => {
 
     const placeholder = {
-        label: 'Filter by...',
+        label: 'Select a tag...',
         value: null,
         color: 'black',
       };
@@ -14,13 +15,14 @@ export const Dropdown = () => {
         <RNPickerSelect
             placeholder = {placeholder}
             style = {pickerSelectStyles}
-            onValueChange={(value) => console.log(value)}
+            onValueChange={(value) => {
+              searchData.tag = value;
+              console.log(searchData.tag)
+            }}
             items={[
-                { label: 'Up next', value: 'upNext'},
-                { label: 'Distance', value: 'distance' },
-                { label: 'Assistants', value: 'assistants' },
-                { label: 'Host rating', value: 'hostRating'},
-                { label: 'Paid', value: 'isPaid'},
+                { label: 'Rave', value: 'rave'},
+                { label: 'Reggaeton', value: 'reggaeton' },
+                { label: 'Pool', value: 'pool' },
             ]}
         />
     );
@@ -29,8 +31,8 @@ export const Dropdown = () => {
 const pickerSelectStyles = StyleSheet.create({
     inputIOS: {
       fontSize: 17,
-      color: 'rgb(62, 167, 253)',
-      marginRight: 25,
+      color: 'rgb(0, 0, 0)',
+      marginLeft: 4,
     },
     inputAndroid: {
       fontSize: 17,

@@ -1,8 +1,9 @@
 import React, { useState, useRef } from 'react'
-import { StyleSheet, SafeAreaView, Pressable, Text, TextInput, View, Keyboard, TouchableWithoutFeedback } from 'react-native'
+import { Alert, StyleSheet, SafeAreaView, Pressable, Text, TextInput, View, Keyboard, TouchableWithoutFeedback } from 'react-native'
 import { logStyles } from '../styles/styles'
 import { CheckBox, SocialIcon, Button } from 'react-native-elements'
 import { useNavigation } from '@react-navigation/native';
+import userData from '../data/user.json'
 
 
 export default function RegistroScreen(props) {
@@ -148,7 +149,25 @@ const DismissKeyboard = ({ children }) => (
             })
             .then(response => response.json())
             .then(data => {
+                var result = parseInt(data.result)
+                if (result > 0) {
+                    userData.email = userEmail; 
+                    userData.id = data.result; // Stores variables in a file to enable features such as deleting the account.
+                    console.log(userData.email)
+                    console.log(userData.id)
                     navigation.navigate('MapList')
+                }
+                else {
+                    if (result == -1) {
+                        console.log(data.result)
+                        Alert.alert("Existing mail", "The email you entered is already associated to a FindMyParty account. Please, select another email.")
+                    }
+                    
+                    if (result == 0) {
+                        console.log(data.result)
+                        Alert.alert("Error", "There has been an error. Please, try again.")
+                    }
+                }
                 
             })
     

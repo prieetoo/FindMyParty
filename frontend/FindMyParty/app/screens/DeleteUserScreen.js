@@ -2,10 +2,10 @@ import React, { useState, useRef } from 'react'
 import { Text, View, SafeAreaView, TouchableWithoutFeedback, Pressable, Keyboard, TextInput, Alert } from 'react-native'
 import { logStyles } from '../styles/styles'
 import { useNavigation } from '@react-navigation/native';
-import userData from '../data/user.json'
 
-export default function LoginScreen(props){
+export default function DeleteAccount(props){
 
+  
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const ref_input2 = useRef();
@@ -23,8 +23,10 @@ export default function LoginScreen(props){
                         <View style = {logStyles.container}>
 
                             <View style = {logStyles.titleBox}>
-                                <Text style = {logStyles.title}>Log in using your account</Text>
+                                <Text style = {logStyles.title}> Delete account </Text>
                             </View>
+                            
+                            <Text style = {{ paddingBottom: 20 }}> Enter your info below to delete your account forever. </Text>
                             
                             <View style = {logStyles.formFieldsBoxLogin}>
 
@@ -59,7 +61,7 @@ export default function LoginScreen(props){
                             <View style = {logStyles.loginBox}>
                                 <View>
                                     <Pressable style = {({ pressed }) => [{ backgroundColor: pressed ? 'rgb(62, 167, 253)' : 'rgb(63, 152, 246)'}, logStyles.mainButton]} onPress = {() => login(email, password, navigation)}> 
-                                        <Text style = {{color: "white", fontSize: 20, fontFamily: 'RalewayUI',}}> Log in </Text>
+                                        <Text style = {{color: "white", fontSize: 20, fontFamily: 'RalewayUI',}}> Delete account </Text>
                                     </Pressable>
                                 </View>
                             </View>
@@ -98,11 +100,8 @@ const login = (userEmail, userPassword, navigation) => {
         .then(data => {
             var result = parseInt(data.result)
             if (result > 0) {
-                userData.email = userEmail; 
-                userData.id = data.result; // Stores variables in a file to enable features such as deleting the account.
-                console.log(userData.email)
-                console.log(userData.id)
-                navigation.navigate('MapList')
+                console.log(result)
+                deleteAccount(result, navigation)
             }
             else {
                 if (result == -1) {
@@ -112,7 +111,7 @@ const login = (userEmail, userPassword, navigation) => {
 
                 if (result == -2) {
                     console.log(data.result)
-                    Alert.alert("Wrong email", "The email you entered is not registered. Have you signed up yet?")
+                    Alert.alert("Wrong email", "The email you entered is not correct.")
                 }
 
                 if (result == 0) {
@@ -128,3 +127,25 @@ const login = (userEmail, userPassword, navigation) => {
      }
 
     };
+
+const deleteAccount = (userID, navigation) => {
+    try { 
+        let response = fetch('http://192.168.68.107:8080/user/eliminate/' + userID, { method: 'GET' })
+        .then(response => response.json())
+        .then(data => {
+            var result = parseInt(data.result)
+            if (result == 1) {
+                console.log("Deleted account")
+                Alert.alert("Account deleted", "Your account has been successfully deleted.")
+                navigation.navigate('Welcome')
+            }
+            else{
+                Alert.alert("Error", "There has been an error. Please, try again.")
+            }
+        })
+    }
+    
+    catch (error) {
+        console.error(error);
+     }
+};

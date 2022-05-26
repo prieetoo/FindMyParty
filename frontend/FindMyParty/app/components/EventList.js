@@ -1,7 +1,6 @@
 import React from 'react'
 import { Text, Image, View, Pressable, ScrollView, SafeAreaView } from 'react-native'
 import { listEvents } from '../styles/styles';
-import { Dropdown } from './FilterPicker';
 import { useNavigation } from '@react-navigation/native';
 
 export function EventList(props) {
@@ -15,10 +14,8 @@ export function EventList(props) {
         </View>
 
         <View style = {listEvents.actionsBox}>
-            <Text style = {listEvents.listActions} onPress = {() => navigation.navigate('CreateEvent')}> Create event </Text>
-            <View style = {listEvents.filterDropdownView}>
-                <Dropdown/>
-            </View>
+            <Text style = {listEvents.listCreateEvent} onPress = {() => navigation.navigate('CreateEvent')}> Create event </Text>
+            <Text style = {listEvents.listFilters} onPress = {() => navigation.navigate('Filters')}> Filters... </Text>
         </View>
 
 
