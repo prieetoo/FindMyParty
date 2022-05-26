@@ -26,6 +26,8 @@ public class Evento {
   private ArrayList<Usuario> participantes;
   private ArrayList<Publicacion> publicaciones;
   private boolean activo;
+  private String descripcion;
+  private boolean coste;
 
   public Evento(Evento ev) {
     this.nombre = ev.getNombre();
@@ -34,26 +36,30 @@ public class Evento {
     this.host = ev.getHost();
     this.etiquetas = ev.getEtiquetas();
     this.valoracion = 0;
-    this.valoraciones = new ArrayList<Valoracion>();
-    this.comentarios = new ArrayList<Comentario>();
-    this.participantes = new ArrayList<Usuario>();
-    this.publicaciones = new ArrayList<Publicacion>();
+    this.valoraciones = new ArrayList<>();
+    this.comentarios = new ArrayList<>();
+    this.participantes = new ArrayList<>();
+    this.publicaciones = new ArrayList<>();
     this.activo = fecha.isBefore(LocalDateTime.now());
+    this.descripcion = ev.descripcion;
+    this.coste = false;
   }
 
-  public Evento(String nombre, Punto coordenadas, String ubicacion, LocalDateTime fecha, Usuario host, ArrayList<String> etiquetas) {
+  public Evento(String nombre, Punto coordenadas, String ubicacion, LocalDateTime fecha, Usuario host, ArrayList<String> etiquetas, String descripcion, boolean coste) {
     this.nombre = nombre;
     this.coordenadas = coordenadas;
     this.fecha = fecha;
     this.host = host;
     this.etiquetas = etiquetas;
     this.valoracion = 0;
-    this.valoraciones = new ArrayList<Valoracion>();
-    this.comentarios = new ArrayList<Comentario>();
-    this.participantes = new ArrayList<Usuario>();
-    this.publicaciones = new ArrayList<Publicacion>();
+    this.valoraciones = new ArrayList<>();
+    this.comentarios = new ArrayList<>();
+    this.participantes = new ArrayList<>();
+    this.publicaciones = new ArrayList<>();
     this.activo = fecha.isBefore(LocalDateTime.now());
     this.ubicacion = ubicacion;
+    this.descripcion = descripcion;
+    this.coste = coste;
     //Añadir a la BD
     String consulta = "INSERT INTO Evento (nombre, ubicacion, fecha, valoracion, usuario_id, x, y) " +
         "VALUES ('" +
@@ -63,7 +69,8 @@ public class Evento {
         this.valoracion + "', '" +
         host.getId() + "','" +
         coordenadas.getX() + "','" +
-        coordenadas.getY()+ "');";
+        coordenadas.getY()+ "','" +
+        descripcion + "');";
     ResultSet rs = DB.getInstance().executeUpdateWithKeys(consulta);
     try {
       if(rs.next())
@@ -87,16 +94,19 @@ public class Evento {
         this.valoracion = rs.getFloat(6);
         this.coordenadas = new Punto(rs.getFloat("x"),rs.getFloat("y"));
         this.idHost = rs.getInt(2);
-        this.valoraciones = new ArrayList<Valoracion>();
-        this.comentarios = new ArrayList<Comentario>();
-        this.participantes = new ArrayList<Usuario>();
-        this.publicaciones = new ArrayList<Publicacion>();
-        this.etiquetas = new ArrayList<String>();
+        this.valoraciones = new ArrayList<>();
+        this.comentarios = new ArrayList<>();
+        this.participantes = new ArrayList<>();
+        this.publicaciones = new ArrayList<>();
+        this.etiquetas = new ArrayList<>();
+        this.descripcion = rs.getString(9);
+        this.coste = rs.getBoolean(10);
       }
     } catch (SQLException e) {
       e.printStackTrace();
     }
   }
+
   public Evento(int id,String nombre, Punto ubicacion, LocalDateTime fecha, Usuario host, ArrayList<String> etiquetas) {
     this.nombre = nombre;
     this.coordenadas = ubicacion;
@@ -104,10 +114,10 @@ public class Evento {
     this.host = host;
     this.etiquetas = etiquetas;
     this.valoracion = 0;
-    this.valoraciones = new ArrayList<Valoracion>();
-    this.comentarios = new ArrayList<Comentario>();
-    this.participantes = new ArrayList<Usuario>();
-    this.publicaciones = new ArrayList<Publicacion>();
+    this.valoraciones = new ArrayList<>();
+    this.comentarios = new ArrayList<>();
+    this.participantes = new ArrayList<>();
+    this.publicaciones = new ArrayList<>();
     this.activo = fecha.isBefore(LocalDateTime.now());
     this.id = id;
     String consulta = "";
@@ -120,17 +130,19 @@ public class Evento {
     }
   }
 
-  public static boolean crear(String nombre, Punto coordenadas, String ubicacion, LocalDateTime fecha, Usuario host, ArrayList<String> etiquetas) {
+  public static boolean crear(String nombre, Punto coordenadas, String ubicacion, LocalDateTime fecha, Usuario host, ArrayList<String> etiquetas, String descripcion, boolean coste) {
     int valoracion = 0;
     String aux = fecha.toString();
-    String consulta = "INSERT INTO Evento (nombre, ubicacion, fecha, valoracion, usuario_id, x, y) " +
+    String consulta = "INSERT INTO Evento (nombre, ubicacion, fecha, valoracion, usuario_id, x, y, descripcion, coste) " +
         "VALUES ('" +
         nombre + "', '" +
         ubicacion + "', STR_TO_DATE('" + fecha.toString() + "','%Y-%m-%dT%H:%i:%s'), '" +
         valoracion + "', '" +
         host.getId() + "','" +
         coordenadas.getX() + "','" +
-        coordenadas.getY()+ "');";
+        coordenadas.getY() + "','" +
+        descripcion + "','" +
+        coste + "');";
     return DB.getInstance().executeUpdate(consulta);
   }
 

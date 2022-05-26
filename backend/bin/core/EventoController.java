@@ -27,7 +27,7 @@ public class EventoController {
   }
 
   @PostMapping(value = "/event/create", consumes = MediaType.APPLICATION_JSON_VALUE,
-      produces = MediaType.ALL_VALUE)
+      produces = MediaType.APPLICATION_JSON_VALUE)
   public String create_event(@RequestBody Map<String, ArrayList<String>> body){
     ArrayList<String> informacion = body.get("information");
     Punto p = new Punto(Float.parseFloat(informacion.get(1)), Float.parseFloat(informacion.get(2)));
@@ -37,8 +37,10 @@ public class EventoController {
     String ubicacion = informacion.get(5);
     Usuario anfitrion = new Usuario(user_id);
     ArrayList<String> etiquetas = body.get("tickets");
+    String descripcion = informacion.get(6);
+    boolean coste = Boolean.parseBoolean(informacion.get(7));
     // 1 correct, -1 error
-    if (Evento.crear(informacion.get(0), p, ubicacion, fecha, anfitrion, etiquetas)) {
+    if (Evento.crear(informacion.get(0), p, ubicacion, fecha, anfitrion, etiquetas, descripcion, coste)) {
       return "{\"result\":1}";
     }
     return "{\"result\":-1}";
