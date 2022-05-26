@@ -19,10 +19,9 @@ public class Busqueda {
      * hacemos una consulta y devolvemos los eventos que coincidan a ese radio
      * y esa direccion, cumpliendo tmb con las etiquetas si es que hay
      */
-    public Busqueda (Punto coord)
+    public Busqueda (Punto coord, float radio)
     {
         eventos = new ArrayList<>();
-        radio = 5; //en kilómetros
         etiquetes = new ArrayList<>();
         eventos_json = new JSONObject();
 
