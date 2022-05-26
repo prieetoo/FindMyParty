@@ -19,16 +19,24 @@ public class Busqueda {
      * hacemos una consulta y devolvemos los eventos que coincidan a ese radio
      * y esa direccion, cumpliendo tmb con las etiquetas si es que hay
      */
-    public Busqueda (Punto coord, float radio)
+    public Busqueda (Punto coord, float radio,ArrayList<String> etiquetes)
     {
         eventos = new ArrayList<>();
-        etiquetes = new ArrayList<>();
         eventos_json = new JSONObject();
+        String cond = "";
+        if (etiquetes.size()> 0){
+            cond = " WHERE ";
+            for (String e: etiquetes) {
+                cond += " et.etiqueta = '" + e + "' OR ";
+            }
+            cond = cond.substring(0, cond.length() - 4);
+        }
 
-        String consulta =  "SELECT id,nombre, ( 6371 * acos( cos( radians(" + coord.getX() + ") ) * cos( radians( e.x ) ) " +
+        String consulta =  "SELECT DISTINCT id,nombre, ( 6371 * acos( cos( radians(" + coord.getX() + ") ) * cos( radians( e.x ) ) " +
             "* cos( radians( " + coord.getY() + " ) - radians(e.y) ) + sin( radians(" + coord.getX() + ") ) * sin(radians(e.x)) ) ) AS distance " +
-            "FROM Evento e " +
-            "HAVING distance <= " + radio +
+            " FROM Evento e " +
+            " INNER JOIN Etiqueta et ON et.evento_id = e.id " + cond +
+            " HAVING distance <= " + radio +
             " ORDER BY distance";
         try{
             ResultSet rs = DB.getInstance().executeQuery(consulta);
