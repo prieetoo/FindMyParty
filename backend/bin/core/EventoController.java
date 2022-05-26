@@ -83,16 +83,19 @@ public class EventoController {
   public String get_events(@RequestBody Map<String, String> body){
     // returns events in json format
     ArrayList<String> array = new ArrayList();
+    // format => "etiquetas": "etiqueta1,etiqueta2"
     if (body.containsKey("etiquetas")){
       array = new ArrayList<>(Arrays.asList(body.get("etiquetas").split(",")));
 
     }
     Float radio = 5f;
+    // format => "radio": number
     if (body.containsKey("radio")){
       radio = Float.parseFloat(body.get("radio"));
     }
     Busqueda busqueda = new Busqueda(new Punto(Float.parseFloat(body.get("latitud")),
             Float.parseFloat(body.get("longitud"))), radio, array);
+    //return format => {"lista_eventos":[{"distancia":number,"id":number,"nombre":"Algo"}]}
     return busqueda.getJsonEventos().toString();
   }
 
