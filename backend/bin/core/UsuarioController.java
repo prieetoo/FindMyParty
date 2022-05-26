@@ -75,7 +75,7 @@ public class UsuarioController {
   }
 
   @GetMapping("/user/eliminate/{user_id}")
-  public String eliminate_user(@PathVariable("user_id") String user_id){
+  public String eliminate_user(@PathVariable("user_id") int user_id){
     // 1 correct, -1 error
     if (Usuario.eliminar(user_id)) {
       return "{\"result\":1}";

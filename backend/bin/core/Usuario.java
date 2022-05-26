@@ -163,7 +163,7 @@ public class Usuario{
     return ConvertToJson("0");
   }
 
-  public static boolean eliminar(String id){
+  public static boolean eliminar(int id){
     boolean rs = false;
     String consulta = "DELETE FROM Usuario" + " WHERE id = " + id +";";
     return DB.getInstance().executeUpdate(consulta);
