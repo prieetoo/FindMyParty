@@ -129,7 +129,7 @@ public class Usuario{
   }
 
   public static String recuperarPassword(String email){
-    String consulta = "select password from Usuario where mail = \"" + email + "\";";
+    String consulta = "select password from Usuario where mail = '" + email + "';";
     // Consultar a la bd password, si no existe email devolver mensaje de error
     ResultSet rs = DB.getInstance().executeQuery(consulta);
     try {
@@ -195,16 +195,14 @@ public class Usuario{
     String consulta = "INSERT INTO `Sigue`" +
             "(`Usuario_id`," +
             "`Usuario_id1`)" +
-            "VALUES " +
-            "(" + seguidor_id + "," +
-            seguido_id + ");";
+            "VALUES " + "('" + seguidor_id + "','" + seguido_id + "');";
     return DB.getInstance().executeUpdate(consulta);
   }
   public static boolean dejarSeguirUsuario(String seguidor_id, String seguido_id){
 
     String consulta = "DELETE FROM Sigue " +
-            "WHERE Usuario_id = " + seguidor_id +
-            " AND Usuario_id1 = " + seguido_id +";";
+            "WHERE Usuario_id = '" + seguidor_id +
+            "' AND Usuario_id1 = '" + seguido_id +"';";
     return DB.getInstance().executeUpdate(consulta);
   }
 
