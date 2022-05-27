@@ -88,7 +88,6 @@ public class EventoController {
     // format => "etiquetas": "etiqueta1,etiqueta2"
     if (body.containsKey("etiquetas")){
       array = new ArrayList<>(Arrays.asList(body.get("etiquetas").split(",")));
-
     }
     Float radio = 5f;
     // format => "radio": number

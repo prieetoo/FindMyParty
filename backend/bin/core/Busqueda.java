@@ -24,8 +24,10 @@ public class Busqueda {
         eventos = new ArrayList<>();
         eventos_json = new JSONObject();
         String cond = "";
+        String join = "";
         if (etiquetes.size()> 0){
             cond = " WHERE ";
+            join = " INNER JOIN Etiqueta et ON et.evento_id = e.id ";
             for (String e: etiquetes) {
                 cond += " et.etiqueta = '" + e + "' OR ";
             }
@@ -35,16 +37,13 @@ public class Busqueda {
         String consulta =  "SELECT DISTINCT id,nombre, ( 6371 * acos( cos( radians(" + coord.getX() + ") ) * cos( radians( e.x ) ) " +
             "* cos( radians( " + coord.getY() + " ) - radians(e.y) ) + sin( radians(" + coord.getX() + ") ) * sin(radians(e.x)) ) ) AS distance " +
             " FROM Evento e " +
-            " INNER JOIN Etiqueta et ON et.evento_id = e.id " + cond +
+            join + cond +
             " HAVING distance <= " + radio +
             " ORDER BY distance";
         try{
             ResultSet rs = DB.getInstance().executeQuery(consulta);
             JSONArray arrayjson = new JSONArray();
             while (rs.next()) {
-
-                //Evento e = new Evento(rs.getInt("id"));
-                //eventos.add(e);
                 JSONObject json_event = new JSONObject();
                 json_event.put("id", rs.getInt("id"));
                 json_event.put("nombre", rs.getString("nombre"));
