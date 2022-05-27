@@ -99,8 +99,13 @@ public class EventoController {
     if (body.containsKey("pago")){
       pago = true;
     }
+    int participantes = 5;
+    // format => "participantes": number
+    if (body.containsKey("participantes")){
+      participantes = Integer.parseInt(body.get("participantes"));
+    }
     Busqueda busqueda = new Busqueda(new Punto(Float.parseFloat(body.get("latitud")),
-            Float.parseFloat(body.get("longitud"))), radio, array,pago );
+            Float.parseFloat(body.get("longitud"))), radio, array,pago, participantes );
     //return format => {"lista_eventos":[{"distancia":number,"id":number,"nombre":"Algo"}]}
     return busqueda.getJsonEventos().toString();
   }
