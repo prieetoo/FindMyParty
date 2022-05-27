@@ -94,8 +94,13 @@ public class EventoController {
     if (body.containsKey("radio")){
       radio = Float.parseFloat(body.get("radio"));
     }
+    // format => "pago": 1
+    Boolean pago = false;
+    if (body.containsKey("pago")){
+      pago = true;
+    }
     Busqueda busqueda = new Busqueda(new Punto(Float.parseFloat(body.get("latitud")),
-            Float.parseFloat(body.get("longitud"))), radio, array);
+            Float.parseFloat(body.get("longitud"))), radio, array,pago );
     //return format => {"lista_eventos":[{"distancia":number,"id":number,"nombre":"Algo"}]}
     return busqueda.getJsonEventos().toString();
   }
