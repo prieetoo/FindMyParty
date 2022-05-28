@@ -119,7 +119,7 @@ const DismissKeyboard = ({ children }) => (
             body: JSON.stringify({
                 name: userUsername,
                 password: userPassword,
-                photo: "jaja",
+                photo: "example",
                 email: userEmail,
                 date_birth: "2001-03-18"
             })

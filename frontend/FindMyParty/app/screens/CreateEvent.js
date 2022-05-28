@@ -1,10 +1,11 @@
 import React, {useRef, useState} from 'react'
-import { Text, View, SafeAreaView, TouchableWithoutFeedback, Pressable, Keyboard, TextInput } from 'react-native'
-import { logStyles } from '../styles/styles'
+import { Text, View, SafeAreaView, TouchableWithoutFeedback, Pressable, Keyboard, TextInput, StyleSheet } from 'react-native'
+import { logStyles, listEvents } from '../styles/styles'
 import Geocoder from 'react-native-geocoding';
 import eventCreationData from '../data/eventCreation.json'
 import { format } from "date-fns";
 import RNDateTimePicker from '@react-native-community/datetimepicker';
+import { TagDropdown } from '../components/TagPicker';
 
 export default function CreateEventScreen(props){
 
@@ -12,7 +13,8 @@ export default function CreateEventScreen(props){
 
     const ref_input2 = useRef();
     const ref_input3 = useRef();
-    
+    const [date, setDate] = useState(new Date());
+
     const saveTitle = title => {
         eventCreationData.name = title;
     };
@@ -21,7 +23,14 @@ export default function CreateEventScreen(props){
         eventCreationData.description = description;
     };
 
-    const [date, setDate] = useState(new Date());
+    const saveDate = (event, selectedDate) => {
+        const currentDate = selectedDate;
+        // setDate(currentDate);
+        const newDate = format(currentDate, "yyyy-MM-dd HH:mm:ss")
+        eventCreationData.date_time = newDate;
+        console.log(eventCreationData.date_time);
+      };
+    
 
    
     return(
@@ -37,7 +46,7 @@ export default function CreateEventScreen(props){
                                 <Text style = {logStyles.title}>Create an Event</Text>
                             </View>
                             
-                            <View style = {logStyles.formFieldsBoxLogin}>
+                            <View style = {createEventStyles.formFields}>
 
                                 <View>
                                     <TextInput
@@ -53,10 +62,11 @@ export default function CreateEventScreen(props){
 
                                 <View>
                                     <TextInput
-                                    style = {logStyles.formFields} 
+                                    style = {createEventStyles.formFieldDescription} 
                                     placeholder = "Description" 
                                     keyboardType='default' 
                                     autoCorrect = {true} 
+                                    multiline = {true}
                                     autoCapitalize='sentences' 
                                     ref={ref_input2}
                                     returnKeyType='done'
@@ -77,9 +87,23 @@ export default function CreateEventScreen(props){
                                     onSubmitEditing={ newAddress => validateAddress(newAddress.nativeEvent.text)}/>
                                 </View>
 
-                                    <RNDateTimePicker mode='datetime' value={date} onChange = {(event, selectedDate) => { const currentDate = selectedDate; setDate(currentDate);}}></RNDateTimePicker>
+                                <View style = {createEventStyles.tagDropdown}>
+                                    <Text style = {{fontWeight: 'bold', fontSize: 16, color: 'rgb(150, 150, 150)'}}> Tag </Text>
+                                    <TagDropdown/>
+                                </View>
 
+                                <View style = {{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
                                 
+                                    <Text style = {{fontWeight: 'bold', fontSize: 16, color: 'rgb(150, 150, 150)'}}> Date and time </Text>
+
+                                    <RNDateTimePicker 
+                                    mode='datetime' 
+                                    value={date} 
+                                    onChange = {saveDate}
+                                    style = {{ width: 200, alignSelf: 'flex-end'}}/>
+
+                                </View>
+
                             </View>
 
                             <View style = {logStyles.loginBox}>
@@ -123,3 +147,27 @@ const validateAddress = address => {
     .catch(error => console.warn(error));
 
 }
+
+const createEventStyles = StyleSheet.create({
+    formFields: {
+        flex: 4,
+        justifyContent: 'space-around',
+        paddingBottom: 5,
+    },
+
+    formFieldDescription: {
+        backgroundColor: 'rgb(248, 248, 248)',
+        width: 350,
+        height: 100,
+        borderRadius: 8,
+        paddingHorizontal: 15,
+        fontFamily: 'RalewayUI',
+        paddingTop: 15,
+    },
+
+    tagDropdown: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+    },
+})
