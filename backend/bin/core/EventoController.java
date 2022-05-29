@@ -90,7 +90,7 @@ public class EventoController {
     if (body.containsKey("etiquetas")){
       array = new ArrayList<>(Arrays.asList(body.get("etiquetas").split(",")));
     }
-    Float radio = 5f;
+    Float radio = 1f;
     // format => "radio": number
     if (body.containsKey("radio")){
       radio = Float.parseFloat(body.get("radio"));
