@@ -190,6 +190,7 @@ public class Usuario{
             " WHERE id = " + id + ";";
     return DB.getInstance().executeUpdate(consulta);
   }
+
   public static boolean seguirUsuario(String seguidor_id, String seguido_id){
 
     String consulta = "INSERT INTO `Sigue`" +
@@ -198,6 +199,7 @@ public class Usuario{
             "VALUES " + "('" + seguidor_id + "','" + seguido_id + "');";
     return DB.getInstance().executeUpdate(consulta);
   }
+
   public static boolean dejarSeguirUsuario(String seguidor_id, String seguido_id){
 
     String consulta = "DELETE FROM Sigue " +
@@ -243,7 +245,7 @@ public class Usuario{
     return owner;
   }
 
-    public static boolean valorarUsuario(int destinatario, float valoracion, int id) {
+  public static boolean valorarUsuario(int destinatario, float valoracion, int id) {
     boolean firstTime = true;
       String consulta = "SELECT `valor`" +
               "FROM `Valoracionusuario` WHERE destinatario_id = "+ destinatario +" AND autor_id = " + id + ";";
@@ -260,7 +262,6 @@ public class Usuario{
       return Usuario.recibirValoracion(destinatario, val.getValor());
     }
     else return false;
-
   }
 
   public JSONObject toJson(){

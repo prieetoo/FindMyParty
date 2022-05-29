@@ -130,20 +130,33 @@ public class Evento {
     }
   }
 
-  public static boolean crear(String nombre, Punto coordenadas, String ubicacion, LocalDateTime fecha, Usuario host, ArrayList<String> etiquetas, String descripcion, boolean coste) {
+  public static boolean crear(String nombre, Punto coordenadas, String ubicacion, LocalDateTime fecha, Usuario host, ArrayList<String> etiquetas, String descripcion, int coste) {
     int valoracion = 0;
+    int event_id = 0;
     String aux = fecha.toString();
-    String consulta = "INSERT INTO Evento (nombre, ubicacion, fecha, valoracion, usuario_id, x, y, descripcion, coste) " +
-        "VALUES ('" +
-        nombre + "', '" +
-        ubicacion + "', STR_TO_DATE('" + fecha.toString() + "','%Y-%m-%dT%H:%i:%s'), '" +
-        valoracion + "', '" +
-        host.getId() + "','" +
-        coordenadas.getX() + "','" +
-        coordenadas.getY() + "','" +
-        descripcion + "','" +
-        coste + "');";
-    return DB.getInstance().executeUpdate(consulta);
+    String consulta = "INSERT INTO Evento (nombre, ubicacion, fecha, valoracion, usuario_id, x, y, descripcion, coste, participantes) " +
+        "VALUES ('" + nombre + "', '" +
+        ubicacion + "', STR_TO_DATE('" + aux + "','%Y-%m-%dT%H:%i:%s'), '" +
+        valoracion + "', '" + host.getId() + "','" + coordenadas.getX() + "','" +
+        coordenadas.getY() + "','" + descripcion + "','" + coste + "', 0);";
+    ResultSet result_insert = DB.getInstance().executeUpdateWithKeys(consulta);
+    try {
+      if(result_insert.next())
+        event_id = result_insert.getInt(1);
+      else{
+        return false;
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+
+    for (String etiqueta : etiquetas) {
+      String consulta2 = "INSERT INTO Etiqueta (etiqueta, evento_id) VALUES ('" + etiqueta + "','" + event_id + "')";
+      if(!DB.getInstance().executeUpdate(consulta2)){
+        return false;
+      }
+    }
+    return true;
   }
 
   public boolean modificar(String nombre, String ubicacion, LocalDateTime fecha, Usuario host, ArrayList<String> etiquetas, Punto coordenadas) {
