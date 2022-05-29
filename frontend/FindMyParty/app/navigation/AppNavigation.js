@@ -27,7 +27,7 @@ export default function MyStack() {
                 <Stack.Screen name="CreateEvent" component={CreateEventScreen} options = {{headerShown: false}}/>
                 <Stack.Screen name="EventInfo" component={EventInfoScreen} options = {{headerShown: false}}/>
                 <Stack.Screen name="Settings" component={Settings} options = {{headerShown: true}}/>
-                <Stack.Screen name="EditEvent" component={EditEvent} options = {{headerShown: true}}/>
+                <Stack.Screen name="Edit event" component={EditEvent} options = {{headerShown: true}}/>
                 <Stack.Screen name="DeleteAccount" component={DeleteAccount} options = {{headerShown: false}}/>
                 <Stack.Screen name="Filters" component={FilterScreen} options = {{headerShown: true}}/>
             </Stack.Navigator>

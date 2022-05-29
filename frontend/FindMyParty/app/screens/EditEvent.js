@@ -1,5 +1,5 @@
 import React, {useRef} from 'react'
-import { Text, View, SafeAreaView, TouchableWithoutFeedback, Pressable, Keyboard, TextInput } from 'react-native'
+import { Text, View, SafeAreaView, TouchableWithoutFeedback, Pressable, Keyboard, TextInput, StyleSheet } from 'react-native'
 import { logStyles } from '../styles/styles'
 
 export default function CreateEventScreen(props){
@@ -14,11 +14,7 @@ export default function CreateEventScreen(props){
 
                         </View>
 
-                        <View style = {logStyles.container}>
-
-                            <View style = {logStyles.titleBox}>
-                                <Text style = {logStyles.title}>Edit your Event</Text>
-                            </View>
+                        <View style = {styles.container}>
                             
                             <View style = {logStyles.formFieldsBoxLogin}>
 
@@ -62,7 +58,7 @@ export default function CreateEventScreen(props){
                             <View style = {logStyles.loginBox}>
                                 <View>
                                     <Pressable style = {({ pressed }) => [{ backgroundColor: pressed ? 'rgb(62, 167, 253)' : 'rgb(63, 152, 246)'}, logStyles.mainButton]} onPress = {() => goToScreen('MapList')}> 
-                                        <Text style = {{color: "white", fontSize: 20, fontFamily: 'RalewayUI',}}> Editar Evento </Text>
+                                        <Text style = {{color: "white", fontSize: 20, fontFamily: 'RalewayUI',}}> Edit event </Text>
                                     </Pressable>
                                 </View>
 
@@ -88,3 +84,15 @@ const DismissKeyboard = ({ children }) => (
 {children}
 </TouchableWithoutFeedback>
 );
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 3,
+        paddingTop: 10,
+        flexDirection: 'column',
+        backgroundColor: "white",
+        alignItems: 'center',
+        justifyContent: 'space-evenly',
+        
+    },
+})

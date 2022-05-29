@@ -286,10 +286,12 @@ const listEvents = StyleSheet.create({
     eventTitle: {
         fontWeight: 'bold',
         fontSize: 16.5,
+        paddingLeft: 10,
     },
 
     eventDistance: {
-        color: 'rgb(100, 100, 100)'
+        color: 'rgb(100, 100, 100)',
+        paddingLeft: 10,
     },
 
     eventNavigate: {

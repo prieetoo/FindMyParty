@@ -24,6 +24,7 @@ export default function EventInfoScreen(props){
     <ScrollView
       showsVerticalScrollIndicator={false}
       contentContainerStyle={{
+        height: 200,
         backgroundColor: colors.white,
         paddingBottom: 20,
       }}>
@@ -43,7 +44,7 @@ export default function EventInfoScreen(props){
           <Icon 
             name="border-color" 
             size={28} color={colors.white}
-            onPress = {() => goToScreen('EditEvent')}
+            onPress = {() => goToScreen('Edit event')}
             />
         </View>
       </ImageBackground>
@@ -52,7 +53,7 @@ export default function EventInfoScreen(props){
           <Icon name="place" color={colors.white} size={28} />
         </View>
         <View style={{marginTop: 25, paddingHorizontal: 20}}>
-          <Text style={{ fontSize: 30, fontWeight: 'bold'}}> </Text>
+          <Text style={{ fontSize: 30, fontWeight: 'bold'}}> Pool party </Text>
           <View
             style={{
               marginTop: 10,
@@ -75,18 +76,7 @@ export default function EventInfoScreen(props){
           </View>
           <ScrollView showsVerticalScrollIndicator={true} style={{marginTop: 20, maxHeight: 200}}>
             <Text style={{lineHeight: 20, color: colors.grey}}>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vulputate suscipit nisi at viverra. 
-            Fusce vitae cursus velit, sit amet cursus ligula. Integer commodo accumsan magna et scelerisque. 
-            Aenean vulputate tortor at orci placerat, elementum porta turpis tempor. Integer dictum leo sagittis 
-            metus sagittis malesuada. Duis mollis interdum euismod. Nam sodales feugiat libero. Donec laoreet nulla 
-            lacus. Nulla facilisi. Fusce ac nisl imperdiet metus tincidunt maximus nec ac ligula. Ut vel dui id lectus 
-            dignissim lobortis. Integer et accumsan nulla. Vivamus a mollis justo.
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vulputate suscipit nisi at viverra. 
-            Fusce vitae cursus velit, sit amet cursus ligula. Integer commodo accumsan magna et scelerisque. 
-            Aenean vulputate tortor at orci placerat, elementum porta turpis tempor. Integer dictum leo sagittis 
-            metus sagittis malesuada. Duis mollis interdum euismod. Nam sodales feugiat libero. Donec laoreet nulla 
-            lacus. Nulla facilisi. Fusce ac nisl imperdiet metus tincidunt maximus nec ac ligula. Ut vel dui id lectus 
-            dignissim lobortis. Integer et accumsan nulla. Vivamus a mollis justo.
+            A party in my private pool! 😎
             </Text>
           </ScrollView>
         </View>
