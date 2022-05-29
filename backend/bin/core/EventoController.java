@@ -6,6 +6,7 @@ import org.json.JSONObject;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -28,7 +29,7 @@ public class EventoController {
 
   @PostMapping(value = "/event/create", consumes = MediaType.APPLICATION_JSON_VALUE,
       produces = MediaType.APPLICATION_JSON_VALUE)
-  public String create_event(@RequestBody Map<String, ArrayList<String>> body){
+  public String create_event(@RequestBody Map<String, ArrayList<String>> body) {
     ArrayList<String> informacion = body.get("information");
     Punto p = new Punto(Float.parseFloat(informacion.get(1)), Float.parseFloat(informacion.get(2)));
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
