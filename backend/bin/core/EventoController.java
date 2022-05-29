@@ -10,7 +10,10 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 
 @RestController
 public class EventoController {
@@ -97,7 +100,6 @@ public class EventoController {
     }
     // format => "pago": 1
     Boolean pago = false;
-
     if (body.get("pago").equals("true")) {
       pago = true;
     }
