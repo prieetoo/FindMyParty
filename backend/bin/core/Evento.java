@@ -130,19 +130,14 @@ public class Evento {
     }
   }
 
-  public static boolean crear(String nombre, Punto coordenadas, String ubicacion, LocalDateTime fecha, Usuario host, ArrayList<String> etiquetas, String descripcion, boolean coste) {
+  public static boolean crear(String nombre, Punto coordenadas, String ubicacion, LocalDateTime fecha, Usuario host, ArrayList<String> etiquetas, String descripcion, int coste) {
     int valoracion = 0;
     String aux = fecha.toString();
-    String consulta = "INSERT INTO Evento (nombre, ubicacion, fecha, valoracion, usuario_id, x, y, descripcion, coste) " +
-        "VALUES ('" +
-        nombre + "', '" +
-        ubicacion + "', STR_TO_DATE('" + fecha.toString() + "','%Y-%m-%dT%H:%i:%s'), '" +
-        valoracion + "', '" +
-        host.getId() + "','" +
-        coordenadas.getX() + "','" +
-        coordenadas.getY() + "','" +
-        descripcion + "','" +
-        coste + "');";
+    String consulta = "INSERT INTO Evento (nombre, ubicacion, fecha, valoracion, usuario_id, x, y, descripcion, coste, participantes) " +
+        "VALUES ('" + nombre + "', '" +
+        ubicacion + "', STR_TO_DATE('" + aux + "','%Y-%m-%dT%H:%i:%s'), '" +
+        valoracion + "', '" + host.getId() + "','" + coordenadas.getX() + "','" +
+        coordenadas.getY() + "','" + descripcion + "','" + coste + "', 0);";
     return DB.getInstance().executeUpdate(consulta);
   }
 

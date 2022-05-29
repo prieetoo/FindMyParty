@@ -38,7 +38,7 @@ public class EventoController {
     Usuario anfitrion = new Usuario(user_id);
     ArrayList<String> etiquetas = body.get("tickets");
     String descripcion = informacion.get(6);
-    boolean coste = Boolean.parseBoolean(informacion.get(7));
+    int coste = Integer.parseInt(informacion.get(7));
     // 1 correct, -1 error
     if (Evento.crear(informacion.get(0), p, ubicacion, fecha, anfitrion, etiquetas, descripcion, coste)) {
       return "{\"result\":1}";
