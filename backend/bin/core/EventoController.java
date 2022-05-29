@@ -97,7 +97,8 @@ public class EventoController {
     // format => "pago": 1
     Boolean pago = false;
     if (body.containsKey("pago")){
-      pago = true;
+      if (Float.parseFloat(body.get("pago")) > 0)
+        pago = true;
     }
     int participantes = 5;
     // format => "participantes": number
