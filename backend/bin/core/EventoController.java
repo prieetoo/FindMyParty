@@ -104,8 +104,15 @@ public class EventoController {
     if (body.containsKey("participantes")){
       participantes = Integer.parseInt(body.get("participantes"));
     }
+
+    int dia = -1;
+    // format => "dia": number
+    //0 = Monday, 1 = Tuesday, 2 = Wednesday, 3 = Thursday, 4 = Friday, 5 = Saturday, 6 = Sunday
+    if (body.containsKey("dia")){
+      dia = Integer.parseInt(body.get("dia"));
+    }
     Busqueda busqueda = new Busqueda(new Punto(Float.parseFloat(body.get("latitud")),
-            Float.parseFloat(body.get("longitud"))), radio, array,pago, participantes );
+            Float.parseFloat(body.get("longitud"))), radio, array, pago, participantes, dia);
     //return format => {"lista_eventos":[{"distancia":number,"id":number,"nombre":"Algo"}]}
     return busqueda.getJsonEventos().toString();
   }

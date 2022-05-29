@@ -5,6 +5,7 @@ import org.json.JSONObject;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class Busqueda {
@@ -19,7 +20,7 @@ public class Busqueda {
      * hacemos una consulta y devolvemos los eventos que coincidan a ese radio
      * y esa direccion, cumpliendo tmb con las etiquetas si es que hay
      */
-    public Busqueda(Punto coord, float radio, ArrayList<String> etiquetes, Boolean pago, int participantes)
+    public Busqueda(Punto coord, float radio, ArrayList<String> etiquetes, Boolean pago, int participantes, int dia)
     {
         eventos = new ArrayList<>();
         eventos_json = new JSONObject();
@@ -39,12 +40,18 @@ public class Busqueda {
             pagoCond = " WHERE e.coste = 1";
         }
         String part = " AND e.participantes <= " + participantes + " ";
+
+        String weekdayCond = "";
+        if (dia >= 0) {
+            weekdayCond = "AND WEEKDAY(e.fecha) = " + dia + " ";
+        }
+
         String formula = "( 6371 * acos( cos( radians(" + coord.getX() + ") ) * cos( radians( e.x ) ) " +
                 "* cos( radians( " + coord.getY() + " ) - radians(e.y) ) + sin( radians(" + coord.getX() + ") ) * sin(radians(e.x)) ) ) AS distance ";
 
         String consulta =  "SELECT DISTINCT id,nombre," + formula +
             " FROM Evento e " +
-            join + pagoCond + part + cond +
+            join + pagoCond + part + weekdayCond + cond +
             " HAVING distance <= " + radio +
             " ORDER BY distance";
         try{
