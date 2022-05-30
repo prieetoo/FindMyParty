@@ -30,6 +30,9 @@ public class EventoController {
   @PostMapping(value = "/event/create", consumes = MediaType.APPLICATION_JSON_VALUE,
       produces = MediaType.APPLICATION_JSON_VALUE)
   public String create_event(@RequestBody Map<String, ArrayList<String>> body) {
+    //Formato body:
+    // "information": ["nombre", latitud, longitud, "yyyy-MM-dd HH:mm:ss", id_usuario, "ubicacion", "descripcion", coste],
+    // "tickets": [etiqueta1, etiqueta2, ...]
     ArrayList<String> informacion = body.get("information");
     Punto p = new Punto(Float.parseFloat(informacion.get(1)), Float.parseFloat(informacion.get(2)));
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
@@ -97,10 +100,10 @@ public class EventoController {
     }
     // format => "pago": 1
     Boolean pago = false;
-    if (body.containsKey("pago")){
-      if (Float.parseFloat(body.get("pago")) > 0)
-        pago = true;
+    if (body.get("pago").equals("true")) {
+      pago = true;
     }
+
     int participantes = 5;
     // format => "participantes": number
     if (body.containsKey("participantes")){
