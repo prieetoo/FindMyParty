@@ -49,7 +49,7 @@ public class Busqueda {
         String formula = "( 6371 * acos( cos( radians(" + coord.getX() + ") ) * cos( radians( e.x ) ) " +
                 "* cos( radians( " + coord.getY() + " ) - radians(e.y) ) + sin( radians(" + coord.getX() + ") ) * sin(radians(e.x)) ) ) AS distance ";
 
-        String consulta =  "SELECT DISTINCT id,nombre," + formula +
+        String consulta =  "SELECT DISTINCT id,nombre,x,y," + formula +
             " FROM Evento e " +
             join + pagoCond + part + weekdayCond + cond +
             " HAVING distance <= " + radio +
@@ -61,6 +61,8 @@ public class Busqueda {
                 JSONObject json_event = new JSONObject();
                 json_event.put("id", rs.getInt("id"));
                 json_event.put("nombre", rs.getString("nombre"));
+                json_event.put("latitud", rs.getString("x"));
+                json_event.put("longitud", rs.getString("y"));
                 json_event.put("distancia", rs.getFloat("distance"));
                 arrayjson.put(json_event);
             }
