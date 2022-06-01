@@ -69,7 +69,7 @@ public class EventoController {
   }
 
   @PostMapping("/event/valorar_event")
-  public String valorar_usuario(@RequestBody Map<String, String> body){
+  public String valorar_evento(@RequestBody Map<String, String> body){
     // 1 correct, -1 error
     if (!Evento.valorar(Integer.parseInt(body.get("destinatario")),Float.parseFloat(body.get("valor")), Integer.parseInt(body.get("autor")))) {
       return "{\"result\":1}";

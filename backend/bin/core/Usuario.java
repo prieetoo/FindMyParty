@@ -1,10 +1,7 @@
 package core;
 
-import org.apache.coyote.Response;
 import org.json.JSONArray;
 import org.json.JSONObject;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -27,7 +24,7 @@ public class Usuario{
   private float valoracion;
   private ArrayList<Comentario> comentarios;
   private List<Valoracion> valoraciones;
-  private List<Publicacion> publicacions;
+  private List<Publicacion> publicaciones;
   private LocalDate fechaNacimiento;
   private Punto ubicacion;
 
@@ -41,7 +38,7 @@ public class Usuario{
     this.valoraciones = new ArrayList<>();
     this.comentarios = new ArrayList<>();
     this.eventos = new ArrayList<>();
-    this.publicacions = new ArrayList<>();
+    this.publicaciones = new ArrayList<>();
     this.fechaNacimiento = fechaNacimiento;
     //this.participa = new ArrayList<>();
 
@@ -70,7 +67,7 @@ public class Usuario{
         this.valoraciones = new ArrayList<>();
         this.comentarios = new ArrayList<>();
         this.eventos = new ArrayList<>();
-        this.publicacions = new ArrayList<>();
+        this.publicaciones = new ArrayList<>();
       }
     } catch (SQLException e) {
       e.printStackTrace();
@@ -210,7 +207,7 @@ public class Usuario{
 
   public boolean añadirPublicacion(Usuario autor, List<String> img, String contenido){
     LocalDateTime fecha = LocalDateTime.now();
-    this.publicacions.add(new Publicacion(this,fecha,img,contenido));
+    this.publicaciones.add(new Publicacion(this,fecha,img,contenido));
     return true;
     }
 
