@@ -37,7 +37,7 @@ public class Busqueda {
         }
         String pagoCond = " WHERE e.coste = 0";
         if (pago) {
-            pagoCond = " WHERE e.coste = 1";
+            pagoCond = " WHERE e.coste > 0";
         }
         String part = " AND e.participantes <= " + participantes + " ";
 
@@ -49,7 +49,7 @@ public class Busqueda {
         String formula = "( 6371 * acos( cos( radians(" + coord.getX() + ") ) * cos( radians( e.x ) ) " +
                 "* cos( radians( " + coord.getY() + " ) - radians(e.y) ) + sin( radians(" + coord.getX() + ") ) * sin(radians(e.x)) ) ) AS distance ";
 
-        String consulta =  "SELECT DISTINCT id,nombre,x,y," + formula +
+        String consulta =  "SELECT DISTINCT id, nombre, x, y, " + formula +
             " FROM Evento e " +
             join + pagoCond + part + weekdayCond + cond +
             " HAVING distance <= " + radio +
