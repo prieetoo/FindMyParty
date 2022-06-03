@@ -5,6 +5,8 @@ import searchData from '../data/searchFilters.json'
 
 export const DayDropdown = () => {
 
+    const val = searchData.dayOfTheWeek;
+
     const placeholder = {
         label: 'Select a day of the week...',
         value: null,
@@ -15,18 +17,18 @@ export const DayDropdown = () => {
         <RNPickerSelect
             placeholder = {placeholder}
             style = {pickerSelectStyles}
-            onValueChange={(value) => {
+            onValueChange = {(value) => {
               searchData.dayOfTheWeek = value;
               console.log(searchData.dayOfTheWeek)
             }}
             items={[
-                { label: 'Monday', value: 'monday'},
-                { label: 'Tuesday', value: 'tuesday' },
-                { label: 'Wednesday', value: 'wednesday' },
-                { label: 'Thursday', value: 'thursday'},
-                { label: 'Friday', value: 'friday'},
-                { label: 'Saturday', value: 'saturday'},
-                { label: 'Sunday', value: 'sunday'}
+                { label: 'Monday', value: 0 },
+                { label: 'Tuesday', value: 1 },
+                { label: 'Wednesday', value: 2 },
+                { label: 'Thursday', value: 3 },
+                { label: 'Friday', value: 4 },
+                { label: 'Saturday', value: 5 },
+                { label: 'Sunday', value: 6 }
             ]}
         />
     );

@@ -6,6 +6,7 @@ import WelcomeScreen from '../screens/WelcomeScreen';
 import RegisterFormScreen from '../screens/RegisterFormScreen';
 import RecuperarPasswordScreen from '../screens/RecuperarPasswordScreen';
 import MapListScreen from '../screens/MapListScreen';
+import NewMap from '../components/NewMap';
 import CreateEventScreen from '../screens/CreateEvent';
 import EventInfoScreen from '../screens/EventInfoScreen';
 import Settings from '../screens/Settings';

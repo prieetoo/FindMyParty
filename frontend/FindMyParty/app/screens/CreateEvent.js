@@ -207,7 +207,7 @@ const createEvent = (navigation) => {
         .then(data => {
             var result = parseInt(data.result)
 
-            if (result = 1) {
+            if (result == 1) {
                 console.log("Event created correctly.");
                 navigation.goBack();
             }

@@ -263,10 +263,10 @@ const listEvents = StyleSheet.create({
 
     eventElement: {
         flexDirection: 'row',
-        borderTopWidth: 1,
-        borderTopStartRadius: 40,
-        borderTopEndRadius: 40,
-        borderTopColor: 'rgb(230, 230, 230)',
+        borderBottomWidth: 1,
+        borderBottomStartRadius: 40,
+        borderBottomEndRadius: 40,
+        borderBottomColor: 'rgb(230, 230, 230)',
         height: 80,
         alignItems: 'center',
     },

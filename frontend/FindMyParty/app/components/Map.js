@@ -5,7 +5,7 @@ import { mapStyle } from '../styles/mapStyle';
 import { useNavigation } from '@react-navigation/native';
 import locationData from '../data/locationData.json'
 import searchFilters from '../data/searchFilters.json'
-import fetchedEvents from '../data/fetchedEvents.json'
+import {fetchedEvents } from '../data/fetchedEvents.json'
 import { Marker } from 'react-native-maps';
 import { render } from 'react-dom';
 
@@ -29,37 +29,11 @@ export function MapScreen() {
         }}
         mapType="standard">
 
-      <Marker title='Rave Cave'
-        coordinate={{latitude: 41.40811302543379, longitude: 2.159412214343009}}
-        onPress={() => navigation.navigate('CreateEvent')}
-      />
-
-      <Marker title='Reggaeton Party'
-        coordinate={{latitude: 41.4050011, longitude: 2.1544453}}
-        onPress={() => navigation.navigate('CreateEvent')}
-      />
+          {fetchEvents.map}    
       
-      <Marker title='Pool party' description='A party in my private pool! 😎'
-        coordinate={{latitude: 41.4138196, longitude: 2.1616995}}
-        onCalloutPress={() => navigation.navigate('CreateEvent')}
-      />
-      
-      
-
       </MapView>
     </View>
   );
-}
-
-const markers = () => {
-  
-  for(const i = 0; i < fetchedEvents.events; i++) {
-    render(
-    <Marker title='Hola'
-           coordinate={{latitude: 41.40811302543379, longitude: 2.159412214343009}}
-           onPress={() => navigation.navigate('CreateEvent')}
-        />)
-  }
 }
 
 const fetchEvents = () => {

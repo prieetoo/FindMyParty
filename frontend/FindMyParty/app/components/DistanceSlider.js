@@ -10,7 +10,7 @@ export default class DistanceSlider extends Component {
   constructor(props){
     super(props)
      this.state = { 
-       distance: 1,
+       distance: searchData.distance,
        minDistance: 1,
        maxDistance: 10
        }

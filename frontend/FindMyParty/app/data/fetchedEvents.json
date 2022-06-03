@@ -1,3 +1,5 @@
 {
-    "events": null
+    "events": {
+        "lista_eventos": []
+    }
 }

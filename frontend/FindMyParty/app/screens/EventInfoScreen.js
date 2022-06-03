@@ -1,27 +1,24 @@
-import React from 'react';
-import {
-  ImageBackground,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { Dimensions, ImageBackground, ScrollView, StatusBar, StyleSheet, Text, View } from 'react-native';
 import colors from '../styles/colors';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import { BlurView } from 'expo-blur'
-import { listEvents } from '../styles/styles'
 import { useNavigation } from '@react-navigation/native';
+import eventDetails from '../data/eventDetails.json';
+import LottieView from "lottie-react-native";
 
 export default function EventInfoScreen(props){
 
     const image = {uri: "https://direct.rhapsody.com/imageserver/images/alb.315707992/500x500.jpg"};
-    const navigation = useNavigation(); 
+    const navigation = useNavigation();
+    const id = props.route.params.id;
+    var [loaded, isLoaded] = useState(false); 
 
+    useEffect (() => {
+      fetchInfo(id, loaded);
+    }, [])
 
-  return (
-      
-    <ScrollView
+    return (
+    <View
       showsVerticalScrollIndicator={false}
       contentContainerStyle={{
         height: 200,
@@ -29,7 +26,7 @@ export default function EventInfoScreen(props){
         paddingBottom: 20,
       }}>
           <StatusBar
-        barStyle="light-content"
+        barStyle="light-content" 
         translucent
         backgroundColor="rgb(255, 255, 255)"
       />
@@ -39,21 +36,23 @@ export default function EventInfoScreen(props){
             name="arrow-back-ios"
             size={28}
             color={colors.white}
-            onPress = {() => goToScreen('MapList')}
+            onPress = {() => navigation.goBack()}
           />
           <Icon 
             name="border-color" 
             size={28} color={colors.white}
-            onPress = {() => goToScreen('Edit event')}
+            onPress = {() => navigation.navigate("EditEvent")}
             />
         </View>
       </ImageBackground>
+      
+      { loaded = true ? (
       <View>
         <View style={style.iconContainer}>
           <Icon name="place" color={colors.white} size={28} />
         </View>
         <View style={{marginTop: 25, paddingHorizontal: 20}}>
-          <Text style={{ fontSize: 30, fontWeight: 'bold'}}> Pool party </Text>
+          <Text style={{ fontSize: 30, fontWeight: 'bold'}}> { eventDetails.details.nombre } </Text>
           <View
             style={{
               marginTop: 10,
@@ -72,7 +71,7 @@ export default function EventInfoScreen(props){
                 4.0
               </Text>
             </View>
-            <Text style={{fontSize: 13, color: colors.grey, alignSelf: 'center'}}>365 reviews</Text>
+            <Text style={{fontSize: 13, color: colors.grey, alignSelf: 'center'}}> { String(eventDetails.details.comentarios.length) } reviews</Text>
           </View>
           <ScrollView showsVerticalScrollIndicator={true} style={{marginTop: 20, maxHeight: 200}}>
             <Text style={{lineHeight: 20, color: colors.grey}}>
@@ -99,7 +98,7 @@ export default function EventInfoScreen(props){
                 color: colors.grey,
                 marginLeft: 5,
               }}>
-              500 users
+              { String(eventDetails.details.participantes.length) } users
             </Text>
           </View>
         </View>
@@ -108,17 +107,55 @@ export default function EventInfoScreen(props){
             Join Now
           </Text>
         </View>
-      </View>
-    </ScrollView>
-  );
-
-  function goToScreen(routeName){
-    props.navigation.navigate(routeName)
+      </View> ) : (
+        <View style = {style.container}>
+          <LottieView
+              source={require("../assets/loading/107547-loading-grey.json")}
+              style={style.animation}
+              autoPlay
+          />
+        </View>
+      )
 }
-
+    </View>
+  )
 };
 
+const fetchInfo = (id, loaded) => {
+
+  try { 
+    let response = fetch('http://192.168.68.107:8080/event/get/' + id, {
+        method: 'GET',
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json'
+        },
+    })
+    .then(response => response.json())
+    .then(data => {
+      //console.log(data);
+      eventDetails.details = data;
+      console.log(eventDetails.details);
+      loaded = true;
+    })
+}
+  catch (error) {
+    console.error(error);
+  }
+}
+
+
 const style = StyleSheet.create({
+
+  container: {
+    paddingBottom: 500,
+    alignItems: 'center',
+    justifyContent: 'center',
+    alignSelf: 'center',
+    width: Dimensions.get("window").width, 
+    height: Dimensions.get("window").height
+  },
+
   btn: {
     height: 55,
     justifyContent: 'center',
@@ -164,5 +201,11 @@ const style = StyleSheet.create({
     alignItems: 'center',
     marginHorizontal: 20,
     justifyContent: 'space-between',
+  },
+
+  animation: {
+    width: 150,
+    height: 150,
+    alignItems: 'center'
   },
 });

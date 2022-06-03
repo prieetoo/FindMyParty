@@ -1,7 +1,7 @@
 {
     "dayOfTheWeek": -1,
-    "distance": 1,
+    "distance": 5,
     "assistants": 5,
-    "isPaid": "false",
+    "isPaid": true,
     "tag": "rave"
 }

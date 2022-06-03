@@ -10,7 +10,7 @@ export default class AssistantSlider extends Component {
   constructor(props){
     super(props)
      this.state = { 
-       assistants: 5,
+       assistants: searchData.assistants,
        minAssistants: 5,
        maxAssistants: 250
        }

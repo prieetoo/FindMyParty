@@ -2,8 +2,9 @@ import React from 'react'
 import { Text, Image, View, Pressable, ScrollView, SafeAreaView } from 'react-native'
 import { listEvents } from '../styles/styles';
 import { useNavigation } from '@react-navigation/native';
+import fetchedEvents from '../data/fetchedEvents.json';
 
-export function EventList(props) {
+export function EventList() {
 
     const navigation = useNavigation(); 
 
@@ -17,31 +18,25 @@ export function EventList(props) {
             <Text style = {listEvents.listCreateEvent} onPress = {() => navigation.navigate('CreateEvent')}> Create event </Text>
             <Text style = {listEvents.listFilters} onPress = {() => navigation.navigate('Filters')}> Filters... </Text>
         </View>
-
-
+        
         <ScrollView style = {listEvents.eventScroll}>
-            <Pressable style = {listEvents.firstEventElement}>
-                <View style = {listEvents.eventDetails}>
-                    <Text style = {listEvents.eventTitle}> Rave Cave </Text>
-                    <Text style = {listEvents.eventDistance}> 0 km away </Text>
-                </View>
-                <Image source={require('../assets/arrow.png')} style = {listEvents.eventNavigate}/>
-            </Pressable>
-            <Pressable style = {listEvents.eventElement}> 
-                <View style = {listEvents.eventDetails}>
-                    <Text style = {listEvents.eventTitle}> Reggaeton party </Text>
-                    <Text style = {listEvents.eventDistance}> 0.5 km away </Text>
-                </View>
-                <Image source={require('../assets/arrow.png')} style = {listEvents.eventNavigate}/>
-            </Pressable>
-            <Pressable style = {listEvents.eventElement} onPress = {() => navigation.navigate('EventInfo')}>
-                <View style = {listEvents.eventDetails}>
-                    <Text style = {listEvents.eventTitle}> Pool party</Text>
-                    <Text style = {listEvents.eventDistance}> 0.6 km away </Text>
-                </View>
-                <Image source={require('../assets/arrow.png')} style = {listEvents.eventNavigate}/>
-            </Pressable>
-        </ScrollView>
+        
+        {fetchedEvents.events.lista_eventos ? (
+            (fetchedEvents.events.lista_eventos.map((event) => {
+                var dist = String(event.distancia).slice(0,4)
+                return(
+                        <Pressable style = {listEvents.eventElement} key = { event.id } onPress = {() => navigation.navigate("EventInfo", {id: event.id})}>
+                            <View style = {listEvents.eventDetails}>
+                                <Text style = {listEvents.eventTitle}> {event.nombre} </Text>
+                                <Text style = {listEvents.eventDistance}> {dist} km away </Text>
+                            </View>
+                            <Image source={require('../assets/arrow.png')} style = {listEvents.eventNavigate}/>
+                        </Pressable>
+        )}))) : (<Text> No hay eventos disponibles. </Text>)
+        }
+        
+        </ScrollView> 
+        
         <Text style = {{alignSelf: 'center', paddingTop: 20, fontSize: 20, color: 'rgb(62, 167, 253)'}} onPress = {() => navigation.navigate('Settings')}> Settings </Text>
     </SafeAreaView>
     )
