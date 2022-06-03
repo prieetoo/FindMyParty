@@ -1,18 +1,12 @@
 package core;
 
-import com.mysql.cj.x.protobuf.MysqlxDatatypes;
-import org.json.JSONArray;
-import org.json.JSONObject;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
-import java.sql.SQLException;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -25,6 +19,16 @@ public class EventoController {
       return "{\"result\":1}";
     }
     return "{\"result\":-1}";
+  }
+
+  @GetMapping("/event/cancel/{evento}/{participante_id}")
+  public String cancel(@PathVariable("evento") String evento, @PathVariable("participante_id") String participante_id){
+    Object o = evento;
+    Evento ev = (Evento) o;
+      if (Evento.eliminarParticipante(ev,Integer.parseInt(participante_id))){
+        return "{\"result\":1}";
+      }
+      return "{\"result\":-1}";
   }
 
   @PostMapping(value = "/event/create", consumes = MediaType.APPLICATION_JSON_VALUE,
