@@ -228,6 +228,10 @@ public class Evento {
 
   public static boolean anadirParticipante(int evento_id, int participante_id) {
     int participantes = 0;
+    /***
+    String consulta0 =  "SELECT participantes FROM Evento WHERE EXISTS (SELECT participantes FROM Evento WHERE Usuario_id ="+participante_id+"');";
+    boolean rs0 = DB.getInstance().executeUpdate(consulta0);
+     **/
     String consulta = "INSERT INTO Participante (Evento_id, Usuario_id) VALUES (" +
         "'" + evento_id + "', " +
         "'" + participante_id + "');";
