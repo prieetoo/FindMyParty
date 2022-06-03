@@ -140,7 +140,7 @@ public class Evento {
         "VALUES ('" + nombre + "', '" +
         ubicacion + "', STR_TO_DATE('" + aux + "','%Y-%m-%dT%H:%i:%s'), '" +
         valoracion + "', '" + host.getId() + "','" + coordenadas.getX() + "','" +
-        coordenadas.getY() + "','" + descripcion + "','" + coste + "', 0);";
+        coordenadas.getY() + "','" + descripcion + "','" + coste + "', 1);";
     ResultSet result_insert = DB.getInstance().executeUpdateWithKeys(consulta);
     try {
       if(result_insert.next())
@@ -227,11 +227,24 @@ public class Evento {
   }
 
   public static boolean anadirParticipante(int evento_id, int participante_id) {
+    int participantes = 1;
     String consulta = "INSERT INTO Participante (Evento_id, Usuario_id) VALUES (" +
         "'" + evento_id + "', " +
         "'" + participante_id + "');";
-    boolean rs = DB.getInstance().executeUpdate(consulta);
-    return rs;
+    boolean rs1 = DB.getInstance().executeUpdate(consulta);
+
+    String consulta1 = "SELECT participantes FROM Evento WHERE id = "+ evento_id +";";
+    ResultSet aux = DB.getInstance().executeQuery(consulta1);
+    try {
+      if (aux.next()) {
+        participantes += aux.getInt("participantes");
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+
+    String consulta2 = "UPDATE Evento SET participantes = '" + participantes + "' WHERE id = " + evento_id + ";";
+    return DB.getInstance().executeUpdate(consulta2);
   }
 
   public boolean eliminarParticipante(Usuario participante) {
