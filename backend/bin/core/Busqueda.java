@@ -6,6 +6,7 @@ import org.json.JSONObject;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 public class Busqueda {
@@ -49,7 +50,7 @@ public class Busqueda {
         String formula = "( 6371 * acos( cos( radians(" + coord.getX() + ") ) * cos( radians( e.x ) ) " +
                 "* cos( radians( " + coord.getY() + " ) - radians(e.y) ) + sin( radians(" + coord.getX() + ") ) * sin(radians(e.x)) ) ) AS distance ";
 
-        String consulta =  "SELECT DISTINCT id, nombre,descripcion, x, y, " + formula +
+        String consulta =  "SELECT DISTINCT id, nombre,descripcion,participantes, x, y, " + formula +
             " FROM Evento e " +
             join + pagoCond + part + weekdayCond + cond +
             " HAVING distance <= " + radio +
@@ -65,15 +66,41 @@ public class Busqueda {
                 json_event.put("longitud", rs.getString("y"));
                 json_event.put("distancia", rs.getFloat("distance"));
                 json_event.put("descripcion", rs.getString("descripcion"));
+                json_event.put("participantes",rs.getString("participantes"));
                 arrayjson.put(json_event);
             }
             eventos_json.put("lista_eventos", arrayjson);
         }catch(SQLException e){
             e.printStackTrace();
         }
+        processComments();
+    }
+    private void processComments(){
+        JSONArray arrayjson  = (JSONArray) this.eventos_json.get("lista_eventos");
+        JSONArray newArray = new JSONArray();
+        for (int i=0; i < arrayjson.length(); i++) {
+           JSONObject event = arrayjson.getJSONObject(i);
+           int id = event.getInt("id");
+           String consulta = "SELECT * FROM Comentarioevento where evento_id = " + id ;
+           ResultSet rs = DB.getInstance().executeQuery(consulta);
+           JSONArray comments = new JSONArray();
+           try {
+               while (rs.next()) {
+                   JSONObject json_comment = new JSONObject();
+                   json_comment.put("contenido",rs.getString("contenido"));
+                   json_comment.put("fecha",rs.getString("fecha"));
+                   json_comment.put("autor",rs.getString("Usuario_id"));
+                   comments.put(json_comment);
+               }
+               event.put("comment",comments);
+           } catch (SQLException e) {
+               e.printStackTrace();
+           }
+           newArray.put(event);
+        }
+        this.eventos_json.put("lista_eventos",newArray);
 
     }
-
     public ArrayList<Evento> getEventos() {
         return eventos;
     }
