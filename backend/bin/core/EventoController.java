@@ -21,11 +21,10 @@ public class EventoController {
     return "{\"result\":-1}";
   }
 
-  @GetMapping("/event/cancel/{evento}/{participante_id}")
-  public String cancel(@PathVariable("evento") String evento, @PathVariable("participante_id") String participante_id){
-    Object o = evento;
-    Evento ev = (Evento) o;
-      if (Evento.eliminarParticipante(ev,Integer.parseInt(participante_id))){
+  @GetMapping("/event/cancel/{evento_id}/{participante_id}")
+  public String cancel(@PathVariable("evento_id") String evento_id, @PathVariable("participante_id") String participante_id){
+
+      if (Evento.eliminarParticipante(Integer.parseInt(evento_id),Integer.parseInt(participante_id))){
         return "{\"result\":1}";
       }
       return "{\"result\":-1}";

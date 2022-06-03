@@ -247,18 +247,12 @@ public class Evento {
     return DB.getInstance().executeUpdate(consulta2);
   }
 
-  public static boolean eliminarParticipante(Evento evento, int participante_id) {
+  public static boolean eliminarParticipante(int evento_id, int participante_id) {
     String consulta = "DELETE FROM Participante" +
         "   WHERE Usuario_id = '" + participante_id + "' and" +
-        "        Evento_id = '" + evento.getId() + "';";
-    for (int i = 0; i < evento.getParticipantes().size(); i++) {
-      if (evento.getParticipantes().get(i).getId() == participante_id) {
-        boolean rs = DB.getInstance().executeUpdate(consulta);
-        evento.getParticipantes().remove(i);
-        return rs;
-      }
-    }
-    return false;
+        "        Evento_id = '" + evento_id + "';";
+    boolean rs = DB.getInstance().executeUpdate(consulta);
+    return rs;
   }
 
   public boolean anadirPublicacion(Publicacion publicacion) {
