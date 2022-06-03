@@ -65,7 +65,7 @@ public class EventoController {
   @GetMapping(value = "/event/eliminate/{event_id}")
   public String delete_event(@PathVariable("event_id") String event_id){
     // 1 correct, -1 error
-    if (!Evento.eliminar(Integer.parseInt(event_id))) {
+    if (Evento.eliminar(Integer.parseInt(event_id))) {
       return "{\"result\":1}";
     }
     return "{\"result\":-1}";
@@ -74,7 +74,7 @@ public class EventoController {
   @PostMapping("/event/valorar_event")
   public String valorar_evento(@RequestBody Map<String, String> body){
     // 1 correct, -1 error
-    if (!Evento.valorar(Integer.parseInt(body.get("destinatario")),Float.parseFloat(body.get("valor")), Integer.parseInt(body.get("autor")))) {
+    if (Evento.valorar(Integer.parseInt(body.get("destinatario")),Float.parseFloat(body.get("valor")), Integer.parseInt(body.get("autor")))) {
       return "{\"result\":1}";
     }
     return "{\"result\":-1}";

@@ -227,7 +227,7 @@ public class Evento {
   }
 
   public static boolean anadirParticipante(int evento_id, int participante_id) {
-    int participantes = 1;
+    int participantes = 0;
     String consulta = "INSERT INTO Participante (Evento_id, Usuario_id) VALUES (" +
         "'" + evento_id + "', " +
         "'" + participante_id + "');";
@@ -248,11 +248,23 @@ public class Evento {
   }
 
   public static boolean eliminarParticipante(int evento_id, int participante_id) {
+    int participantes = 0;
     String consulta = "DELETE FROM Participante" +
         "   WHERE Usuario_id = '" + participante_id + "' and" +
         "        Evento_id = '" + evento_id + "';";
     boolean rs = DB.getInstance().executeUpdate(consulta);
-    return rs;
+    String consulta1 = "SELECT participantes FROM Evento WHERE id = "+ evento_id +";";
+    ResultSet aux = DB.getInstance().executeQuery(consulta1);
+    try {
+      if (aux.next()) {
+        participantes = aux.getInt("participantes") -  1;
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+
+    String consulta2 = "UPDATE Evento SET participantes = '" + participantes + "' WHERE id = " + evento_id + ";";
+    return DB.getInstance().executeUpdate(consulta2);
   }
 
   public boolean anadirPublicacion(Publicacion publicacion) {

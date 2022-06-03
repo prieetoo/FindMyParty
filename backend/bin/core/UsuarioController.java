@@ -23,12 +23,6 @@ public class UsuarioController {
     return Usuario.iniciarSesion(email, pwd);
   }
 
- //Ejemplo de internet para ver los diferentes tipos de peticiones y como hacer la respuesta
-  @GetMapping("/user/{id}")
-  public String search(@PathVariable String id){
-    return id;
-  }
-
   @PostMapping(value = "/user/register", consumes = MediaType.APPLICATION_JSON_VALUE,
       produces = MediaType.APPLICATION_JSON_VALUE)
   public String register_user(@RequestBody Map<String, String> body){
