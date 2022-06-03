@@ -12,6 +12,7 @@ public class Comentario {
     private Evento evento;
     private LocalDateTime fecha;
     private String contenido;
+    private int autorId;
     public Comentario(Usuario autor,Usuario destinatario, LocalDateTime fecha, String contenido){
 
         this.autor = autor;
@@ -30,6 +31,15 @@ public class Comentario {
         this.evento = evento;
 
     }
+    public Comentario(Evento evento, int usuarioId,LocalDateTime fecha, String contenido){
+        //this.autor = new Usuario(usuarioId);
+        this.autorId = usuarioId;
+        this.destinatario = null;
+        this.evento = evento;
+        this.fecha = fecha;
+        this.contenido = contenido;
+    }
+
     public boolean eliminar() //revisar
     {
         String consulta = "";
@@ -40,6 +50,13 @@ public class Comentario {
 
         boolean rs = DB.getInstance().executeUpdate(consulta);
         return rs;
+    }
+    public JSONObject toJsonEvent(){
+        JSONObject json = new JSONObject();
+        json.put("autor",this.autorId);
+        json.put("fecha", this.fecha);
+        json.put("contenido", this.contenido);
+        return json;
     }
     public JSONObject toJson(){
         JSONObject json = new JSONObject();

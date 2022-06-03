@@ -28,6 +28,7 @@ public class Evento {
   private boolean activo;
   private String descripcion;
   private boolean coste;
+  private int nParticipantes;
 
   public Evento(Evento ev) {
     this.nombre = ev.getNombre();
@@ -101,6 +102,7 @@ public class Evento {
         this.etiquetas = new ArrayList<>();
         this.descripcion = rs.getString(9);
         this.coste = rs.getBoolean(10);
+        this.nParticipantes = rs.getInt("participantes");
       }
     } catch (SQLException e) {
       e.printStackTrace();
@@ -269,11 +271,24 @@ public class Evento {
   }
 
   private void loadEtiquetas(){
-    String consulta = "SELECT * FROM FindMyParty.Etiqueta where evento_id = " + this.id ;
+    String consulta = "SELECT * FROM Etiqueta where evento_id = " + this.id ;
     ResultSet rs = DB.getInstance().executeQuery(consulta);
     try {
       while (rs.next()) {
         this.etiquetas.add(rs.getString("etiqueta"));
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+  }
+  private void loadComentarios(){
+    String consulta = "SELECT * FROM Comentarioevento where evento_id = " + this.id ;
+    ResultSet rs = DB.getInstance().executeQuery(consulta);
+    try {
+      while (rs.next()) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        LocalDateTime dateTime = LocalDateTime.parse(rs.getString("fecha"),formatter);
+        this.comentarios.add(new Comentario(this,rs.getInt("Usuario_id"),dateTime,rs.getString("contenido")));
       }
     } catch (SQLException e) {
       e.printStackTrace();
@@ -288,11 +303,14 @@ public class Evento {
     json.put("coordenadas", this.coordenadas.toString());
     json.put("fecha", this.fecha);
     json.put("valoracion", this.valoracion);
+    json.put("descripcion", this.descripcion);
+    json.put("nParticipantes",this.nParticipantes);
     Usuario u = new Usuario(this.idHost);
-    json.put("host",u.toJson());
+    json.put("host",u.toJsonGetEvents());
 
     JSONArray jsonArray = new JSONArray();
     this.loadEtiquetas();
+    this.loadComentarios();
     jsonArray = new JSONArray();
     for (int i = 0; i < this.etiquetas.size(); i++) {
       jsonArray.put(this.etiquetas.get(i));
@@ -301,7 +319,7 @@ public class Evento {
 
     jsonArray = new JSONArray();
     for (int i = 0; i < this.comentarios.size(); i++) {
-      jsonArray.put(this.comentarios.get(i).toJson());
+      jsonArray.put(this.comentarios.get(i).toJsonEvent());
     }
     json.put("comentarios", jsonArray);
 
@@ -309,7 +327,7 @@ public class Evento {
     for (int i = 0; i < this.participantes.size(); i++) {
       jsonArray.put(this.participantes.get(i).toJson());
     }
-    json.put("participantes", jsonArray);
+    //json.put("participantes", jsonArray);
 
     jsonArray = new JSONArray();
     for (int i = 0; i < this.publicaciones.size(); i++) {

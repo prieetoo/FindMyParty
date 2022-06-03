@@ -65,7 +65,6 @@ public class Usuario{
         this.nombre = rs.getString(2);
         this.email = rs.getString(3);
         this.password = rs.getString(4);
-        this.fechaNacimiento = LocalDate.parse(rs.getString(5));
         this.valoracion = rs.getFloat(7);
         this.valoraciones = new ArrayList<>();
         this.comentarios = new ArrayList<>();
@@ -263,12 +262,18 @@ public class Usuario{
     }
     else return false;
   }
+  public JSONObject toJsonGetEvents() {
+    JSONObject json = new JSONObject();
+    json.put("id", this.id);
+    json.put("nombre", this.nombre);
+    json.put("email", this.email);
+    return json;
+  }
 
   public JSONObject toJson(){
     JSONObject json = new JSONObject();
     json.put("id", this.id);
     json.put("nombre", this.nombre);
-    json.put("fechaNacimiento", this.fechaNacimiento.toString());;
     json.put("email", this.email);
     json.put("valoracion", this.valoracion);
 
