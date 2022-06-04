@@ -25,7 +25,7 @@ export function EventList() {
             (fetchedEvents.events.lista_eventos.map((event) => {
                 var dist = String(event.distancia).slice(0,4)
                 return(
-                        <Pressable style = {listEvents.eventElement} key = { event.id } onPress = {() => navigation.navigate("EventInfo", {id: event.id})}>
+                        <Pressable style = {listEvents.eventElement} key = { event.id } onPress = {() => navigation.navigate("EventInfo", {id: event.id, nombre: event.nombre, desc: event.descripcion, lat: event.latitud, lon: event.longitud, part: event.participantes, com: Number(event.comment.length), dist: dist, autor: event.autor})}>
                             <View style = {listEvents.eventDetails}>
                                 <Text style = {listEvents.eventTitle}> {event.nombre} </Text>
                                 <Text style = {listEvents.eventDistance}> {dist} km away </Text>

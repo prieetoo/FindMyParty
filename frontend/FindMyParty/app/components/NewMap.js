@@ -57,7 +57,7 @@ export const MyMapComponent = () => {
             longitude: Number(event.longitud),
             }}
             title = { event.nombre }
-            description = { String(event.id)}
+            description = { String(event.descripcion)}
             />
             )
           }))) : ("Hello")
@@ -112,11 +112,8 @@ const fetchEvents = () => {
     })
     .then(response => response.json())
     .then(data => {
-      console.log(locationData.location.latitude)
-      console.log(locationData.location.longitude)
-      console.log(data)
       fetchedEvents.events = data;
-      console.log(fetchedEvents.events.lista_eventos);
+      console.log(fetchedEvents.events)
     })
 }
   catch (error) {
