@@ -1,6 +1,5 @@
-import React, { useEffect, useLayoutEffect, useState } from 'react';
+import React from 'react';
 import { Alert, Dimensions, ImageBackground, Pressable, ScrollView, StatusBar, StyleSheet, Text, View } from 'react-native';
-import colors from '../styles/colors';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { useNavigation } from '@react-navigation/native';
 import user from '../data/user.json';
