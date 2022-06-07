@@ -1,67 +1,162 @@
- nb @startuml
+@startuml
 class Usuario {
-  nombre : String
-  id : int
-  password : String
-  fechaNacimiento : Date
-  foto : String
-  email : String
-  valoracion : float
-  valoraciones : List<flloat>
-  Usuario(nombre, password, fechaNacimiento, foto, email)
-  iniciarSesion(email,password) : bool
-  recuperarPassword(email) : bool
-  modificarPerfil(nombre, password, fechaNacimiento, foto, email) : bool
-  eliminar(password) : bool
-  seguirUsuario(usuario) : bool
-  recibirValoracion(valoracion) : bool
-  recibirComentario(comentario) : bool
-  crearEvento(evento) : bool
-  modificarEvento(evento) : bool
-  toJson() : JSONObject
+  - nombre : String
+  - id : int
+  - password : String
+  - foto : String
+  - email : String
+  - valoracion : float
+  - fechaNacimiento : Date
+  + Usuario(nombre : String, password : String, fechaNacimiento : LocalDate, foto : String, email : String)
+  + Usuario(id : int)
+
+  + {static} ConvertToJson(str : String) : String
+  + {static} iniciarSesion(email : String, password : String) : String
+  + {static} registrar(nombre : String, password : String, fechaNacimiento : LocalDate, foto : String, email : String) : String
+  + {static} recuperarPassword(email : String) : String
+  + {static} modificarPerfil(id : int, nombre : String, password : String, fechaNacimiento : String, foto : String, email : String) : String
+  + {static} eliminar(id : int) : boolean
+  + {static} recibirValoracion(id : int, valor : float) : boolean
+  + {static} seguirUsuario(seguidor_id : String, seguido_id : String) : boolean
+  + {static} dejarSeguirUsuario(seguidor_id : String, seguido_id : String) : boolean
+  + añadirPublicacion(autor : Usuario, img : List<String>, contenido : String) : boolean
+  + {static} comentar(autor_id : int, destinatario_id : int, contenido : String) : boolean
+  + modificarEvento(nombre : String, ubicacion : String, coordenadas : Punto, fecha : String, id : int) : boolean
+  + {static} valorarUsuario(destinatario : int, valoracion : float, id : int) : boolean
+  + toJson() : JSONObject
 }
 
 class Evento {
-  nombre : String
-  ubicacion : String
-  fecha : Date
-  host : Usuario
-  valoracion : float
-  valoraciones : List<float>
-  etiquetas : List<String>
-  Evento(nombre, ubicacion, fecha, host, etiquetas)
-  modificar(nombre, ubicacion, fecha, host, etiquetas) : bool
-  recibirComentario(comentario) : bool
-  recibirValoracion(valoracion) : bool
-  añadirParticipante(participante) : bool
-  eliminarParticipante(participante) : bool
-  eliminar() : bool
-  añadirPublicacion(publicacion) : bool
-  toJson() : JSONObject
+  - id : int
+  - nombre : String
+  - coordenadas : Punto
+  - ubicacion : String
+  - fecha : LocalDateTime
+  - valoracion : float
+  - idHost : int
+  - etiquetas : ArrayList<String>
+  - activo : boolean
+  - descripcion : String
+  - coste : boolean
+
+  + Evento(ev : Evento)
+  + Evento(nombre : String, coordenadas : Punto, ubicacion : String, fecha : LocalDateTime, host : Usuario, etiquetas : ArrayList<String>, descripcion : String, coste : boolean)
+  + Evento(id : int)
+  + Evento(nombre : String, ubicacion : Punto, fecha : LocalDateTime, host : Usuario, etiquetas : ArrayList<String>)
+  + {static} crear(nombre : String, coordenadas : Punto, ubicacion : String, fecha : LocalDateTime, host : Usuario, etiquetas : ArrayList<String>, descripcion : String, coste : boolean) : boolean
+  + modificar(nombre : String, ubicacion : String, fecha : LocalDateTime, host : Usuario, etiquetas : ArrayList<String>, coordenadas : Punto) : boolean
+  + {static} comentar(event_id : int, user_id : int, contenido : String) : boolean
+  + {static} valorar(evento : int, valoracion : float, autor : int)) : boolean
+  + {static} anadirParticipante(evento_id : int, participante_id : int) : boolean
+  + eliminarParticipante(participante : Usuario)) : boolean
+  + añadirPublicacion(publicacion : Publicacion) : boolean
+  - loadEtiquetas()
+  + toJson() : JSONObject
 }
 
 class Publicacion {
-  autor : Usuario
-  fecha : Date
-  imagenes : List<String>
-  contenido : String
-  Publicacion(autor, fecha, imagenes, contenido)
-  eliminar() : bool
-  toJson() : JSONObject
+  - id : int
+  - fecha : LocalDateTime
+  - img : ArrayList<String>
+  - contenido : String
+
+  + Publicacion(autor : Usuario, fecha : LocalDateTime, img : List<String>, contenido : String)
+  - eliminar() : boolean
+  + toJson() : JSONObject
 }
 
 class Comentario {
-  autor : Usuario
-  fecha : Date
-  contenido : String
-  Comentario(autor, fecha, contenido)
-  toJson() : JSONObject
+  - fecha : LocalDateTime
+  - contenido : String
+
+  + Comentario(autor : Usuario, destinatario : Usuario, fecha : LocalDateTime, contenido : String)
+  + Comentario(autor : Usuario, evento : Evento, fecha : LocalDateTime, contenido : String)
+  + eliminar() : boolean
+  + toJson() : JSONObject
+}
+
+class Valoracion {
+  - autor : int
+  - destino : int
+  - evento : int
+  - valor : float
+
+  + Valoracion(autor : int, destino : int, valoracion : float)
+  + Valoracion(autor : int, destino : int, valoracion : float, evento : boolean)
+  + toJson() : JSONObject
+}
+
+class Punto {
+  - x : float
+  - y : float
+
+  + Punto(x : float, y : float)
+  + distanciaHasta(destino : Punto) : double
+  + toString() : String
+  + {static} fromString(punto : String) : Punto
+}
+
+class Busqueda {
+  - radio : float
+  - etiquetes : ArrayList<String>
+  - eventos_json : JSONObject
+
+  + Busqueda(coord : Punto, radio : float, etiquetes : ArrayList<String>, pago : boolean, participantes : int, dia : int)
+  + getJsonEventos() : JSONObject
+}
+
+class DB << (S, orange) Singleton >>  {
+  - connection : Connection
+  - statement : Statement
+  - {static} instance : DB
+
+  + DB()
+  + executeQuery(operation : String) : ResultSet
+  + executeUpdate(operation : String) : boolean
+  + executeUpdateWithKeys(operation : String) : ResultSet
+  + {static} getInstance() : DB
+}
+
+interface UsuarioController {
+  + login(body : Map<String, String>) : String
+  + register_user(body : Map<String, String>) : String
+  + modify_profile(body : Map<String, String>) : String
+  + get_password(body : Map<String, String>) : String
+  + comment(autor_id : String, destinatario_id : String, contenido : String) : String
+  + eliminate_user(user_id : int) : String
+  + follow_user(follower_id : String, followed_id : String) : String
+  + unfollow_user(follower_id : String, followed_id : String) : String
+  + valorar_usuario(body : Map<String, String>) : String
+}
+
+interface EventoController {
+  + join(event_id : String, user_id : String) : String
+  + create_event(body : Map<String, String>) : String
+  + comment_event(event_id : String, user_id : String, content : String) : String
+  + delete_event(event_id : String) : String
+  + valorar_evento(body : Map<String, String>) : String
+  + get_event(event_id : String) : String
+  + get_events(body : Map<String, String>) : String
+}
+
+interface MainApplicationClass {
+  + {static} main(args : String[])
 }
 
 Usuario "0" *--> "*" Evento : eventos
+Usuario "0" *--> "*" Publicacion : publicaciones
+Usuario "0" *--> "*" Valoracion : valoraciones
+Usuario "0" *--> "*" Comentario : comentarios
+Usuario "1" --> "1" Punto : ubicacion
 Evento "1" --> "1" Usuario : host
 Evento "0" *--> "*" Publicacion : publicaciones
 Evento "1" *--> "*" Usuario : participantes
 Evento "0" *--> "*" Comentario : comentarios
-Usuario "0" *--> "*" Comentario : comentarios
+Evento "0" *--> "*" Valoracion : valoraciones
+Publicacion "1" --> "1" Usuario : autor
+Comentario "1" --> "1" Usuario : autor
+Comentario "1" --> "1" Usuario : destinatario
+Comentario "1" --> "1" Evento : evento
+Busqueda "0" *--> "*" Evento : eventos
+DB "1" --> "1" DB
 @enduml
