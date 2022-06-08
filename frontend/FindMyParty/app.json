@@ -20,7 +20,7 @@
       "supportsTablet": false,
       "bundleIdentifier": "com.prieetoo.FindMyParty",
       "config": {
-        "googleMapsApiKey": "AIzaSyB7YzcfDqmO64jdMnHqS-I9SPMv8NM7DTY"
+        "googleMapsApiKey": "YOUR_API_KEY"
       }
     },
     "android": {
@@ -30,7 +30,7 @@
       },
       "config": {
         "googleMaps": {
-          "apiKey": "AIzaSyB7YzcfDqmO64jdMnHqS-I9SPMv8NM7DTY"
+          "apiKey": "YOUR_API_KEY"
         }
       },
       "package": "com.prieetoo.FindMyParty"
